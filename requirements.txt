@@ -1,1 +1,11 @@
- 
+fastapi
+uvicorn
+requests
+langchain
+langchain-community
+transformers
+pydantic
+jinja2
+python-multipart
+pyodbc
+autocorrect
