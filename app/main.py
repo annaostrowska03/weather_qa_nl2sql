@@ -14,7 +14,7 @@ async def root(request: Request):
 
 @app.post("/ask")
 async def ask_question(question: Question):
-    sql_query = generate_sql(question.question)
+    sql_query = generate_sql(question.question, question.model, question.api_key)
     return {"sql_query": sql_query}
     '''conn = get_db_connection()
     cursor = conn.cursor()
