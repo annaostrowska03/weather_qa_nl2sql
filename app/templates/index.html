@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Q&A</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        input, select, textarea { width: 100%; padding: 10px; margin: 10px 0; }
+        button { padding: 10px 20px; }
+        .answer { margin-top: 20px; padding: 15px; background: #f0f0f0; border-left: 4px solid #007bff; }
+    </style>
+</head>
+<body>
+    <h1>Ask a Weather Question</h1>
+    <form method="post" action="/ask">
+        <label for="question">Your question:</label>
+        <textarea name="question" rows="3" required></textarea>
+
+        <label for="model">Choose model:</label>
+        <select name="model">
+            <option value="phi3:mini">phi3:mini (fast, basic)</option>
+            <option value="llama3">llama3 (slower, better)</option>
+            <option value="gpt-3.5-turbo">gpt-3.5-turbo (OpenAI)</option>
+            <option value="gpt-4o-mini">gpt-4o-mini (OpenAI, high quality)</option>
+        </select>
+
+        <label for="api_key">API Key (for GPT models only):</label>
+        <input type="text" name="api_key" placeholder="sk-...">
+
+        <button type="submit">Ask</button>
+    </form>
+
+    {% if answer %}
+    <div class="answer">
+        <strong>Answer:</strong> {{ answer }}
+    </div>
+    {% endif %}
+</body>
+</html>
  

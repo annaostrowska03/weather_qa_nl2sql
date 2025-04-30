@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from app.database import get_db_connection
@@ -13,8 +13,12 @@ async def root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/ask")
-async def ask_question(question: Question):
-    return answer_question(question.question, question.model, question.api_key)
+async def ask_question(request: Request,
+                       question: str = Form(...),
+                       model: str = Form(...),
+                       api_key: str = Form("")):
+    answer = answer_question(question, model, api_key)
+    return templates.TemplateResponse("index.html", {"request": request, "answer": answer})
 
 if __name__ == "__main__":
     import uvicorn
