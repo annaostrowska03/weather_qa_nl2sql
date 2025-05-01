@@ -60,7 +60,7 @@
       background: #ffca28;
       color: #333;
       margin-top: 30px;
-      margin-left: 15%;
+      margin-left: 14%;
       width: 400px;
       height: auto;
     }
@@ -148,9 +148,22 @@
       <button type="submit" class = "answer_button">Get Answer</button>
     </form>
 
+    {% if sql %}
+    <div class="answer">
+      <strong>Generated SQL:</strong> {{ sql }}
+    </div>
+    {% endif %}
+
+
+   {% if result %}
+    <div class="answer">
+      <strong>SQL result:</strong> {{ result }}
+    </div>
+    {% endif %}
+
     {% if answer %}
     <div class="answer">
-      <strong>Answer:</strong> {{ answer }}
+      <strong>Answer:</strong>  {{ answer }}
     </div>
     {% endif %}
   </div>

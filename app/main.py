@@ -20,8 +20,8 @@ async def ask_question(request: Request,
                        question: str = Form(...),
                        model: str = Form(...),
                        api_key: str = Form("")):
-    answer = answer_question(question, model, api_key)
-    return templates.TemplateResponse("index.html", {"request": request, "answer": answer, "model": model, "question": question, "api_key": api_key})
+    sql, result, final_answer = answer_question(question, model, api_key)
+    return templates.TemplateResponse("index.html", {"request": request, "sql": sql, "result": result, "answer": final_answer, "model": model, "question": question, "api_key": api_key})
 
 if __name__ == "__main__":
     import uvicorn

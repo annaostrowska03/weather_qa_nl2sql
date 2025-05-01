@@ -75,21 +75,27 @@ SQL:"""
     # Clean the SQL output
     return corrected_question, clean_sql_output(answer)
 
-def answer_question(question: str, model_name: str, api_key: str) -> str:
-    corrected_question, sql_query = generate_sql(question, model_name, api_key)
+def execute_sql(sql_query: str) -> list:
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
         cursor.execute(sql_query)
         results = cursor.fetchall()
     except Exception as e:
-        return {"Error executing SQL": str(e)}
+        return [("Error executing SQL", str(e))]
     finally:
         cursor.close()
         conn.close()
 
+    return results
+
+def answer_question(question: str, model_name: str, api_key: str) -> str:
+    corrected_question, sql_query = generate_sql(question, model_name, api_key)
+    results = execute_sql(sql_query)
+
     if not results:
-        return "No matching results found."
+        return sql_query, "No results", "No matching results found."
+
     
     result_summary = "; ".join([", ".join(map(str, row)) for row in results])
 
@@ -126,4 +132,4 @@ Answer:"""
             }
         ).json()["response"].strip()
 
-    return final_response
+    return sql_query, result_summary, final_response
