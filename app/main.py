@@ -4,8 +4,11 @@ from fastapi.templating import Jinja2Templates
 from app.database import get_db_connection
 from app.models import Question
 from app.nlp import answer_question
+from fastapi.staticfiles import StaticFiles
+
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
 
 @app.get("/", response_class=HTMLResponse)
@@ -18,7 +21,7 @@ async def ask_question(request: Request,
                        model: str = Form(...),
                        api_key: str = Form("")):
     answer = answer_question(question, model, api_key)
-    return templates.TemplateResponse("index.html", {"request": request, "answer": answer})
+    return templates.TemplateResponse("index.html", {"request": request, "answer": answer, "model": model, "question": question, "api_key": api_key})
 
 if __name__ == "__main__":
     import uvicorn

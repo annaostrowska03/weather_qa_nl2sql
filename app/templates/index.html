@@ -1,41 +1,165 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Weather Q&A</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        input, select, textarea { width: 100%; padding: 10px; margin: 10px 0; }
-        button { padding: 10px 20px; }
-        .answer { margin-top: 20px; padding: 15px; background: #f0f0f0; border-left: 4px solid #007bff; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+
+  <title>Weather Q&A</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 40px;
+      background: url('/static/images/background.svg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      font-size: 2.8em;
+      color: #fdb020; 
+      margin-bottom: 25px;
+      letter-spacing: 1px;
+    }
+
+    form {
+      background: #fff3e0;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-size: 1.16em;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+    button {
+      background: #ffca28;
+      color: #333;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .answer_button {
+      background: #ffca28;
+      color: #333;
+      margin-top: 30px;
+      margin-left: 15%;
+      width: 400px;
+      height: auto;
+    }
+    .answer_button:hover {
+      background: #ffb300;
+    }
+    .answer {
+      background: #f1f8e9;
+      padding: 15px;
+      border-left: 5px solid #8bc34a;
+      margin-top: 20px;
+      border-radius: 5px;
+      font-size: 1.15em;
+    }
+    .note {
+      font-size: 0.9em;
+      color: #666;
+      margin-top: -5px;
+      margin-bottom: 15px;
+    }
+  
+    .api-key-wrapper {
+      position: relative;
+    }
+  
+    .api-key-wrapper input {
+      width: 525px;
+    }
+  
+    .eye-button {
+      position: absolute;
+      right: -4.5px;
+      top: 40%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 1.3em;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      height: 1.4em;
+      width: 1.4em;
+      color: #666;
+    }
+  
+    .eye-button:hover {
+      color: #243aff;
+    }
+    #model{
+      width: 548px;
+    }
+
+    #question{
+      width: 530px;
+      font-size: 1.19em;
+    } 
+
+  </style>
+  
 </head>
 <body>
+  <div class="container">
     <h1>Ask a Weather Question</h1>
     <form method="post" action="/ask">
-        <label for="question">Your question:</label>
-        <textarea name="question" rows="3" required></textarea>
+      <label for="question">Your question:</label>
+      <textarea name="question" id="question" rows="2" placeholder="e.g. Where is it raining?" required>{{ question or '' }}</textarea>
 
-        <label for="model">Choose model:</label>
-        <select name="model">
-            <option value="phi3:mini">phi3:mini (fast, basic)</option>
-            <option value="llama3">llama3 (slower, better)</option>
-            <option value="gpt-3.5-turbo">gpt-3.5-turbo (OpenAI)</option>
-            <option value="gpt-4o-mini">gpt-4o-mini (OpenAI, high quality)</option>
-            <option value="gpt-4o">gpt-4o (OpenAI, high quality)</option>
-            <option value="mistral">mistral (good quality, but very slow)</option>
-        </select>
+      <label for="model">Choose a model:</label>
+      <select name="model" id = "model" required>
+        <option value="phi3:mini" {% if model == 'phi3:mini' %}selected{% endif %}>phi3:mini – Fast, lightweight, simple</option>
+        <option value="llama3" {% if model == 'llama3' %}selected{% endif %}>llama3 – Slower but more accurate</option>
+        <option value="gpt-3.5-turbo" {% if model == 'gpt-3.5-turbo' %}selected{% endif %}>gpt-3.5-turbo – Reliable, fast, OpenAI</option>
+        <option value="gpt-4o-mini" {% if model == 'gpt-4o-mini' %}selected{% endif %}>gpt-4o-mini – Compact but high quality (OpenAI)</option>
+        <option value="gpt-4o" {% if model == 'gpt-4o' %}selected{% endif %}>gpt-4o – Best quality (OpenAI)</option>
+        <option value="mistral" {% if model == 'mistral' %}selected{% endif %}>mistral – Good quality, slow response</option>
+      </select>
 
-        <label for="api_key">API Key (for GPT models only):</label>
-        <input type="text" name="api_key" placeholder="sk-...">
+      <label for="api_key">API Key <span class="note">(required for GPT models only)</span></label>
+      <div class="api-key-wrapper">
+        <input type="password" name="api_key" id="api_key" value="{{ api_key or '' }}" placeholder="sk-...">
+        <button type="button" class="eye-button" onclick="toggleApiKeyVisibility()" title="Show/hide API key">👁</button>
+      </div>
+      
 
-        <button type="submit">Ask</button>
+      <button type="submit" class = "answer_button">Get Answer</button>
     </form>
 
     {% if answer %}
     <div class="answer">
-        <strong>Answer:</strong> {{ answer }}
+      <strong>Answer:</strong> {{ answer }}
     </div>
     {% endif %}
+  </div>
+
+  <script>
+    function toggleApiKeyVisibility() {
+      const input = document.getElementById("api_key");
+      input.type = input.type === "password" ? "text" : "password";
+    }
+  </script>
 </body>
 </html>
- 
