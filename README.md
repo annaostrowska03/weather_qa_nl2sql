@@ -2,6 +2,10 @@
 
 This project was developed as a take-home task for a AI/ML internship at Evertz.  It uses LangChain, FastAPI, and several LLM backends to translate natural language questions into SQL queries for weather data — and vice versa, converting SQL results back into human-readable answers.
 
+## Project Type
+
+This is a **web application** built with FastAPI.  
+It exposes a REST API that receives natural language weather questions and returns answers based on SQL queries.
 
 
 ---
