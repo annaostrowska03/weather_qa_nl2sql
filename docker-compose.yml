@@ -1,1 +1,49 @@
- 
+version: "3.9"
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: ${SA_PASSWORD}
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+      - ./init_db.sql:/init/init_db.sql
+
+  init-db:
+    image: mcr.microsoft.com/mssql-tools
+    container_name: sqlserver-init
+    depends_on:
+      - sqlserver
+    entrypoint: /bin/bash
+    command: >
+      -c "
+      sleep 20 &&
+      /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P ${SA_PASSWORD} -Q \"IF DB_ID('WeatherDB') IS NULL CREATE DATABASE WeatherDB\" &&
+      /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P ${SA_PASSWORD} -d WeatherDB -i /init/init_db.sql
+      "
+    volumes:
+      - ./init_db.sql:/init/init_db.sql
+
+  app:
+    build: .
+    container_name: weather-app
+    depends_on:
+      - init-db
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      DB_SERVER: sqlserver
+      DB_PORT: 1433
+    volumes:
+      - .:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+volumes:
+  mssql_data:
