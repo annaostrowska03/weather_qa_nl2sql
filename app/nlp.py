@@ -287,6 +287,9 @@ def answer_question(question: str, model_name: str, api_key: str, prompt_templat
     if sql_query.startswith("-- Error"):
             return sql_query, sql_query, sql_query, corrected_question, True
     results, has_error = execute_sql(sql_query)
+
+    if has_error:
+        result_summary = "Error executing SQL query."
     if not has_error:
         result_summary = "; ".join([", ".join(map(str, row)) for row in results])
     if model_name in ["tscholak/1zha5ono", "juierror/text-to-sql-with-table-schema"]:
