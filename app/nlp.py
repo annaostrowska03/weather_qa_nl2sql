@@ -24,10 +24,10 @@ temperature: float = 0.1, num_ctx: int = 2048, num_predict: int = 256) -> tuple:
         if prompt_template is None:
             prompt_template = """
     Table 'Weather' has columns: 
-    - city (text)
-    - temperature (int)
-    - weather (text): e.g., 'sunny', 'rainy', 'cloudy'
-    - climate (text): e.g., 'temperate', 'tropical'
+    - City (text)
+    - Temperature (int)
+    - Weather (text): e.g., 'sunny', 'rainy', 'cloudy'
+    - Climate (text): e.g., 'temperate', 'tropical'
 
     Use fuzzy matching for textual data when needed (e.g., weather LIKE '%rain%').
     Write a correct and minimal SQL query for the question below.
@@ -41,23 +41,28 @@ temperature: float = 0.1, num_ctx: int = 2048, num_predict: int = 256) -> tuple:
     SQL:"""
         prompt = prompt_template.format(corrected_question=corrected_question)
 
-        if model_name == "sqlcoder":
-            from transformers import AutoTokenizer, AutoModelForCausalLM
-            import torch
-            # Load the model and tokenizer
-            tokenizer = AutoTokenizer.from_pretrained("defog/sqlcoder")
-            model = AutoModelForCausalLM.from_pretrained("defog/sqlcoder").to("cuda" if torch.cuda.is_available() else "cpu")
+        if model_name == "juierror/text-to-sql-with-table-schema":
+            from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+
+            tokenizer = AutoTokenizer.from_pretrained(model_name)
+            model = AutoModelForSeq2SeqLM.from_pretrained(model_name).to("cuda" if torch.cuda.is_available() else "cpu")
+
+            table_columns = ["City", "Temperature", "Weather", "Climate"]
+            table_prefix = "Weather:"
+            question_prefix = "question:"
+            join_table = ",".join(table_columns)
+            prompt = f"{question_prefix} {corrected_question} {table_prefix} {join_table}"
 
             inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-            outputs = model.generate(**inputs, max_new_tokens=128)
+            outputs = model.generate(inputs=inputs["input_ids"], num_beams=10, max_length=700)
             output = tokenizer.decode(outputs[0], skip_special_tokens=True)
-            sql = "SELECT" + output.split("SELECT", 1)[-1]
-            return corrected_question, sql
+            return corrected_question, output.strip()
+
         
-        if model_name == "crack-sql":
+        if model_name == "tscholak/1zha5ono":
             from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-            tokenizer = AutoTokenizer.from_pretrained("bjin/crack-sql")
-            model = AutoModelForSeq2SeqLM.from_pretrained("bjin/crack-sql").to("cuda" if torch.cuda.is_available() else "cpu")
+            tokenizer = AutoTokenizer.from_pretrained("tscholak/1zha5ono")
+            model = AutoModelForSeq2SeqLM.from_pretrained("tscholak/1zha5ono").to("cuda" if torch.cuda.is_available() else "cpu")
 
             inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
             outputs = model.generate(**inputs, max_new_tokens=128)
@@ -142,7 +147,7 @@ def answer_question(question: str, model_name: str, api_key: str, prompt_templat
 
 
 
-        if model_name == "sqlcoder":
+        if model_name == "tscholak/1zha5ono" or model_name == "juierror/text-to-sql-with-table-schema":
             return sql_query, results, "", corrected_question, has_error
 
         if final_prompt is None:

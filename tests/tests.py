@@ -33,12 +33,13 @@ if __name__ == "__main__":
     results = []
 
     for question in questions.questions:
-        result = measure_response_time(question, 'sqlcoder', prompt_template=prompt_templates_other["sqlcoder"], prompt_name="sqlcoder")
+        result = measure_response_time(question, 'tscholak/1zha5ono', prompt_template=prompt_templates_other["tscholak/1zha5ono"], prompt_name="tscholak/1zha5ono")
         results.append(result)
-        print(f"Model: sqlcoder, Question: {question}, SQL: {result['sql_query']}, Response Time: {result['response_time']:.2f} seconds, prompt template: sqlcoder")
-        result = measure_response_time(question, 'crack_sql', prompt_template=prompt_templates_other["cracksql"], prompt_name="cracksql")
+        print(f"Model: tscholak/1zha5ono, Question: {question}, SQL: {result['sql_query']}, Response Time: {result['response_time']:.2f} seconds, prompt template: tscholak/1zha5ono")
+
+        result = measure_response_time(question, 'juierror/text-to-sql-with-table-schema', prompt_template=prompt_templates_other["juierror/text-to-sql-with-table-schema"], prompt_name="juierror/text-to-sql-with-table-schema")
         results.append(result)
-        print(f"Model: cracksql, Question: {question}, SQL: {result['sql_query']}, Response Time: {result['response_time']:.2f} seconds, prompt template: cracksql")
+        print(f"Model: juierror/text-to-sql-with-table-schema, Question: {question}, SQL: {result['sql_query']}, Response Time: {result['response_time']:.2f} seconds, prompt template: juierror/text-to-sql-with-table-schema")
 
     for model in ["phi3:mini", "llama3", "gpt-4o-mini", "mistral"]:
         for sql_temperature in [0.1, 0.3, 0.0]:
@@ -47,7 +48,7 @@ if __name__ == "__main__":
                     for num_ctx in [2048]:
                         for num_predict in [128, 64]:
                             for question in questions.questions:
-                                result = measure_response_time(question, model, api_key=os.genens("OPEN_API_KEY"), sql_temperature=sql_temperature, final_temperature=final_temperature, prompt_template=prompt, num_ctx=num_ctx, num_predict=num_predict, prompt_name=name)
+                                result = measure_response_time(question, model, api_key=os.getenv("OPEN_API_KEY", ""), sql_temperature=sql_temperature, final_temperature=final_temperature, prompt_template=prompt, num_ctx=num_ctx, num_predict=num_predict, prompt_name=name)
                                 results.append(result)
                                 print(f"Model: {model}, Question: {question}, SQL: {result['sql_query']}, Response Time: {result['response_time']:.2f} seconds, sql temperature: {sql_temperature}, final temperature: {final_temperature}, prompt template: {name}, num_ctx: {num_ctx}, num_predict: {num_predict}")
 

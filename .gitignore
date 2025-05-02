@@ -1,0 +1,32 @@
+# Hugging Face model cache
+~/.cache/huggingface
+**/transformers_cache/
+**/cache/
+**/hf_cache/
+**/huggingface/
+**/hub/
+
+# PyTorch cache
+**/torch_cache/
+**/torch_model/
+
+# Compiled Python files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Environment files
+.env
+*.env
+
+
+# Output files
+*.log
+*.out
+*.tmp
+*.bak
+
+# VS Code or other editor-specific
+.vscode/
+.idea/
