@@ -205,11 +205,11 @@ Query:
 Response:
 
 ```json
-```
+
     "sql": "SELECT City FROM Weather WHERE Weather LIKE '%rainy%'
     "result": "Bangalore"
     "answer": "It is raining in Bangalore."
----
+```
 
 
 ---
