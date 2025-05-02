@@ -150,12 +150,22 @@
 
       <label for="model">Choose a model:</label>
       <select name="model" id = "model" required>
-        <option value="phi3:mini" {% if model == 'phi3:mini' %}selected{% endif %}>phi3:mini – Fast, lightweight, simple</option>
-        <option value="llama3" {% if model == 'llama3' %}selected{% endif %}>llama3 – Slower but more accurate</option>
-        <option value="gpt-3.5-turbo" {% if model == 'gpt-3.5-turbo' %}selected{% endif %}>gpt-3.5-turbo – Reliable, fast, OpenAI</option>
-        <option value="gpt-4o-mini" {% if model == 'gpt-4o-mini' %}selected{% endif %}>gpt-4o-mini – Compact but high quality (OpenAI)</option>
-        <option value="gpt-4o" {% if model == 'gpt-4o' %}selected{% endif %}>gpt-4o – Best quality (OpenAI)</option>
-        <option value="mistral" {% if model == 'mistral' %}selected{% endif %}>mistral – Good quality, slow response</option>
+        <option value="phi3:mini" {% if model == 'phi3:mini' %}selected{% endif %}>
+          phi3:mini – Fast, high accuracy for small model
+        </option>
+        
+        <option value="juierror/text-to-sql-with-table-schema" {% if model == 'juierror/text-to-sql-with-table-schema' %}selected{% endif %}>
+          juierror – Instant responses, low accuracy, no answer in natural language
+        </option>
+        
+        <option value="gpt-4o-mini" {% if model == 'gpt-4o-mini' %}selected{% endif %}>
+          gpt-4o-mini – Best overall accuracy, fast (OpenAI), API key required
+        </option>
+        
+        <option value="mistral" {% if model == 'mistral' %}selected{% endif %}>
+          mistral – Medium accuracy, much slower but open-source
+        </option>
+        
       </select>
 
       <label for="api_key">API Key <span class="note">(required for GPT models only)</span></label>
@@ -166,29 +176,53 @@
       
 
       <button type="submit" class = "answer_button">Get Answer</button>
+      {% if model == 'juierror/text-to-sql-with-table-schema' %}
+      <div class="note">Note: This model only generates SQL. Natural language answer not available.</div>
+{% endif %}
+{% if error %}
+<div class="answer" style="border-left-color: #e53935; background: #ffebee; color: #b71c1c;">
+  <strong>Error:</strong> {{ error }}
+</div>
+{% endif %}
+
+
     </form>
 
     {% if answer %}
     <div class="answer">
       <strong>Answer:</strong>  {{ answer }}
     </div>
-    {% endif %}
+    {% elif was_submitted and not is_gpt_and_missing_key%}
+    <div class="answer">
+      <strong>Answer:</strong> Sorry, we couldn't generate an answer for your question.
+      <br> Please try again with a different question or model.
+    </div>
+  {% endif %}
+    
 
-
+  <button onclick="toggleVisibility('sqlBlock')" class = "hide-button">Show/hide SQL Query</button>
   {% if sql %}
-    <button onclick="toggleVisibility('sqlBlock')" class = "hide-button">Show/hide SQL Query</button>
     <div id="sqlBlock" class="answer" style="display: none;">
       <strong>Generated SQL:</strong> {{ sql }}
     </div>
-    {% endif %}
+    {% elif was_submitted and not is_gpt_and_missing_key%}
+  <div class="answer">
+    <strong>Generated SQL:</strong> Sorry, we couldn't generate an answer for your question.
+    <br> Please try again with a different question or model.
+  </div>
+{% endif %}
 
-
+  <button onclick="toggleVisibility('resultBlock')" class = "hide-button">Show/hide SQL Result</button>
    {% if result %}
-    <button onclick="toggleVisibility('resultBlock')" class = "hide-button">Show/hide SQL Result</button>
     <div id="resultBlock" class="answer" style="display: none;">
       <strong>SQL result:</strong> {{ result }}
     </div>
-    {% endif %}
+    {% elif was_submitted and not is_gpt_and_missing_key%}
+    <div class="answer">
+      <strong>SQL result:</strong> Sorry, we couldn't generate an answer for your question.
+      <br> Please try again with a different question or model.
+    </div>
+  {% endif %}
 
   </div>
 

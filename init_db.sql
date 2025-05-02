@@ -1,5 +1,3 @@
- CREATE DATABASE WeatherDB;
-GO
 USE WeatherDB;
 GO
 CREATE TABLE Weather (

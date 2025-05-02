@@ -21,12 +21,58 @@ async def ask_question(request: Request,
                        model: str = Form(...),
                        api_key: str = Form("")):
     try:
+        if "gpt" in model.lower() and not api_key.strip():
+            return templates.TemplateResponse("index.html", {
+                "request": request,
+                "error": "API key is required for GPT-based models.",
+                "model": model,
+                "question": question,
+                "api_key": api_key,
+                "was_submitted": True,
+                "is_gpt_and_missing_key": True
+            })
+        
         question_model = QuestionModel(question=question, model=model, api_key=api_key)
+        sql, result_summary, final_answer, corrected_question, has_error = answer_question(question, model, api_key)
+        # if invalid api key, return error message
+        if isinstance(sql, str) and "invalid_api_key" in sql.lower():
+            return templates.TemplateResponse("index.html", {
+                "request": request,
+                "error": "Your OpenAI API key is invalid. Please double-check and try again.",
+                "model": model,
+                "question": question,
+                "api_key": api_key,
+                "was_submitted": True,
+                "sql": None,
+                "result": None,
+                "answer": None,
+                "has_error": True,
+                "is_gpt_and_missing_key": True
+            })
+
+        return templates.TemplateResponse("index.html", {
+            "request": request,
+            "sql": sql,
+            "result": result_summary,
+            "answer": final_answer,
+            "model": model,
+            "question": question,
+            "api_key": api_key,
+            "has_error": has_error, 
+            "was_submitted": True,
+            "is_gpt_and_missing_key": False
+        })
+
     except Exception as e:
-        return templates.TemplateResponse("index.html", {"request": request, "error": str(e)})
-    
-    sql, result, final_answer, has_error = answer_question(question, model, api_key)
-    return templates.TemplateResponse("index.html", {"request": request, "sql": sql, "result": result, "answer": final_answer, "model": model, "question": question, "api_key": api_key, "has_error": has_error})
+        return templates.TemplateResponse("index.html", {
+            "request": request,
+            "error": f"Something went wrong: {str(e)}",
+            "model": model,
+            "question": question,
+            "api_key": api_key,
+            "was_submitted": True,
+            "is_gpt_and_missing_key": False
+        })
 
 if __name__ == "__main__":
     import uvicorn

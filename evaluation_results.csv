@@ -1,0 +1,776 @@
+question,model,prompt_template,response_time,status,match,sql_query,sql_result
+Where is it raining?,llama3,default,98.45293736457825,sql_error,False,,
+Where is it the hottest?,llama3,default,13.16597580909729,ok,True,"SELECT City, MAX(Temperature) FROM Weather GROUP BY City","Bangalore, 28, Beijing, 24, Buenos Aires, 23, Cairo, 32, Cape Town, 19, Chicago, 18, Houston, 30, Johannesburg, 20, London, 18, Los Angeles, 25, Moscow, 15, Mumbai, 30, New York, 22, Paris, 21, Phoenix, 35, Rio de Janeiro, 29, Sydney, 22, Tokyo, 26, Toronto, 20, Warsaw, 16"
+What is the temperature in Warsaw?,llama3,default,13.017001867294312,ok,True,SELECT Temperature FROM Weather WHERE City LIKE '%Warsaw%',16
+Which cities have tropical climate?,llama3,default,13.213586568832396,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%tropical%',"Houston, Bangalore, Tokyo, Sydney, Rio de Janeiro, Mumbai, Buenos Aires, Johannesburg"
+Is it cloudy in Berlin?,llama3,default,16.560028553009033,ok,False,SELECT * FROM Weather WHERE City LIKE '%Berlin%' AND Weather = 'cloudy',
+What's the temperature in Fort Worth?,llama3,default,15.794850587844849,sql_error,False,,
+Where is it the coldest?,llama3,default,15.347718000411987,ok,True,"SELECT City, MIN(Temperature) FROM Weather GROUP BY City","Bangalore, 28, Beijing, 24, Buenos Aires, 23, Cairo, 32, Cape Town, 19, Chicago, 18, Houston, 30, Johannesburg, 20, London, 18, Los Angeles, 25, Moscow, 15, Mumbai, 30, New York, 22, Paris, 21, Phoenix, 35, Rio de Janeiro, 29, Sydney, 22, Tokyo, 26, Toronto, 20, Warsaw, 16"
+Which cities have temperate climate?,llama3,default,14.240752935409546,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%temperate%',"New York, Warsaw, London, Paris"
+WHere is it the hotest?,llama3,default,14.108474731445312,sql_error,False,,
+Where is the sky clear?,llama3,default,13.216986656188965,sql_error,False,,
+Where is it 20 degrees?,llama3,default,11.884536266326904,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,default,16.026560306549072,sql_error,False,,
+Where is it raining?,llama3,schema_only,65.29068946838379,sql_error,False,,
+Where is it the hottest?,llama3,schema_only,53.64188599586487,sql_error,False,,
+What is the temperature in Warsaw?,llama3,schema_only,49.75174307823181,sql_error,False,,
+Which cities have tropical climate?,llama3,schema_only,41.98598599433899,sql_error,False,,
+Is it cloudy in Berlin?,llama3,schema_only,46.71772646903992,sql_error,False,,
+What's the temperature in Fort Worth?,llama3,schema_only,32.77593994140625,sql_error,False,,
+Where is it the coldest?,llama3,schema_only,47.62142372131348,sql_error,False,,
+Which cities have temperate climate?,llama3,schema_only,46.90664196014404,sql_error,False,,
+WHere is it the hotest?,llama3,schema_only,44.42563605308533,sql_error,False,,
+Where is the sky clear?,llama3,schema_only,46.709476709365845,sql_error,False,,
+Where is it 20 degrees?,llama3,schema_only,35.24556636810303,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,schema_only,48.51062750816345,sql_error,False,,
+Where is it raining?,llama3,instructional,57.95460653305054,sql_error,False,,
+Where is it the hottest?,llama3,instructional,45.20511674880981,sql_error,False,,
+What is the temperature in Warsaw?,llama3,instructional,44.98570251464844,sql_error,False,,
+Which cities have tropical climate?,llama3,instructional,44.98831009864807,sql_error,False,,
+Is it cloudy in Berlin?,llama3,instructional,40.96525716781616,ok,False,SELECT 1 AS is_cloudy,1
+What's the temperature in Fort Worth?,llama3,instructional,45.47802662849426,sql_error,False,,
+Where is it the coldest?,llama3,instructional,43.88747429847717,sql_error,False,,
+Which cities have temperate climate?,llama3,instructional,38.94470000267029,sql_error,False,,
+WHere is it the hotest?,llama3,instructional,42.31484484672546,no_sql,False,,
+Where is the sky clear?,llama3,instructional,39.884291648864746,no_sql,False,,
+Where is it 20 degrees?,llama3,instructional,40.51010990142822,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,instructional,40.54482913017273,sql_error,False,,
+Where is it raining?,llama3,few_shot,46.413309812545776,sql_error,False,,
+Where is it the hottest?,llama3,few_shot,29.00778722763061,ok,True,"SELECT City, Temperature FROM Weather ORDER BY Temperature DESC","Phoenix, 35, Cairo, 32, Houston, 30, Mumbai, 30, Rio de Janeiro, 29, Bangalore, 28, Tokyo, 26, Los Angeles, 25, Beijing, 24, Buenos Aires, 23, Sydney, 22, New York, 22, Paris, 21, Toronto, 20, Johannesburg, 20, Cape Town, 19, London, 18, Chicago, 18, Warsaw, 16, Moscow, 15"
+What is the temperature in Warsaw?,llama3,few_shot,22.16459965705872,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,llama3,few_shot,10.683478116989136,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%tropical%',"Houston, Bangalore, Tokyo, Sydney, Rio de Janeiro, Mumbai, Buenos Aires, Johannesburg"
+Is it cloudy in Berlin?,llama3,few_shot,39.91878437995911,ok,False,SELECT Weather FROM Weather WHERE City = 'Berlin' AND Weather LIKE '%cloudy%',
+What's the temperature in Fort Worth?,llama3,few_shot,15.552544116973875,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,llama3,few_shot,33.498621225357056,ok,True,"SELECT City, Temperature FROM Weather ORDER BY Temperature ASC","Moscow, 15, Warsaw, 16, London, 18, Chicago, 18, Cape Town, 19, Toronto, 20, Johannesburg, 20, Paris, 21, New York, 22, Sydney, 22, Buenos Aires, 23, Beijing, 24, Los Angeles, 25, Tokyo, 26, Bangalore, 28, Rio de Janeiro, 29, Mumbai, 30, Houston, 30, Cairo, 32, Phoenix, 35"
+Which cities have temperate climate?,llama3,few_shot,36.47101616859436,sql_error,False,,
+WHere is it the hotest?,llama3,few_shot,39.573227405548096,no_sql,False,,
+Where is the sky clear?,llama3,few_shot,14.930749893188477,ok,True,SELECT City FROM Weather WHERE Weather LIKE '%clear%',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,llama3,few_shot,14.771799325942991,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,llama3,few_shot,39.09904670715332,sql_error,False,,
+Where is it raining?,llama3,rag_style,62.10073947906494,sql_error,False,,
+Where is it the hottest?,llama3,rag_style,38.01206278800965,sql_error,False,,
+What is the temperature in Warsaw?,llama3,rag_style,42.91808319091797,sql_error,False,,
+Which cities have tropical climate?,llama3,rag_style,31.30865907669068,sql_error,False,,
+Is it cloudy in Berlin?,llama3,rag_style,40.51606917381287,sql_error,False,,
+What's the temperature in Fort Worth?,llama3,rag_style,46.34129691123962,sql_error,False,,
+Where is it the coldest?,llama3,rag_style,43.12641835212708,sql_error,False,,
+Which cities have temperate climate?,llama3,rag_style,41.246665477752686,sql_error,False,,
+WHere is it the hotest?,llama3,rag_style,44.24715399742127,no_sql,False,,
+Where is the sky clear?,llama3,rag_style,41.5349109172821,sql_error,False,,
+Where is it 20 degrees?,llama3,rag_style,30.76122045516968,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,rag_style,44.36426258087158,sql_error,False,,
+Where is it raining?,llama3,conversational,23.06946277618408,sql_error,False,,
+Where is it the hottest?,llama3,conversational,11.047083377838137,sql_error,False,,
+What is the temperature in Warsaw?,llama3,conversational,11.901017904281616,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,llama3,conversational,12.055698871612549,sql_error,False,,
+Is it cloudy in Berlin?,llama3,conversational,15.919497728347778,ok,False,SELECT * FROM Weather WHERE City = 'Berlin' AND Weather = 'cloudy',
+What's the temperature in Fort Worth?,llama3,conversational,11.940893650054932,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,llama3,conversational,12.736657619476318,sql_error,False,,
+Which cities have temperate climate?,llama3,conversational,13.65563178062439,sql_error,False,,
+WHere is it the hotest?,llama3,conversational,11.118652820587158,ok,False,SELECT * FROM Weather WHERE Weather = 'honest',
+Where is the sky clear?,llama3,conversational,10.949971199035645,sql_error,False,,
+Where is it 20 degrees?,llama3,conversational,11.962856769561768,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,conversational,17.927839517593384,sql_error,False,,
+Where is it raining?,llama3,default,61.667696714401245,sql_error,False,,
+Where is it the hottest?,llama3,default,13.402715921401978,ok,True,"SELECT City, MAX(Temperature) FROM Weather GROUP BY City","Bangalore, 28, Beijing, 24, Buenos Aires, 23, Cairo, 32, Cape Town, 19, Chicago, 18, Houston, 30, Johannesburg, 20, London, 18, Los Angeles, 25, Moscow, 15, Mumbai, 30, New York, 22, Paris, 21, Phoenix, 35, Rio de Janeiro, 29, Sydney, 22, Tokyo, 26, Toronto, 20, Warsaw, 16"
+What is the temperature in Warsaw?,llama3,default,13.070871114730837,ok,True,SELECT Temperature FROM Weather WHERE City LIKE '%Warsaw%',16
+Which cities have tropical climate?,llama3,default,13.772136926651,sql_error,False,,
+Is it cloudy in Berlin?,llama3,default,16.042598962783813,ok,False,SELECT * FROM Weather WHERE City = 'Berlin' AND Weather LIKE '%cloudy%',
+What's the temperature in Fort Worth?,llama3,default,12.738722801208496,ok,False,SELECT Temperature FROM Weather WHERE City LIKE '%Fort Worth%',
+Where is it the coldest?,llama3,default,13.569231986999512,ok,True,"SELECT City, MIN(Temperature) FROM Weather GROUP BY City","Bangalore, 28, Beijing, 24, Buenos Aires, 23, Cairo, 32, Cape Town, 19, Chicago, 18, Houston, 30, Johannesburg, 20, London, 18, Los Angeles, 25, Moscow, 15, Mumbai, 30, New York, 22, Paris, 21, Phoenix, 35, Rio de Janeiro, 29, Sydney, 22, Tokyo, 26, Toronto, 20, Warsaw, 16"
+Which cities have temperate climate?,llama3,default,12.71941876411438,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%temperate%',"New York, Warsaw, London, Paris"
+WHere is it the hotest?,llama3,default,13.380709886550903,sql_error,False,,
+Where is the sky clear?,llama3,default,13.527952194213867,sql_error,False,,
+Where is it 20 degrees?,llama3,default,12.24225115776062,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,default,14.903959512710571,sql_error,False,,
+Where is it raining?,llama3,schema_only,49.428884744644165,sql_error,False,,
+Where is it the hottest?,llama3,schema_only,39.528263092041016,sql_error,False,,
+What is the temperature in Warsaw?,llama3,schema_only,39.57166123390198,sql_error,False,,
+Which cities have tropical climate?,llama3,schema_only,39.17642259597778,sql_error,False,,
+Is it cloudy in Berlin?,llama3,schema_only,44.1323082447052,sql_error,False,,
+What's the temperature in Fort Worth?,llama3,schema_only,40.124021768569946,sql_error,False,,
+Where is it the coldest?,llama3,schema_only,43.91437602043152,sql_error,False,,
+Which cities have temperate climate?,llama3,schema_only,39.9712188243866,sql_error,False,,
+WHere is it the hotest?,llama3,schema_only,44.96712017059326,no_sql,False,,
+Where is the sky clear?,llama3,schema_only,45.96376395225525,sql_error,False,,
+Where is it 20 degrees?,llama3,schema_only,39.27474117279053,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,schema_only,44.35118126869202,sql_error,False,,
+Where is it raining?,llama3,instructional,56.54207611083984,sql_error,False,,
+Where is it the hottest?,llama3,instructional,43.25890302658081,sql_error,False,,
+What is the temperature in Warsaw?,llama3,instructional,49.627575397491455,sql_error,False,,
+Which cities have tropical climate?,llama3,instructional,43.53175067901611,sql_error,False,,
+Is it cloudy in Berlin?,llama3,instructional,45.88770079612732,ok,False,SELECT 1 AS is_cloudy,1
+What's the temperature in Fort Worth?,llama3,instructional,47.23040246963501,sql_error,False,,
+Where is it the coldest?,llama3,instructional,49.573132038116455,sql_error,False,,
+Which cities have temperate climate?,llama3,instructional,45.63198208808899,sql_error,False,,
+WHere is it the hotest?,llama3,instructional,45.210729122161865,no_sql,False,,
+Where is the sky clear?,llama3,instructional,43.46624422073364,sql_error,False,,
+Where is it 20 degrees?,llama3,instructional,30.40196776390076,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,instructional,39.85224008560181,sql_error,False,,
+Where is it raining?,llama3,few_shot,43.68698525428772,sql_error,False,,
+Where is it the hottest?,llama3,few_shot,26.348917961120605,sql_error,False,,
+What is the temperature in Warsaw?,llama3,few_shot,17.87250828742981,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,llama3,few_shot,10.4709153175354,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%tropical%',"Houston, Bangalore, Tokyo, Sydney, Rio de Janeiro, Mumbai, Buenos Aires, Johannesburg"
+Is it cloudy in Berlin?,llama3,few_shot,39.47087740898132,ok,False,SELECT Weather FROM Weather WHERE City = 'Berlin' AND Weather LIKE '%cloudy%',
+What's the temperature in Fort Worth?,llama3,few_shot,14.42618989944458,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,llama3,few_shot,29.511869430541992,ok,True,"SELECT City, Temperature FROM Weather ORDER BY Temperature ASC","Moscow, 15, Warsaw, 16, London, 18, Chicago, 18, Cape Town, 19, Toronto, 20, Johannesburg, 20, Paris, 21, New York, 22, Sydney, 22, Buenos Aires, 23, Beijing, 24, Los Angeles, 25, Tokyo, 26, Bangalore, 28, Rio de Janeiro, 29, Mumbai, 30, Houston, 30, Cairo, 32, Phoenix, 35"
+Which cities have temperate climate?,llama3,few_shot,30.0535192489624,sql_error,False,,
+WHere is it the hotest?,llama3,few_shot,37.75248003005981,no_sql,False,,
+Where is the sky clear?,llama3,few_shot,24.1131649017334,ok,True,SELECT City FROM Weather WHERE Weather LIKE '%clear%',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,llama3,few_shot,14.677372932434082,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,llama3,few_shot,38.2443265914917,sql_error,False,,
+Where is it raining?,llama3,rag_style,66.23866438865662,sql_error,False,,
+Where is it the hottest?,llama3,rag_style,35.20534038543701,sql_error,False,,
+What is the temperature in Warsaw?,llama3,rag_style,36.87156271934509,sql_error,False,,
+Which cities have tropical climate?,llama3,rag_style,25.350078582763672,sql_error,False,,
+Is it cloudy in Berlin?,llama3,rag_style,39.45661425590515,sql_error,False,,
+What's the temperature in Fort Worth?,llama3,rag_style,40.710848331451416,sql_error,False,,
+Where is it the coldest?,llama3,rag_style,38.053152322769165,no_sql,False,,
+Which cities have temperate climate?,llama3,rag_style,37.24811100959778,sql_error,False,,
+WHere is it the hotest?,llama3,rag_style,37.22609305381775,no_sql,False,,
+Where is the sky clear?,llama3,rag_style,40.22205328941345,sql_error,False,,
+Where is it 20 degrees?,llama3,rag_style,26.51228904724121,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,rag_style,37.42843413352966,sql_error,False,,
+Where is it raining?,llama3,conversational,22.08969140052796,sql_error,False,,
+Where is it the hottest?,llama3,conversational,11.596384525299072,sql_error,False,,
+What is the temperature in Warsaw?,llama3,conversational,12.05501675605774,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,llama3,conversational,11.547042608261108,sql_error,False,,
+Is it cloudy in Berlin?,llama3,conversational,14.614294528961182,ok,False,SELECT * FROM Weather WHERE City = 'Berlin' AND Weather = 'cloudy',
+What's the temperature in Fort Worth?,llama3,conversational,11.985920906066896,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,llama3,conversational,12.318498134613035,sql_error,False,,
+Which cities have temperate climate?,llama3,conversational,11.60532832145691,sql_error,False,,
+WHere is it the hotest?,llama3,conversational,11.861919403076172,ok,False,SELECT * FROM Weather WHERE Weather = 'honest',
+Where is the sky clear?,llama3,conversational,10.181754350662231,sql_error,False,,
+Where is it 20 degrees?,llama3,conversational,9.5478253364563,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,conversational,13.858389139175417,sql_error,False,,
+Where is it raining?,llama3,default,56.344483613967896,sql_error,False,,
+Where is it the hottest?,llama3,default,10.591455221176147,ok,True,"SELECT City, MAX(Temperature) FROM Weather GROUP BY City","Bangalore, 28, Beijing, 24, Buenos Aires, 23, Cairo, 32, Cape Town, 19, Chicago, 18, Houston, 30, Johannesburg, 20, London, 18, Los Angeles, 25, Moscow, 15, Mumbai, 30, New York, 22, Paris, 21, Phoenix, 35, Rio de Janeiro, 29, Sydney, 22, Tokyo, 26, Toronto, 20, Warsaw, 16"
+What is the temperature in Warsaw?,llama3,default,11.05809235572815,ok,True,SELECT Temperature FROM Weather WHERE City LIKE '%Warsaw%',16
+Which cities have tropical climate?,llama3,default,10.6856427192688,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%tropical%',"Houston, Bangalore, Tokyo, Sydney, Rio de Janeiro, Mumbai, Buenos Aires, Johannesburg"
+Is it cloudy in Berlin?,llama3,default,13.49043083190918,ok,False,SELECT * FROM Weather WHERE City LIKE '%Berlin%' AND Weather = 'cloudy',
+What's the temperature in Fort Worth?,llama3,default,12.317479133605955,sql_error,False,,
+Where is it the coldest?,llama3,default,11.565229177474976,ok,True,"SELECT City, MIN(Temperature) FROM Weather GROUP BY City","Bangalore, 28, Beijing, 24, Buenos Aires, 23, Cairo, 32, Cape Town, 19, Chicago, 18, Houston, 30, Johannesburg, 20, London, 18, Los Angeles, 25, Moscow, 15, Mumbai, 30, New York, 22, Paris, 21, Phoenix, 35, Rio de Janeiro, 29, Sydney, 22, Tokyo, 26, Toronto, 20, Warsaw, 16"
+Which cities have temperate climate?,llama3,default,10.814542055130005,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%temperate%',"New York, Warsaw, London, Paris"
+WHere is it the hotest?,llama3,default,11.743777990341188,sql_error,False,,
+Where is the sky clear?,llama3,default,12.593949556350708,sql_error,False,,
+Where is it 20 degrees?,llama3,default,10.233602523803713,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,default,14.06559920310974,sql_error,False,,
+Where is it raining?,llama3,schema_only,46.68592715263367,sql_error,False,,
+Where is it the hottest?,llama3,schema_only,38.96945786476135,sql_error,False,,
+What is the temperature in Warsaw?,llama3,schema_only,34.59730052947998,sql_error,False,,
+Which cities have tropical climate?,llama3,schema_only,34.82153367996216,sql_error,False,,
+Is it cloudy in Berlin?,llama3,schema_only,38.52458620071411,sql_error,False,,
+What's the temperature in Fort Worth?,llama3,schema_only,25.757902145385746,sql_error,False,,
+Where is it the coldest?,llama3,schema_only,37.3773250579834,sql_error,False,,
+Which cities have temperate climate?,llama3,schema_only,34.90634369850159,sql_error,False,,
+WHere is it the hotest?,llama3,schema_only,37.37795877456665,sql_error,False,,
+Where is the sky clear?,llama3,schema_only,39.20667386054993,sql_error,False,,
+Where is it 20 degrees?,llama3,schema_only,27.77021861076355,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,schema_only,38.08092427253723,sql_error,False,,
+Where is it raining?,llama3,instructional,50.35020041465759,sql_error,False,,
+Where is it the hottest?,llama3,instructional,37.08302044868469,sql_error,False,,
+What is the temperature in Warsaw?,llama3,instructional,38.03788018226624,sql_error,False,,
+Which cities have tropical climate?,llama3,instructional,38.24460172653198,sql_error,False,,
+Is it cloudy in Berlin?,llama3,instructional,42.42804169654846,ok,False,SELECT 1 AS is_cloudy,1
+What's the temperature in Fort Worth?,llama3,instructional,43.738585233688354,sql_error,False,,
+Where is it the coldest?,llama3,instructional,42.32123589515686,sql_error,False,,
+Which cities have temperate climate?,llama3,instructional,39.72114610671997,sql_error,False,,
+WHere is it the hotest?,llama3,instructional,38.18734908103943,no_sql,False,,
+Where is the sky clear?,llama3,instructional,37.247759103775024,sql_error,False,,
+Where is it 20 degrees?,llama3,instructional,37.95966482162476,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,instructional,42.253937005996704,sql_error,False,,
+Where is it raining?,llama3,few_shot,46.938642740249634,sql_error,False,,
+Where is it the hottest?,llama3,few_shot,30.56096887588501,ok,True,"SELECT City, Temperature FROM Weather ORDER BY Temperature DESC","Phoenix, 35, Cairo, 32, Houston, 30, Mumbai, 30, Rio de Janeiro, 29, Bangalore, 28, Tokyo, 26, Los Angeles, 25, Beijing, 24, Buenos Aires, 23, Sydney, 22, New York, 22, Paris, 21, Toronto, 20, Johannesburg, 20, Cape Town, 19, London, 18, Chicago, 18, Warsaw, 16, Moscow, 15"
+What is the temperature in Warsaw?,llama3,few_shot,18.768999099731445,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,llama3,few_shot,10.596970081329346,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%tropical%',"Houston, Bangalore, Tokyo, Sydney, Rio de Janeiro, Mumbai, Buenos Aires, Johannesburg"
+Is it cloudy in Berlin?,llama3,few_shot,41.84909629821777,ok,False,SELECT * FROM Weather WHERE City = 'Berlin' AND Weather LIKE '%cloudy%',
+What's the temperature in Fort Worth?,llama3,few_shot,14.20727515220642,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,llama3,few_shot,32.870211362838745,ok,True,"SELECT City, Temperature FROM Weather ORDER BY Temperature ASC","Moscow, 15, Warsaw, 16, London, 18, Chicago, 18, Cape Town, 19, Toronto, 20, Johannesburg, 20, Paris, 21, New York, 22, Sydney, 22, Buenos Aires, 23, Beijing, 24, Los Angeles, 25, Tokyo, 26, Bangalore, 28, Rio de Janeiro, 29, Mumbai, 30, Houston, 30, Cairo, 32, Phoenix, 35"
+Which cities have temperate climate?,llama3,few_shot,33.64852571487427,sql_error,False,,
+WHere is it the hotest?,llama3,few_shot,40.72979497909546,no_sql,False,,
+Where is the sky clear?,llama3,few_shot,16.359642505645752,ok,True,SELECT City FROM Weather WHERE Weather LIKE '%clear%',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,llama3,few_shot,20.06288385391236,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,llama3,few_shot,40.3161609172821,sql_error,False,,
+Where is it raining?,llama3,rag_style,53.13488483428955,sql_error,False,,
+Where is it the hottest?,llama3,rag_style,39.34817028045654,sql_error,False,,
+What is the temperature in Warsaw?,llama3,rag_style,40.70603704452515,sql_error,False,,
+Which cities have tropical climate?,llama3,rag_style,28.30950355529785,sql_error,False,,
+Is it cloudy in Berlin?,llama3,rag_style,46.0507128238678,sql_error,False,,
+What's the temperature in Fort Worth?,llama3,rag_style,45.31068539619446,sql_error,False,,
+Where is it the coldest?,llama3,rag_style,38.82923865318298,sql_error,False,,
+Which cities have temperate climate?,llama3,rag_style,41.24176549911499,sql_error,False,,
+WHere is it the hotest?,llama3,rag_style,40.24332666397095,no_sql,False,,
+Where is the sky clear?,llama3,rag_style,40.14742183685303,sql_error,False,,
+Where is it 20 degrees?,llama3,rag_style,29.56591010093689,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,rag_style,38.5743522644043,sql_error,False,,
+Where is it raining?,llama3,conversational,19.64401912689209,sql_error,False,,
+Where is it the hottest?,llama3,conversational,10.621432542800903,sql_error,False,,
+What is the temperature in Warsaw?,llama3,conversational,11.539167881011965,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,llama3,conversational,12.48777723312378,sql_error,False,,
+Is it cloudy in Berlin?,llama3,conversational,14.28768825531006,ok,False,SELECT * FROM Weather WHERE City = 'Berlin' AND Weather = 'cloudy',
+What's the temperature in Fort Worth?,llama3,conversational,11.814324617385864,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,llama3,conversational,12.988199472427368,sql_error,False,,
+Which cities have temperate climate?,llama3,conversational,11.283710479736328,sql_error,False,,
+WHere is it the hotest?,llama3,conversational,10.488909006118774,ok,False,SELECT * FROM Weather WHERE Weather = 'honest',
+Where is the sky clear?,llama3,conversational,9.83803415298462,sql_error,False,,
+Where is it 20 degrees?,llama3,conversational,9.47096562385559,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,conversational,14.182998657226562,sql_error,False,,
+Where is it raining?,llama3,default,58.37880611419678,sql_error,False,,
+Where is it the hottest?,llama3,default,11.354482412338257,ok,True,"SELECT City, MAX(Temperature) FROM Weather GROUP BY City","Bangalore, 28, Beijing, 24, Buenos Aires, 23, Cairo, 32, Cape Town, 19, Chicago, 18, Houston, 30, Johannesburg, 20, London, 18, Los Angeles, 25, Moscow, 15, Mumbai, 30, New York, 22, Paris, 21, Phoenix, 35, Rio de Janeiro, 29, Sydney, 22, Tokyo, 26, Toronto, 20, Warsaw, 16"
+What is the temperature in Warsaw?,llama3,default,12.719738245010376,ok,True,SELECT Temperature FROM Weather WHERE City LIKE '%Warsaw%',16
+Which cities have tropical climate?,llama3,default,10.793295621871948,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%tropical%',"Houston, Bangalore, Tokyo, Sydney, Rio de Janeiro, Mumbai, Buenos Aires, Johannesburg"
+Is it cloudy in Berlin?,llama3,default,15.829849481582642,ok,False,SELECT * FROM Weather WHERE City LIKE '%Berlin%' AND Weather = 'cloudy',
+What's the temperature in Fort Worth?,llama3,default,12.11060380935669,sql_error,False,,
+Where is it the coldest?,llama3,default,11.025777101516724,ok,True,"SELECT City, MIN(Temperature) FROM Weather GROUP BY City","Bangalore, 28, Beijing, 24, Buenos Aires, 23, Cairo, 32, Cape Town, 19, Chicago, 18, Houston, 30, Johannesburg, 20, London, 18, Los Angeles, 25, Moscow, 15, Mumbai, 30, New York, 22, Paris, 21, Phoenix, 35, Rio de Janeiro, 29, Sydney, 22, Tokyo, 26, Toronto, 20, Warsaw, 16"
+Which cities have temperate climate?,llama3,default,10.593276500701904,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%temperate%',"New York, Warsaw, London, Paris"
+WHere is it the hotest?,llama3,default,12.180074453353882,sql_error,False,,
+Where is the sky clear?,llama3,default,11.931195974349976,sql_error,False,,
+Where is it 20 degrees?,llama3,default,10.203006744384766,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,default,14.184428215026855,sql_error,False,,
+Where is it raining?,llama3,schema_only,46.84292435646057,sql_error,False,,
+Where is it the hottest?,llama3,schema_only,39.78484725952149,sql_error,False,,
+What is the temperature in Warsaw?,llama3,schema_only,36.17959308624268,sql_error,False,,
+Which cities have tropical climate?,llama3,schema_only,38.04465842247009,sql_error,False,,
+Is it cloudy in Berlin?,llama3,schema_only,47.393678188323975,sql_error,False,,
+What's the temperature in Fort Worth?,llama3,schema_only,30.84629774093628,sql_error,False,,
+Where is it the coldest?,llama3,schema_only,42.70174884796143,sql_error,False,,
+Which cities have temperate climate?,llama3,schema_only,37.87035799026489,sql_error,False,,
+WHere is it the hotest?,llama3,schema_only,42.67773509025574,sql_error,False,,
+Where is the sky clear?,llama3,schema_only,41.61470437049866,sql_error,False,,
+Where is it 20 degrees?,llama3,schema_only,31.324389696121216,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,schema_only,40.96488761901856,sql_error,False,,
+Where is it raining?,llama3,instructional,53.94820189476013,sql_error,False,,
+Where is it the hottest?,llama3,instructional,39.205477237701416,sql_error,False,,
+What is the temperature in Warsaw?,llama3,instructional,41.480746030807495,sql_error,False,,
+Which cities have tropical climate?,llama3,instructional,35.98220992088318,sql_error,False,,
+Is it cloudy in Berlin?,llama3,instructional,37.091859579086304,ok,False,SELECT 1 AS is_cloudy,1
+What's the temperature in Fort Worth?,llama3,instructional,41.51667833328247,sql_error,False,,
+Where is it the coldest?,llama3,instructional,39.04444217681885,sql_error,False,,
+Which cities have temperate climate?,llama3,instructional,41.11817717552185,sql_error,False,,
+WHere is it the hotest?,llama3,instructional,38.11788058280945,no_sql,False,,
+Where is the sky clear?,llama3,instructional,37.3772177696228,sql_error,False,,
+Where is it 20 degrees?,llama3,instructional,39.44033908843994,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,instructional,41.65616178512573,sql_error,False,,
+Where is it raining?,llama3,few_shot,45.8701913356781,sql_error,False,,
+Where is it the hottest?,llama3,few_shot,28.81794261932373,ok,True,"SELECT City, Temperature FROM Weather ORDER BY Temperature DESC","Phoenix, 35, Cairo, 32, Houston, 30, Mumbai, 30, Rio de Janeiro, 29, Bangalore, 28, Tokyo, 26, Los Angeles, 25, Beijing, 24, Buenos Aires, 23, Sydney, 22, New York, 22, Paris, 21, Toronto, 20, Johannesburg, 20, Cape Town, 19, London, 18, Chicago, 18, Warsaw, 16, Moscow, 15"
+What is the temperature in Warsaw?,llama3,few_shot,16.994489192962646,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,llama3,few_shot,12.446516036987305,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%tropical%',"Houston, Bangalore, Tokyo, Sydney, Rio de Janeiro, Mumbai, Buenos Aires, Johannesburg"
+Is it cloudy in Berlin?,llama3,few_shot,42.45546746253967,ok,False,SELECT * FROM Weather WHERE City = 'Berlin' AND Weather LIKE '%cloudy%',
+What's the temperature in Fort Worth?,llama3,few_shot,15.314136028289797,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,llama3,few_shot,30.49163556098938,ok,True,"SELECT City, Temperature FROM Weather ORDER BY Temperature ASC","Moscow, 15, Warsaw, 16, London, 18, Chicago, 18, Cape Town, 19, Toronto, 20, Johannesburg, 20, Paris, 21, New York, 22, Sydney, 22, Buenos Aires, 23, Beijing, 24, Los Angeles, 25, Tokyo, 26, Bangalore, 28, Rio de Janeiro, 29, Mumbai, 30, Houston, 30, Cairo, 32, Phoenix, 35"
+Which cities have temperate climate?,llama3,few_shot,33.8816442489624,sql_error,False,,
+WHere is it the hotest?,llama3,few_shot,42.89074492454529,no_sql,False,,
+Where is the sky clear?,llama3,few_shot,15.459543943405151,ok,True,SELECT City FROM Weather WHERE Weather LIKE '%clear%',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,llama3,few_shot,20.010529279708862,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,llama3,few_shot,39.74852108955383,sql_error,False,,
+Where is it raining?,llama3,rag_style,55.211535930633545,sql_error,False,,
+Where is it the hottest?,llama3,rag_style,39.406633615493774,sql_error,False,,
+What is the temperature in Warsaw?,llama3,rag_style,40.2883026599884,sql_error,False,,
+Which cities have tropical climate?,llama3,rag_style,28.12234258651733,sql_error,False,,
+Is it cloudy in Berlin?,llama3,rag_style,40.135984897613525,sql_error,False,,
+What's the temperature in Fort Worth?,llama3,rag_style,41.58022713661194,sql_error,False,,
+Where is it the coldest?,llama3,rag_style,40.46020007133484,sql_error,False,,
+Which cities have temperate climate?,llama3,rag_style,41.22545647621155,sql_error,False,,
+WHere is it the hotest?,llama3,rag_style,39.3156852722168,no_sql,False,,
+Where is the sky clear?,llama3,rag_style,37.17730927467346,sql_error,False,,
+Where is it 20 degrees?,llama3,rag_style,28.056740283966064,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,rag_style,37.85687017440796,sql_error,False,,
+Where is it raining?,llama3,conversational,22.00900292396545,sql_error,False,,
+Where is it the hottest?,llama3,conversational,10.690612077713013,sql_error,False,,
+What is the temperature in Warsaw?,llama3,conversational,10.747008323669434,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,llama3,conversational,11.703028440475464,sql_error,False,,
+Is it cloudy in Berlin?,llama3,conversational,16.23731279373169,ok,False,SELECT * FROM Weather WHERE City = 'Berlin' AND Weather = 'cloudy',
+What's the temperature in Fort Worth?,llama3,conversational,11.155610799789429,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,llama3,conversational,11.987706661224363,sql_error,False,,
+Which cities have temperate climate?,llama3,conversational,10.663771152496338,sql_error,False,,
+WHere is it the hotest?,llama3,conversational,10.54727816581726,ok,False,SELECT * FROM Weather WHERE Weather = 'honest',
+Where is the sky clear?,llama3,conversational,11.458289623260498,sql_error,False,,
+Where is it 20 degrees?,llama3,conversational,10.13216519355774,sql_error,False,,
+What is the average temperature in sunny cities?,llama3,conversational,14.050474166870115,sql_error,False,,
+Where is it raining?,mistral,default,84.02296495437622,sql_error,False,,
+Where is it the hottest?,mistral,default,14.34977412223816,ok,True,"SELECT City, MAX(Temperature) FROM Weather GROUP BY City","Bangalore, 28, Beijing, 24, Buenos Aires, 23, Cairo, 32, Cape Town, 19, Chicago, 18, Houston, 30, Johannesburg, 20, London, 18, Los Angeles, 25, Moscow, 15, Mumbai, 30, New York, 22, Paris, 21, Phoenix, 35, Rio de Janeiro, 29, Sydney, 22, Tokyo, 26, Toronto, 20, Warsaw, 16"
+What is the temperature in Warsaw?,mistral,default,16.113750219345093,ok,True,SELECT Temperature FROM Weather WHERE City LIKE '%Warsaw%',16
+Which cities have tropical climate?,mistral,default,13.240301609039308,ok,False,"SELECT City, Climate FROM Weather WHERE Climate = 'tropical'","Rio de Janeiro, tropical"
+Is it cloudy in Berlin?,mistral,default,18.8010687828064,ok,False,"SELECT City, Weather FROM Weather WHERE City = 'Berlin' AND Weather LIKE '%cloudy%'",
+What's the temperature in Fort Worth?,mistral,default,15.570034503936768,ok,False,SELECT Temperature FROM Weather WHERE City LIKE '%Fort Worth%',
+Where is it the coldest?,mistral,default,16.194624185562134,ok,True,"SELECT TOP 1 City, Temperature FROM Weather ORDER BY Temperature ASC","Moscow, 15"
+Which cities have temperate climate?,mistral,default,14.500291347503662,ok,True,"SELECT City, Climate FROM Weather WHERE Climate = 'temperate'","New York, temperate, Warsaw, temperate, Paris, temperate"
+WHere is it the hotest?,mistral,default,14.71001935005188,ok,False,"SELECT City, Weather FROM Weather WHERE Climate LIKE '%honest%'",
+Where is the sky clear?,mistral,default,12.303641319274902,ok,True,"SELECT City, Weather FROM Weather WHERE Weather LIKE '%clear%'","Tokyo, clear, Buenos Aires, clear"
+Where is it 20 degrees?,mistral,default,11.716586828231812,ok,True,"SELECT City, Temperature FROM Weather WHERE Temperature = 20","Toronto, 20, Johannesburg, 20"
+What is the average temperature in sunny cities?,mistral,default,22.70233392715454,sql_error,False,,
+Where is it raining?,mistral,schema_only,29.238685131073,sql_error,False,,
+Where is it the hottest?,mistral,schema_only,36.535210371017456,sql_error,False,,
+What is the temperature in Warsaw?,mistral,schema_only,37.909056186676025,ok,True,SELECT TOP 1 Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,mistral,schema_only,29.53927326202393,ok,False,SELECT City FROM Weather WHERE Climate = 'tropical',Rio de Janeiro
+Is it cloudy in Berlin?,mistral,schema_only,35.58067536354065,ok,False,SELECT City FROM Weather WHERE City = 'Berlin' AND Weather = 'cloudy',
+What's the temperature in Fort Worth?,mistral,schema_only,36.6218843460083,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,mistral,schema_only,37.58237814903259,ok,True,SELECT City FROM Weather,"New York, Los Angeles, Chicago, Houston, Phoenix, Toronto, Warsaw, Bangalore, London, Paris, Tokyo, Sydney, Cape Town, Moscow, Rio de Janeiro, Beijing, Mumbai, Cairo, Buenos Aires, Johannesburg"
+Which cities have temperate climate?,mistral,schema_only,13.89962363243103,sql_error,False,,
+WHere is it the hotest?,mistral,schema_only,39.26447892189026,no_sql,False,,
+Where is the sky clear?,mistral,schema_only,22.472153425216675,ok,True,SELECT City FROM Weather WHERE Weather = 'clear',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,mistral,schema_only,20.77029800415039,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,mistral,schema_only,40.65044856071472,no_sql,False,,
+Where is it raining?,mistral,instructional,58.22277736663818,sql_error,False,,
+Where is it the hottest?,mistral,instructional,39.89644408226013,ok,False,SELECT City FROM Weather,"New York, Los Angeles, Chicago, Houston, Phoenix, Toronto, Warsaw, Bangalore, London, Paris, Tokyo, Sydney, Cape Town, Moscow, Rio de Janeiro, Beijing, Mumbai, Cairo, Buenos Aires, Johannesburg"
+What is the temperature in Warsaw?,mistral,instructional,39.902857065200806,sql_error,False,,
+Which cities have tropical climate?,mistral,instructional,43.51931977272034,ok,False,SELECT City FROM Weather WHERE Climate = 'tropical',Rio de Janeiro
+Is it cloudy in Berlin?,mistral,instructional,39.50003719329834,ok,False,SELECT Weather FROM Weather,"sunny, partly cloudy, cloudy, thunderstorms, sunny, partly cloudy, overcast, rainy, drizzle, partly sunny, clear, windy, partly cloudy, cloudy, scattered showers, smoggy, humid, sunny, clear, partly sunny"
+What's the temperature in Fort Worth?,mistral,instructional,41.18660640716553,sql_error,False,,
+Where is it the coldest?,mistral,instructional,38.14192867279053,sql_error,False,,
+Which cities have temperate climate?,mistral,instructional,37.99056625366211,sql_error,False,,
+WHere is it the hotest?,mistral,instructional,39.77578687667847,no_sql,False,,
+Where is the sky clear?,mistral,instructional,49.19443583488464,ok,True,SELECT City FROM Weather WHERE Weather = 'clear',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,mistral,instructional,55.21425437927246,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,mistral,instructional,52.27636933326721,sql_error,False,,
+Where is it raining?,mistral,few_shot,59.311704874038696,sql_error,False,,
+Where is it the hottest?,mistral,few_shot,43.98823761940002,sql_error,False,,
+What is the temperature in Warsaw?,mistral,few_shot,30.14059591293335,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,mistral,few_shot,50.343170166015625,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%tropical%',"Houston, Bangalore, Tokyo, Sydney, Rio de Janeiro, Mumbai, Buenos Aires, Johannesburg"
+Is it cloudy in Berlin?,mistral,few_shot,53.034428358078,ok,False,SELECT City FROM Weather WHERE Weather LIKE '%cloudy%' AND City = 'Berlin',
+What's the temperature in Fort Worth?,mistral,few_shot,19.289767503738403,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,mistral,few_shot,16.532496452331543,ok,True,"SELECT TOP 1 City, Temperature FROM Weather ORDER BY Temperature ASC","Moscow, 15"
+Which cities have temperate climate?,mistral,few_shot,15.493074655532835,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%temperate%',"New York, Warsaw, London, Paris"
+WHere is it the hotest?,mistral,few_shot,42.68900752067566,no_sql,False,,
+Where is the sky clear?,mistral,few_shot,31.344808101654053,sql_error,False,,
+Where is it 20 degrees?,mistral,few_shot,12.624990224838257,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,mistral,few_shot,47.53874969482422,no_sql,False,,
+Where is it raining?,mistral,rag_style,64.02856969833374,sql_error,False,,
+Where is it the hottest?,mistral,rag_style,47.85523343086243,sql_error,False,,
+What is the temperature in Warsaw?,mistral,rag_style,44.13694214820862,sql_error,False,,
+Which cities have tropical climate?,mistral,rag_style,15.820915699005129,sql_error,False,,
+Is it cloudy in Berlin?,mistral,rag_style,53.34227275848389,sql_error,False,,
+What's the temperature in Fort Worth?,mistral,rag_style,47.96010732650757,sql_error,False,,
+Where is it the coldest?,mistral,rag_style,52.3780505657196,sql_error,False,,
+Which cities have temperate climate?,mistral,rag_style,15.70155906677246,sql_error,False,,
+WHere is it the hotest?,mistral,rag_style,42.793519020080566,no_sql,False,,
+Where is the sky clear?,mistral,rag_style,29.360732555389404,ok,False,SELECT City FROM Weather WHERE Weather = 'sunny',"New York, Phoenix, Cairo"
+Where is it 20 degrees?,mistral,rag_style,28.36670756340027,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,mistral,rag_style,43.07344722747803,sql_error,False,,
+Where is it raining?,mistral,conversational,24.590145587921143,sql_error,False,,
+Where is it the hottest?,mistral,conversational,14.19445514678955,sql_error,False,,
+What is the temperature in Warsaw?,mistral,conversational,13.384743213653564,sql_error,False,,
+Which cities have tropical climate?,mistral,conversational,12.749530792236328,sql_error,False,,
+Is it cloudy in Berlin?,mistral,conversational,15.676120519638062,sql_error,False,,
+What's the temperature in Fort Worth?,mistral,conversational,14.767234086990356,sql_error,False,,
+Where is it the coldest?,mistral,conversational,13.882385730743408,sql_error,False,,
+Which cities have temperate climate?,mistral,conversational,12.648337364196776,sql_error,False,,
+WHere is it the hotest?,mistral,conversational,13.7174711227417,sql_error,False,,
+Where is the sky clear?,mistral,conversational,11.911225080490112,sql_error,False,,
+Where is it 20 degrees?,mistral,conversational,12.504326820373535,sql_error,False,,
+What is the average temperature in sunny cities?,mistral,conversational,17.002930641174316,sql_error,False,,
+Where is it raining?,mistral,default,68.8051552772522,sql_error,False,,
+Where is it the hottest?,mistral,default,13.594275951385498,ok,True,"SELECT City, MAX(Temperature) FROM Weather GROUP BY City","Bangalore, 28, Beijing, 24, Buenos Aires, 23, Cairo, 32, Cape Town, 19, Chicago, 18, Houston, 30, Johannesburg, 20, London, 18, Los Angeles, 25, Moscow, 15, Mumbai, 30, New York, 22, Paris, 21, Phoenix, 35, Rio de Janeiro, 29, Sydney, 22, Tokyo, 26, Toronto, 20, Warsaw, 16"
+What is the temperature in Warsaw?,mistral,default,13.432245254516602,ok,True,SELECT Temperature FROM Weather WHERE City LIKE '%Warsaw%',16
+Which cities have tropical climate?,mistral,default,12.59777855873108,ok,False,"SELECT City, Climate FROM Weather WHERE Climate = 'tropical'","Rio de Janeiro, tropical"
+Is it cloudy in Berlin?,mistral,default,18.53620719909668,ok,False,"SELECT City, Weather FROM Weather WHERE City = 'Berlin' AND Weather LIKE '%cloudy%'",
+What's the temperature in Fort Worth?,mistral,default,16.420840978622437,ok,False,SELECT Temperature FROM Weather WHERE City LIKE '%Fort Worth%',
+Where is it the coldest?,mistral,default,18.008857488632202,ok,True,"SELECT City, MIN(Temperature) as coldest_temperature FROM Weather GROUP BY City","Bangalore, 28, Beijing, 24, Buenos Aires, 23, Cairo, 32, Cape Town, 19, Chicago, 18, Houston, 30, Johannesburg, 20, London, 18, Los Angeles, 25, Moscow, 15, Mumbai, 30, New York, 22, Paris, 21, Phoenix, 35, Rio de Janeiro, 29, Sydney, 22, Tokyo, 26, Toronto, 20, Warsaw, 16"
+Which cities have temperate climate?,mistral,default,12.855860233306885,ok,True,"SELECT City, Climate FROM Weather WHERE Climate = 'temperate'","New York, temperate, Warsaw, temperate, Paris, temperate"
+WHere is it the hotest?,mistral,default,16.47045063972473,ok,False,"SELECT City, Weather FROM Weather WHERE LOWER(City) LIKE '%honest%'",
+Where is the sky clear?,mistral,default,15.732345819473268,ok,True,"SELECT City, Weather FROM Weather WHERE Weather LIKE '%clear%'","Tokyo, clear, Buenos Aires, clear"
+Where is it 20 degrees?,mistral,default,13.793068647384644,ok,True,"SELECT City, Temperature FROM Weather WHERE Temperature = 20","Toronto, 20, Johannesburg, 20"
+What is the average temperature in sunny cities?,mistral,default,27.639111280441284,sql_error,False,,
+Where is it raining?,mistral,schema_only,42.53292727470398,sql_error,False,,
+Where is it the hottest?,mistral,schema_only,39.33496689796448,sql_error,False,,
+What is the temperature in Warsaw?,mistral,schema_only,39.574737548828125,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,mistral,schema_only,15.182630777359009,sql_error,False,,
+Is it cloudy in Berlin?,mistral,schema_only,42.41831994056702,ok,False,SELECT City FROM Weather WHERE City = 'Berlin' AND Weather = 'cloudy',
+What's the temperature in Fort Worth?,mistral,schema_only,40.8527147769928,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,mistral,schema_only,37.627774715423584,ok,True,SELECT City FROM Weather,"New York, Los Angeles, Chicago, Houston, Phoenix, Toronto, Warsaw, Bangalore, London, Paris, Tokyo, Sydney, Cape Town, Moscow, Rio de Janeiro, Beijing, Mumbai, Cairo, Buenos Aires, Johannesburg"
+Which cities have temperate climate?,mistral,schema_only,13.240604400634766,sql_error,False,,
+WHere is it the hotest?,mistral,schema_only,43.64157223701477,no_sql,False,,
+Where is the sky clear?,mistral,schema_only,23.655726432800293,ok,True,SELECT City FROM Weather WHERE Weather = 'clear',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,mistral,schema_only,24.657369136810303,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,mistral,schema_only,46.090576171875,no_sql,False,,
+Where is it raining?,mistral,instructional,59.28158855438232,sql_error,False,,
+Where is it the hottest?,mistral,instructional,40.17643976211548,ok,False,SELECT City FROM Weather,"New York, Los Angeles, Chicago, Houston, Phoenix, Toronto, Warsaw, Bangalore, London, Paris, Tokyo, Sydney, Cape Town, Moscow, Rio de Janeiro, Beijing, Mumbai, Cairo, Buenos Aires, Johannesburg"
+What is the temperature in Warsaw?,mistral,instructional,41.06059646606445,sql_error,False,,
+Which cities have tropical climate?,mistral,instructional,40.346659898757935,sql_error,False,,
+Is it cloudy in Berlin?,mistral,instructional,37.25853443145752,sql_error,False,,
+What's the temperature in Fort Worth?,mistral,instructional,37.28970837593079,sql_error,False,,
+Where is it the coldest?,mistral,instructional,37.90435433387756,sql_error,False,,
+Which cities have temperate climate?,mistral,instructional,39.16285920143128,sql_error,False,,
+WHere is it the hotest?,mistral,instructional,36.47763752937317,no_sql,False,,
+Where is the sky clear?,mistral,instructional,44.63510179519653,ok,True,SELECT City FROM Weather WHERE Weather = 'clear',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,mistral,instructional,39.47097706794739,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,mistral,instructional,39.85957932472229,sql_error,False,,
+Where is it raining?,mistral,few_shot,53.99217033386231,sql_error,False,,
+Where is it the hottest?,mistral,few_shot,40.73606252670288,sql_error,False,,
+What is the temperature in Warsaw?,mistral,few_shot,25.96477508544922,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,mistral,few_shot,39.1473822593689,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%tropical%',"Houston, Bangalore, Tokyo, Sydney, Rio de Janeiro, Mumbai, Buenos Aires, Johannesburg"
+Is it cloudy in Berlin?,mistral,few_shot,43.75387740135193,ok,False,SELECT City FROM Weather WHERE Weather LIKE '%cloudy%' AND City = 'Berlin',
+What's the temperature in Fort Worth?,mistral,few_shot,14.124733924865724,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,mistral,few_shot,13.641072511672974,ok,True,"SELECT TOP 1 City, Temperature FROM Weather ORDER BY Temperature ASC","Moscow, 15"
+Which cities have temperate climate?,mistral,few_shot,15.074743747711182,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%temperate%',"New York, Warsaw, London, Paris"
+WHere is it the hotest?,mistral,few_shot,41.63271951675415,no_sql,False,,
+Where is the sky clear?,mistral,few_shot,22.80787444114685,sql_error,False,,
+Where is it 20 degrees?,mistral,few_shot,11.088629722595217,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,mistral,few_shot,40.20268177986145,no_sql,False,,
+Where is it raining?,mistral,rag_style,53.26779007911682,sql_error,False,,
+Where is it the hottest?,mistral,rag_style,43.242469787597656,sql_error,False,,
+What is the temperature in Warsaw?,mistral,rag_style,46.73743677139282,no_sql,False,,
+Which cities have tropical climate?,mistral,rag_style,15.20369553565979,sql_error,False,,
+Is it cloudy in Berlin?,mistral,rag_style,44.03122568130493,sql_error,False,,
+What's the temperature in Fort Worth?,mistral,rag_style,42.84090209007263,sql_error,False,,
+Where is it the coldest?,mistral,rag_style,40.97571301460266,sql_error,False,,
+Which cities have temperate climate?,mistral,rag_style,14.284771203994753,sql_error,False,,
+WHere is it the hotest?,mistral,rag_style,42.35911011695862,no_sql,False,,
+Where is the sky clear?,mistral,rag_style,25.392643928527832,ok,False,SELECT City FROM Weather WHERE Weather = 'sunny',"New York, Phoenix, Cairo"
+Where is it 20 degrees?,mistral,rag_style,23.04910087585449,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,mistral,rag_style,41.66817760467529,sql_error,False,,
+Where is it raining?,mistral,conversational,23.56134915351868,sql_error,False,,
+Where is it the hottest?,mistral,conversational,15.466334581375122,sql_error,False,,
+What is the temperature in Warsaw?,mistral,conversational,13.339787721633911,sql_error,False,,
+Which cities have tropical climate?,mistral,conversational,13.76646637916565,sql_error,False,,
+Is it cloudy in Berlin?,mistral,conversational,16.651633739471436,sql_error,False,,
+What's the temperature in Fort Worth?,mistral,conversational,14.934741020202637,sql_error,False,,
+Where is it the coldest?,mistral,conversational,15.5627019405365,sql_error,False,,
+Which cities have temperate climate?,mistral,conversational,13.59442138671875,sql_error,False,,
+WHere is it the hotest?,mistral,conversational,14.45780110359192,sql_error,False,,
+Where is the sky clear?,mistral,conversational,12.67610216140747,sql_error,False,,
+Where is it 20 degrees?,mistral,conversational,11.184483766555786,sql_error,False,,
+What is the average temperature in sunny cities?,mistral,conversational,14.161477327346802,sql_error,False,,
+Where is it raining?,mistral,default,68.36028861999512,sql_error,False,,
+Where is it the hottest?,mistral,default,12.681101083755491,ok,True,"SELECT City, MAX(Temperature) FROM Weather GROUP BY City","Bangalore, 28, Beijing, 24, Buenos Aires, 23, Cairo, 32, Cape Town, 19, Chicago, 18, Houston, 30, Johannesburg, 20, London, 18, Los Angeles, 25, Moscow, 15, Mumbai, 30, New York, 22, Paris, 21, Phoenix, 35, Rio de Janeiro, 29, Sydney, 22, Tokyo, 26, Toronto, 20, Warsaw, 16"
+What is the temperature in Warsaw?,mistral,default,13.221086263656616,ok,True,SELECT Temperature FROM Weather WHERE City LIKE '%Warsaw%',16
+Which cities have tropical climate?,mistral,default,12.489865779876707,ok,False,"SELECT City, Climate FROM Weather WHERE Climate = 'tropical'","Rio de Janeiro, tropical"
+Is it cloudy in Berlin?,mistral,default,15.806179285049438,ok,False,"SELECT City, Weather FROM Weather WHERE City = 'Berlin' AND Weather LIKE '%cloudy%'",
+What's the temperature in Fort Worth?,mistral,default,13.772117137908936,ok,False,SELECT Temperature FROM Weather WHERE City LIKE '%Fort Worth%',
+Where is it the coldest?,mistral,default,17.575844287872314,ok,True,"SELECT City, MIN(Temperature) as coldest_temperature FROM Weather GROUP BY City","Bangalore, 28, Beijing, 24, Buenos Aires, 23, Cairo, 32, Cape Town, 19, Chicago, 18, Houston, 30, Johannesburg, 20, London, 18, Los Angeles, 25, Moscow, 15, Mumbai, 30, New York, 22, Paris, 21, Phoenix, 35, Rio de Janeiro, 29, Sydney, 22, Tokyo, 26, Toronto, 20, Warsaw, 16"
+Which cities have temperate climate?,mistral,default,13.563924074172974,ok,True,"SELECT City, Climate FROM Weather WHERE Climate = 'temperate'","New York, temperate, Warsaw, temperate, Paris, temperate"
+WHere is it the hotest?,mistral,default,12.83618187904358,ok,False,"SELECT City, Weather FROM Weather WHERE Climate LIKE '%honest%'",
+Where is the sky clear?,mistral,default,13.265546083450316,ok,True,"SELECT City, Weather FROM Weather WHERE Weather LIKE '%clear%'","Tokyo, clear, Buenos Aires, clear"
+Where is it 20 degrees?,mistral,default,13.207154989242554,ok,True,"SELECT City, Temperature FROM Weather WHERE Temperature = 20","Toronto, 20, Johannesburg, 20"
+What is the average temperature in sunny cities?,mistral,default,23.808570384979248,sql_error,False,,
+Where is it raining?,mistral,schema_only,29.67497730255127,sql_error,False,,
+Where is it the hottest?,mistral,schema_only,40.65640830993652,sql_error,False,,
+What is the temperature in Warsaw?,mistral,schema_only,43.6478157043457,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,mistral,schema_only,28.256330966949463,ok,False,SELECT City FROM Weather WHERE Climate = 'tropical',Rio de Janeiro
+Is it cloudy in Berlin?,mistral,schema_only,39.84827947616577,ok,False,SELECT City FROM Weather WHERE City = 'Berlin' AND Weather = 'cloudy',
+What's the temperature in Fort Worth?,mistral,schema_only,43.59717035293579,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,mistral,schema_only,45.38092732429504,ok,True,SELECT City FROM Weather,"New York, Los Angeles, Chicago, Houston, Phoenix, Toronto, Warsaw, Bangalore, London, Paris, Tokyo, Sydney, Cape Town, Moscow, Rio de Janeiro, Beijing, Mumbai, Cairo, Buenos Aires, Johannesburg"
+Which cities have temperate climate?,mistral,schema_only,14.307927131652832,sql_error,False,,
+WHere is it the hotest?,mistral,schema_only,44.36321949958801,no_sql,False,,
+Where is the sky clear?,mistral,schema_only,22.247968196868896,ok,True,SELECT City FROM Weather WHERE Weather = 'clear',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,mistral,schema_only,23.29539060592652,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,mistral,schema_only,42.85374975204468,no_sql,False,,
+Where is it raining?,mistral,instructional,61.789878606796265,sql_error,False,,
+Where is it the hottest?,mistral,instructional,40.709975481033325,ok,False,SELECT City FROM Weather,"New York, Los Angeles, Chicago, Houston, Phoenix, Toronto, Warsaw, Bangalore, London, Paris, Tokyo, Sydney, Cape Town, Moscow, Rio de Janeiro, Beijing, Mumbai, Cairo, Buenos Aires, Johannesburg"
+What is the temperature in Warsaw?,mistral,instructional,41.66813921928406,sql_error,False,,
+Which cities have tropical climate?,mistral,instructional,41.43746852874756,sql_error,False,,
+Is it cloudy in Berlin?,mistral,instructional,41.3697817325592,sql_error,False,,
+What's the temperature in Fort Worth?,mistral,instructional,43.54165506362915,sql_error,False,,
+Where is it the coldest?,mistral,instructional,41.38859939575195,ok,True,SELECT City FROM Weather WHERE Temperature = (SELECT MIN(Temperature) FROM Weather),Moscow
+Which cities have temperate climate?,mistral,instructional,46.1838116645813,sql_error,False,,
+WHere is it the hotest?,mistral,instructional,46.45695614814758,no_sql,False,,
+Where is the sky clear?,mistral,instructional,45.57916045188904,ok,True,SELECT City FROM Weather WHERE Weather = 'clear',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,mistral,instructional,46.35329866409302,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,mistral,instructional,39.49855351448059,sql_error,False,,
+Where is it raining?,mistral,few_shot,54.235978841781616,sql_error,False,,
+Where is it the hottest?,mistral,few_shot,38.21522474288941,sql_error,False,,
+What is the temperature in Warsaw?,mistral,few_shot,25.096152544021606,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,mistral,few_shot,43.23874640464783,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%tropical%',"Houston, Bangalore, Tokyo, Sydney, Rio de Janeiro, Mumbai, Buenos Aires, Johannesburg"
+Is it cloudy in Berlin?,mistral,few_shot,39.07709217071533,ok,False,SELECT City FROM Weather WHERE Weather LIKE '%cloudy%' AND City = 'Berlin',
+What's the temperature in Fort Worth?,mistral,few_shot,14.624130249023438,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,mistral,few_shot,13.57028341293335,ok,True,"SELECT TOP 1 City, Temperature FROM Weather ORDER BY Temperature ASC","Moscow, 15"
+Which cities have temperate climate?,mistral,few_shot,13.319873094558716,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%temperate%',"New York, Warsaw, London, Paris"
+WHere is it the hotest?,mistral,few_shot,42.92662024497986,no_sql,False,,
+Where is the sky clear?,mistral,few_shot,23.163419485092163,sql_error,False,,
+Where is it 20 degrees?,mistral,few_shot,10.53392481803894,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,mistral,few_shot,42.48780131340027,no_sql,False,,
+Where is it raining?,mistral,rag_style,53.51354598999024,sql_error,False,,
+Where is it the hottest?,mistral,rag_style,39.6321873664856,sql_error,False,,
+What is the temperature in Warsaw?,mistral,rag_style,45.492082357406616,no_sql,False,,
+Which cities have tropical climate?,mistral,rag_style,15.785768985748293,sql_error,False,,
+Is it cloudy in Berlin?,mistral,rag_style,42.19793152809143,sql_error,False,,
+What's the temperature in Fort Worth?,mistral,rag_style,40.971842527389526,sql_error,False,,
+Where is it the coldest?,mistral,rag_style,42.777405977249146,sql_error,False,,
+Which cities have temperate climate?,mistral,rag_style,13.65956449508667,sql_error,False,,
+WHere is it the hotest?,mistral,rag_style,38.95755624771118,no_sql,False,,
+Where is the sky clear?,mistral,rag_style,26.38328528404236,ok,False,SELECT City FROM Weather WHERE Weather = 'sunny',"New York, Phoenix, Cairo"
+Where is it 20 degrees?,mistral,rag_style,26.31863260269165,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,mistral,rag_style,48.16938924789429,sql_error,False,,
+Where is it raining?,mistral,conversational,26.53765845298767,sql_error,False,,
+Where is it the hottest?,mistral,conversational,13.242024898529053,sql_error,False,,
+What is the temperature in Warsaw?,mistral,conversational,14.587307214736938,sql_error,False,,
+Which cities have tropical climate?,mistral,conversational,15.4241840839386,sql_error,False,,
+Is it cloudy in Berlin?,mistral,conversational,17.994589805603027,sql_error,False,,
+What's the temperature in Fort Worth?,mistral,conversational,17.049531936645508,sql_error,False,,
+Where is it the coldest?,mistral,conversational,16.029407739639282,sql_error,False,,
+Which cities have temperate climate?,mistral,conversational,16.13999032974243,sql_error,False,,
+WHere is it the hotest?,mistral,conversational,14.28048610687256,sql_error,False,,
+Where is the sky clear?,mistral,conversational,13.624726295471191,sql_error,False,,
+Where is it 20 degrees?,mistral,conversational,14.150468349456789,sql_error,False,,
+What is the average temperature in sunny cities?,mistral,conversational,19.63927173614502,sql_error,False,,
+Where is it raining?,mistral,default,72.47953057289124,sql_error,False,,
+Where is it the hottest?,mistral,default,13.624270677566528,ok,True,"SELECT City, MAX(Temperature) FROM Weather GROUP BY City","Bangalore, 28, Beijing, 24, Buenos Aires, 23, Cairo, 32, Cape Town, 19, Chicago, 18, Houston, 30, Johannesburg, 20, London, 18, Los Angeles, 25, Moscow, 15, Mumbai, 30, New York, 22, Paris, 21, Phoenix, 35, Rio de Janeiro, 29, Sydney, 22, Tokyo, 26, Toronto, 20, Warsaw, 16"
+What is the temperature in Warsaw?,mistral,default,15.298528671264648,ok,True,SELECT Temperature FROM Weather WHERE City LIKE '%Warsaw%',16
+Which cities have tropical climate?,mistral,default,13.306467056274414,ok,False,"SELECT City, Climate FROM Weather WHERE Climate = 'tropical'","Rio de Janeiro, tropical"
+Is it cloudy in Berlin?,mistral,default,18.218218326568604,ok,False,"SELECT City, Weather FROM Weather WHERE City = 'Berlin' AND Weather LIKE '%cloudy%'",
+What's the temperature in Fort Worth?,mistral,default,15.367867708206177,ok,False,SELECT Temperature FROM Weather WHERE City LIKE '%Fort Worth%',
+Where is it the coldest?,mistral,default,19.446561098098755,ok,True,"SELECT City, MIN(Temperature) as coldest_temperature FROM Weather GROUP BY City","Bangalore, 28, Beijing, 24, Buenos Aires, 23, Cairo, 32, Cape Town, 19, Chicago, 18, Houston, 30, Johannesburg, 20, London, 18, Los Angeles, 25, Moscow, 15, Mumbai, 30, New York, 22, Paris, 21, Phoenix, 35, Rio de Janeiro, 29, Sydney, 22, Tokyo, 26, Toronto, 20, Warsaw, 16"
+Which cities have temperate climate?,mistral,default,14.773947715759276,ok,True,"SELECT City, Climate FROM Weather WHERE Climate = 'temperate'","New York, temperate, Warsaw, temperate, Paris, temperate"
+WHere is it the hotest?,mistral,default,13.708266496658323,ok,False,"SELECT City, Weather FROM Weather WHERE Climate LIKE '%honest%'",
+Where is the sky clear?,mistral,default,12.655063152313232,ok,True,"SELECT City, Weather FROM Weather WHERE Weather LIKE '%clear%'","Tokyo, clear, Buenos Aires, clear"
+Where is it 20 degrees?,mistral,default,12.917417764663696,ok,True,"SELECT City, Temperature FROM Weather WHERE Temperature = 20","Toronto, 20, Johannesburg, 20"
+What is the average temperature in sunny cities?,mistral,default,24.135926961898804,sql_error,False,,
+Where is it raining?,mistral,schema_only,30.91059374809265,sql_error,False,,
+Where is it the hottest?,mistral,schema_only,42.79824590682984,sql_error,False,,
+What is the temperature in Warsaw?,mistral,schema_only,40.70019006729126,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,mistral,schema_only,29.303950786590576,ok,False,SELECT City FROM Weather WHERE Climate = 'tropical',Rio de Janeiro
+Is it cloudy in Berlin?,mistral,schema_only,37.60410666465759,ok,False,SELECT City FROM Weather WHERE City = 'Berlin' AND Weather = 'cloudy',
+What's the temperature in Fort Worth?,mistral,schema_only,40.68042016029358,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,mistral,schema_only,39.720351219177246,ok,True,SELECT City FROM Weather,"New York, Los Angeles, Chicago, Houston, Phoenix, Toronto, Warsaw, Bangalore, London, Paris, Tokyo, Sydney, Cape Town, Moscow, Rio de Janeiro, Beijing, Mumbai, Cairo, Buenos Aires, Johannesburg"
+Which cities have temperate climate?,mistral,schema_only,14.115464210510254,sql_error,False,,
+WHere is it the hotest?,mistral,schema_only,46.10697436332703,no_sql,False,,
+Where is the sky clear?,mistral,schema_only,25.28947806358337,ok,True,SELECT City FROM Weather WHERE Weather = 'clear',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,mistral,schema_only,25.638023376464844,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,mistral,schema_only,44.78779649734497,no_sql,False,,
+Where is it raining?,mistral,instructional,60.28090310096741,sql_error,False,,
+Where is it the hottest?,mistral,instructional,35.81113696098328,ok,False,SELECT City FROM Weather,"New York, Los Angeles, Chicago, Houston, Phoenix, Toronto, Warsaw, Bangalore, London, Paris, Tokyo, Sydney, Cape Town, Moscow, Rio de Janeiro, Beijing, Mumbai, Cairo, Buenos Aires, Johannesburg"
+What is the temperature in Warsaw?,mistral,instructional,37.34582543373108,sql_error,False,,
+Which cities have tropical climate?,mistral,instructional,45.13736248016357,sql_error,False,,
+Is it cloudy in Berlin?,mistral,instructional,38.76528644561768,sql_error,False,,
+What's the temperature in Fort Worth?,mistral,instructional,36.17566704750061,sql_error,False,,
+Where is it the coldest?,mistral,instructional,38.97305369377136,ok,True,SELECT City FROM Weather WHERE Temperature = (SELECT MIN(Temperature) FROM Weather),Moscow
+Which cities have temperate climate?,mistral,instructional,43.74791574478149,sql_error,False,,
+WHere is it the hotest?,mistral,instructional,42.75333118438721,no_sql,False,,
+Where is the sky clear?,mistral,instructional,45.51685500144959,ok,True,SELECT City FROM Weather WHERE Weather = 'clear',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,mistral,instructional,37.12303137779236,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,mistral,instructional,35.67931818962097,sql_error,False,,
+Where is it raining?,mistral,few_shot,52.92497634887695,sql_error,False,,
+Where is it the hottest?,mistral,few_shot,33.59987163543701,sql_error,False,,
+What is the temperature in Warsaw?,mistral,few_shot,24.44162511825561,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,mistral,few_shot,39.49379014968872,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%tropical%',"Houston, Bangalore, Tokyo, Sydney, Rio de Janeiro, Mumbai, Buenos Aires, Johannesburg"
+Is it cloudy in Berlin?,mistral,few_shot,36.459113359451294,ok,False,SELECT City FROM Weather WHERE Weather LIKE '%cloudy%' AND City = 'Berlin',
+What's the temperature in Fort Worth?,mistral,few_shot,13.104494571685793,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,mistral,few_shot,12.967830896377563,ok,True,"SELECT TOP 1 City, Temperature FROM Weather ORDER BY Temperature ASC","Moscow, 15"
+Which cities have temperate climate?,mistral,few_shot,13.614458560943604,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%temperate%',"New York, Warsaw, London, Paris"
+WHere is it the hotest?,mistral,few_shot,37.91867733001709,no_sql,False,,
+Where is the sky clear?,mistral,few_shot,21.74397754669189,sql_error,False,,
+Where is it 20 degrees?,mistral,few_shot,9.781421899795532,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,mistral,few_shot,37.14778447151184,no_sql,False,,
+Where is it raining?,mistral,rag_style,53.80833148956299,sql_error,False,,
+Where is it the hottest?,mistral,rag_style,40.68674540519714,sql_error,False,,
+What is the temperature in Warsaw?,mistral,rag_style,39.22764039039612,no_sql,False,,
+Which cities have tropical climate?,mistral,rag_style,13.355562448501589,sql_error,False,,
+Is it cloudy in Berlin?,mistral,rag_style,41.3877182006836,sql_error,False,,
+What's the temperature in Fort Worth?,mistral,rag_style,45.36369967460632,sql_error,False,,
+Where is it the coldest?,mistral,rag_style,44.90420055389404,sql_error,False,,
+Which cities have temperate climate?,mistral,rag_style,14.97976279258728,sql_error,False,,
+WHere is it the hotest?,mistral,rag_style,43.84983253479004,no_sql,False,,
+Where is the sky clear?,mistral,rag_style,28.769538640975952,ok,False,SELECT City FROM Weather WHERE Weather = 'sunny',"New York, Phoenix, Cairo"
+Where is it 20 degrees?,mistral,rag_style,24.71193027496338,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,mistral,rag_style,41.54282093048096,sql_error,False,,
+Where is it raining?,mistral,conversational,24.793466329574585,sql_error,False,,
+Where is it the hottest?,mistral,conversational,13.969171524047852,sql_error,False,,
+What is the temperature in Warsaw?,mistral,conversational,15.290669202804564,sql_error,False,,
+Which cities have tropical climate?,mistral,conversational,13.313167572021484,sql_error,False,,
+Is it cloudy in Berlin?,mistral,conversational,17.68569803237915,sql_error,False,,
+What's the temperature in Fort Worth?,mistral,conversational,14.5033757686615,sql_error,False,,
+Where is it the coldest?,mistral,conversational,15.91522216796875,sql_error,False,,
+Which cities have temperate climate?,mistral,conversational,15.817607164382936,sql_error,False,,
+WHere is it the hotest?,mistral,conversational,12.500281810760498,sql_error,False,,
+Where is the sky clear?,mistral,conversational,11.363691806793211,sql_error,False,,
+Where is it 20 degrees?,mistral,conversational,12.231011152267456,sql_error,False,,
+What is the average temperature in sunny cities?,mistral,conversational,15.730690479278564,sql_error,False,,
+Where is it raining?,phi3:mini,default,35.46971130371094,sql_error,False,,
+Where is it the hottest?,phi3:mini,default,53.67831492424011,sql_error,False,,
+What is the temperature in Warsaw?,phi3:mini,default,8.570973873138428,ok,True,"SELECT City, Temperature FROM Weather WHERE City = 'Warsaw'","Warsaw, 16"
+Which cities have tropical climate?,phi3:mini,default,6.464481830596924,ok,False,SELECT City FROM Weather WHERE Climate = 'tropical',Rio de Janeiro
+Is it cloudy in Berlin?,phi3:mini,default,11.08695149421692,ok,False,SELECT City FROM Weather WHERE City = 'Berlin' AND (Weather LIKE '%cloudy%' OR Weather = 'cloudy'),
+What's the temperature in Fort Worth?,phi3:mini,default,47.29227375984192,ok,False,"SELECT City, Temperature FROM Weather WHERE City = 'Fort Worth'",
+Where is it the coldest?,phi3:mini,default,9.610941648483276,ok,True,SELECT City FROM Weather WHERE Temperature = (SELECT MIN(Temperature) FROM Weather),Moscow
+Which cities have temperate climate?,phi3:mini,default,6.739057779312134,ok,True,SELECT City FROM Weather WHERE Climate = 'temperate',"New York, Warsaw, Paris"
+WHere is it the hotest?,phi3:mini,default,51.95261764526367,sql_error,False,,
+Where is the sky clear?,phi3:mini,default,13.019536972045898,ok,True,SELECT City FROM Weather WHERE Weather LIKE '%clear%',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,phi3:mini,default,28.693881511688232,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,phi3:mini,default,15.535938501358032,sql_error,False,,
+Where is it raining?,phi3:mini,schema_only,30.20492911338806,sql_error,False,,
+Where is it the hottest?,phi3:mini,schema_only,23.207216262817383,sql_error,False,,
+What is the temperature in Warsaw?,phi3:mini,schema_only,30.264886379241943,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,phi3:mini,schema_only,50.64399695396423,ok,False,SELECT DISTINCT City FROM Weather WHERE Climate = 'tropical',Rio de Janeiro
+Is it cloudy in Berlin?,phi3:mini,schema_only,52.3423080444336,ok,False,SELECT * FROM Weather WHERE City = 'Berlin' AND Weather = 'cloudy',
+What's the temperature in Fort Worth?,phi3:mini,schema_only,77.48940515518188,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,phi3:mini,schema_only,31.89383602142334,sql_error,False,,
+Which cities have temperate climate?,phi3:mini,schema_only,32.078935623168945,sql_error,False,,
+WHere is it the hotest?,phi3:mini,schema_only,27.185408353805546,no_sql,False,,
+Where is the sky clear?,phi3:mini,schema_only,45.72847270965576,ok,True,"SELECT City, Weather FROM Weather WHERE Weather = 'clear'","Tokyo, clear, Buenos Aires, clear"
+Where is it 20 degrees?,phi3:mini,schema_only,29.97173118591309,ok,True,"SELECT City, Temperature FROM Weather WHERE Temperature = 20","Toronto, 20, Johannesburg, 20"
+What is the average temperature in sunny cities?,phi3:mini,schema_only,68.87520456314087,sql_error,False,,
+Where is it raining?,phi3:mini,instructional,25.024573802948,sql_error,False,,
+Where is it the hottest?,phi3:mini,instructional,29.39241337776184,sql_error,False,,
+What is the temperature in Warsaw?,phi3:mini,instructional,17.474031448364258,ok,True,"SELECT City, Temperature FROM Weather WHERE City = 'Warsaw'","Warsaw, 16"
+Which cities have tropical climate?,phi3:mini,instructional,8.5986328125,ok,False,SELECT City FROM Weather WHERE Climate = 'tropical',Rio de Janeiro
+Is it cloudy in Berlin?,phi3:mini,instructional,37.633092164993286,ok,False,SELECT City FROM Weather WHERE City = 'Berlin' AND Weather = 'cloudy',
+What's the temperature in Fort Worth?,phi3:mini,instructional,65.4094660282135,ok,False,"SELECT City, Temperature FROM Weather WHERE City = 'Fort Worth'",
+Where is it the coldest?,phi3:mini,instructional,18.316511631011963,sql_error,False,,
+Which cities have temperate climate?,phi3:mini,instructional,30.391527891159058,ok,True,SELECT City FROM Weather WHERE Climate = 'temperate',"New York, Warsaw, Paris"
+WHere is it the hotest?,phi3:mini,instructional,27.357924699783325,ok,False,SELECT City FROM Weather WHERE Weather = 'sunny' AND Climate LIKE '%temperate%',New York
+Where is the sky clear?,phi3:mini,instructional,6.03781270980835,ok,True,SELECT City FROM Weather WHERE Weather = 'clear',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,phi3:mini,instructional,12.977611780166626,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,phi3:mini,instructional,18.24313974380493,sql_error,False,,
+Where is it raining?,phi3:mini,few_shot,20.658877849578857,sql_error,False,,
+Where is it the hottest?,phi3:mini,few_shot,9.78614592552185,ok,True,"SELECT TOP 1 City, MAX(Temperature) as highest_temperature FROM Weather GROUP BY City ORDER BY highest_temperature DESC","Phoenix, 35"
+What is the temperature in Warsaw?,phi3:mini,few_shot,20.041302919387817,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,phi3:mini,few_shot,11.918665885925291,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%tropical%',"Houston, Bangalore, Tokyo, Sydney, Rio de Janeiro, Mumbai, Buenos Aires, Johannesburg"
+Is it cloudy in Berlin?,phi3:mini,few_shot,28.53626298904419,ok,False,SELECT City FROM Weather WHERE Weather LIKE '%cloud%',"Los Angeles, Chicago, Toronto, Cape Town, Moscow"
+What's the temperature in Fort Worth?,phi3:mini,few_shot,7.389148473739624,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,phi3:mini,few_shot,8.56808590888977,ok,True,"SELECT TOP 1 City, Temperature FROM Weather ORDER BY Temperature ASC","Moscow, 15"
+Which cities have temperate climate?,phi3:mini,few_shot,5.873845100402832,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%temperate%',"New York, Warsaw, London, Paris"
+WHere is it the hotest?,phi3:mini,few_shot,21.058188438415527,no_sql,False,,
+Where is the sky clear?,phi3:mini,few_shot,5.933811187744141,ok,True,SELECT City FROM Weather WHERE Weather LIKE '%clear%',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,phi3:mini,few_shot,5.267440557479858,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,phi3:mini,few_shot,17.781585693359375,no_sql,False,,
+Where is it raining?,phi3:mini,rag_style,32.23683023452759,ok,True,SELECT City FROM Weather WHERE Weather = 'rainy',Bangalore
+Where is it the hottest?,phi3:mini,rag_style,21.120596408844,sql_error,False,,
+What is the temperature in Warsaw?,phi3:mini,rag_style,19.179107904434204,ok,True,"SELECT City, Temperature FROM Weather WHERE City = 'Warsaw'","Warsaw, 16"
+Which cities have tropical climate?,phi3:mini,rag_style,21.41291069984436,ok,False,SELECT City FROM Weather WHERE Climate = 'tropical',Rio de Janeiro
+Is it cloudy in Berlin?,phi3:mini,rag_style,21.97378730773925,ok,False,SELECT City FROM Weather WHERE City = 'Berlin' AND Weather = 'cloudy',
+What's the temperature in Fort Worth?,phi3:mini,rag_style,22.66642165184021,ok,False,"SELECT City, Temperature FROM Weather WHERE City = 'Fort Worth'",
+Where is it the coldest?,phi3:mini,rag_style,22.75504326820373,sql_error,False,,
+Which cities have temperate climate?,phi3:mini,rag_style,23.85748815536499,ok,True,SELECT City FROM Weather WHERE Climate = 'temperate',"New York, Warsaw, Paris"
+WHere is it the hotest?,phi3:mini,rag_style,18.75366163253784,no_sql,False,,
+Where is the sky clear?,phi3:mini,rag_style,30.925095319747925,ok,False,SELECT City FROM Weather WHERE Weather = 'sunny',"New York, Phoenix, Cairo"
+Where is it 20 degrees?,phi3:mini,rag_style,6.6644604206085205,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,phi3:mini,rag_style,20.98857092857361,sql_error,False,,
+Where is it raining?,phi3:mini,conversational,11.766876459121704,sql_error,False,,
+Where is it the hottest?,phi3:mini,conversational,9.670984268188477,sql_error,False,,
+What is the temperature in Warsaw?,phi3:mini,conversational,8.36170768737793,sql_error,False,,
+Which cities have tropical climate?,phi3:mini,conversational,8.386159896850586,sql_error,False,,
+Is it cloudy in Berlin?,phi3:mini,conversational,10.744333505630491,sql_error,False,,
+What's the temperature in Fort Worth?,phi3:mini,conversational,11.241246461868286,sql_error,False,,
+Where is it the coldest?,phi3:mini,conversational,12.69064998626709,sql_error,False,,
+Which cities have temperate climate?,phi3:mini,conversational,9.692751407623293,sql_error,False,,
+WHere is it the hotest?,phi3:mini,conversational,7.163317441940308,sql_error,False,,
+Where is the sky clear?,phi3:mini,conversational,8.768663167953491,sql_error,False,,
+Where is it 20 degrees?,phi3:mini,conversational,7.229383230209351,sql_error,False,,
+What is the average temperature in sunny cities?,phi3:mini,conversational,21.21274971961975,sql_error,False,,
+Where is it raining?,tscholak/1zha5ono,tscholak/1zha5ono,2.219001054763794,sql_error,False,,
+Where is it raining?,juierror/text-to-sql-with-table-schema,juierror/text-to-sql-with-table-schema,1.0938303470611572,ok,True,SELECT City FROM Weather WHERE Weather = 'rainy',Bangalore
+Where is it the hottest?,tscholak/1zha5ono,tscholak/1zha5ono,2.1790783405303955,sql_error,False,,
+Where is it the hottest?,juierror/text-to-sql-with-table-schema,juierror/text-to-sql-with-table-schema,2.536137819290161,sql_error,False,,
+What is the temperature in Warsaw?,tscholak/1zha5ono,tscholak/1zha5ono,3.046994924545288,ok,False,select Temperature FROM Weather where City in (select City FROM Weather where Weather = 'Warsaw'),
+What is the temperature in Warsaw?,juierror/text-to-sql-with-table-schema,juierror/text-to-sql-with-table-schema,3.062110424041748,sql_error,False,,
+Which cities have tropical climate?,tscholak/1zha5ono,tscholak/1zha5ono,2.128722667694092,ok,False,select City FROM Weather where Climate = 'tropical',Rio de Janeiro
+Which cities have tropical climate?,juierror/text-to-sql-with-table-schema,juierror/text-to-sql-with-table-schema,1.3922946453094482,sql_error,False,,
+Is it cloudy in Berlin?,tscholak/1zha5ono,tscholak/1zha5ono,1.998715877532959,ok,False,select Weather FROM Weather where City like '%berlin%',
+Is it cloudy in Berlin?,juierror/text-to-sql-with-table-schema,juierror/text-to-sql-with-table-schema,1.1922578811645508,sql_error,False,,
+What's the temperature in Fort Worth?,tscholak/1zha5ono,tscholak/1zha5ono,2.7367732524871826,ok,False,select Temperature FROM Weather where City = 'Fort Worth',
+What's the temperature in Fort Worth?,juierror/text-to-sql-with-table-schema,juierror/text-to-sql-with-table-schema,1.1790668964385986,sql_error,False,,
+Where is it the coldest?,tscholak/1zha5ono,tscholak/1zha5ono,2.506117105484009,sql_error,False,,
+Where is it the coldest?,juierror/text-to-sql-with-table-schema,juierror/text-to-sql-with-table-schema,1.175762176513672,sql_error,False,,
+Which cities have temperate climate?,tscholak/1zha5ono,tscholak/1zha5ono,1.687551975250244,ok,True,select distinct City FROM Weather where Temperature >= 2,"Bangalore, Beijing, Buenos Aires, Cairo, Cape Town, Chicago, Houston, Johannesburg, London, Los Angeles, Moscow, Mumbai, New York, Paris, Phoenix, Rio de Janeiro, Sydney, Tokyo, Toronto, Warsaw"
+Which cities have temperate climate?,juierror/text-to-sql-with-table-schema,juierror/text-to-sql-with-table-schema,1.1245613098144531,sql_error,False,,
+WHere is it the hotest?,tscholak/1zha5ono,tscholak/1zha5ono,3.1082117557525635,ok,False,select Weather FROM Weather as t1 where Weather = 'good' or Weather = 'bad',
+WHere is it the hotest?,juierror/text-to-sql-with-table-schema,juierror/text-to-sql-with-table-schema,1.1117761135101318,sql_error,False,,
+Where is the sky clear?,tscholak/1zha5ono,tscholak/1zha5ono,1.5980353355407717,ok,False,select City FROM Weather where Temperature > 4000,
+Where is the sky clear?,juierror/text-to-sql-with-table-schema,juierror/text-to-sql-with-table-schema,1.628650188446045,sql_error,False,,
+Where is it 20 degrees?,tscholak/1zha5ono,tscholak/1zha5ono,1.7749252319335938,ok,False,select City FROM Weather where Temperature > 20,"New York, Los Angeles, Houston, Phoenix, Bangalore, Paris, Tokyo, Sydney, Rio de Janeiro, Beijing, Mumbai, Cairo, Buenos Aires"
+Where is it 20 degrees?,juierror/text-to-sql-with-table-schema,juierror/text-to-sql-with-table-schema,1.1381208896636963,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,tscholak/1zha5ono,tscholak/1zha5ono,5.842366456985474,sql_error,False,,
+What is the average temperature in sunny cities?,juierror/text-to-sql-with-table-schema,juierror/text-to-sql-with-table-schema,1.1768875122070312,ok,False,SELECT AVG(Temperature) FROM Weather WHERE City = 'sunny',None
+Where is it raining?,gpt-4o-mini,default,1.3567512035369873,sql_error,False,,
+Where is it the hottest?,gpt-4o-mini,default,1.1691954135894775,ok,True,"SELECT TOP 1 City, Temperature FROM Weather ORDER BY Temperature DESC","Phoenix, 35"
+What is the temperature in Warsaw?,gpt-4o-mini,default,0.7851459980010986,ok,True,"SELECT Temperature, City FROM Weather WHERE City LIKE '%Warsaw%'","16, Warsaw"
+Which cities have tropical climate?,gpt-4o-mini,default,20.839682579040527,ok,True,"SELECT City, Climate FROM Weather WHERE Climate LIKE '%tropical%'","Houston, humid subtropical, Bangalore, tropical savanna, Tokyo, humid subtropical, Sydney, humid subtropical, Rio de Janeiro, tropical, Mumbai, tropical monsoon, Buenos Aires, humid subtropical, Johannesburg, subtropical highland"
+Is it cloudy in Berlin?,gpt-4o-mini,default,20.92485809326172,ok,False,"SELECT Weather, City FROM Weather WHERE City LIKE '%Berlin%' AND Weather LIKE '%cloudy%'",
+What's the temperature in Fort Worth?,gpt-4o-mini,default,20.776699781417847,ok,False,SELECT Temperature FROM Weather WHERE City LIKE '%Fort Worth%',
+Where is it the coldest?,gpt-4o-mini,default,20.90907335281372,ok,True,"SELECT TOP 1 City, Temperature FROM Weather ORDER BY Temperature ASC","Moscow, 15"
+Which cities have temperate climate?,gpt-4o-mini,default,21.262009620666504,ok,True,"SELECT City, Climate FROM Weather WHERE Climate LIKE '%temperate%'","New York, temperate, Warsaw, temperate, London, temperate maritime, Paris, temperate"
+WHere is it the hotest?,gpt-4o-mini,default,21.068378925323486,ok,False,"SELECT City, Weather FROM Weather WHERE Weather LIKE '%honest%'",
+Where is the sky clear?,gpt-4o-mini,default,20.7737364768982,ok,True,"SELECT City, Weather FROM Weather WHERE Weather LIKE '%clear%'","Tokyo, clear, Buenos Aires, clear"
+Where is it 20 degrees?,gpt-4o-mini,default,21.354061126708984,ok,True,"SELECT City, Temperature FROM Weather WHERE Temperature = 20","Toronto, 20, Johannesburg, 20"
+What is the average temperature in sunny cities?,gpt-4o-mini,default,21.326369524002075,ok,False,SELECT AVG(Temperature) FROM Weather WHERE Weather LIKE '%sunny%',26
+Where is it raining?,gpt-4o-mini,default,20.760650634765625,sql_error,False,,
+Where is it the hottest?,gpt-4o-mini,default,20.95263695716858,ok,True,"SELECT TOP 1 City, Temperature FROM Weather ORDER BY Temperature DESC","Phoenix, 35"
+What is the temperature in Warsaw?,gpt-4o-mini,default,21.144088745117188,ok,True,SELECT Temperature FROM Weather WHERE City LIKE '%Warsaw%',16
+Which cities have tropical climate?,gpt-4o-mini,default,21.105599403381348,ok,True,"SELECT City, Climate FROM Weather WHERE Climate LIKE '%tropical%'","Houston, humid subtropical, Bangalore, tropical savanna, Tokyo, humid subtropical, Sydney, humid subtropical, Rio de Janeiro, tropical, Mumbai, tropical monsoon, Buenos Aires, humid subtropical, Johannesburg, subtropical highland"
+Is it cloudy in Berlin?,gpt-4o-mini,default,21.52442455291748,ok,False,SELECT Weather FROM Weather WHERE City LIKE '%Berlin%' AND Weather LIKE '%cloudy%',
+What's the temperature in Fort Worth?,gpt-4o-mini,default,21.202505350112915,ok,False,"SELECT Temperature, City FROM Weather WHERE City LIKE '%Fort Worth%'",
+Where is it the coldest?,gpt-4o-mini,default,20.99946689605713,ok,True,"SELECT TOP 1 City, Temperature FROM Weather ORDER BY Temperature ASC","Moscow, 15"
+Which cities have temperate climate?,gpt-4o-mini,default,21.78948760032653,ok,True,"SELECT City, Climate FROM Weather WHERE Climate LIKE '%temperate%'","New York, temperate, Warsaw, temperate, London, temperate maritime, Paris, temperate"
+WHere is it the hotest?,gpt-4o-mini,default,1.2875690460205078,ok,False,"SELECT City, Weather FROM Weather WHERE Weather LIKE '%honest%'",
+Where is the sky clear?,gpt-4o-mini,default,21.172077417373657,ok,True,"SELECT City, Weather FROM Weather WHERE Weather LIKE '%clear%'","Tokyo, clear, Buenos Aires, clear"
+Where is it 20 degrees?,gpt-4o-mini,default,21.530308723449707,ok,True,"SELECT City, Temperature FROM Weather WHERE Temperature = 20","Toronto, 20, Johannesburg, 20"
+What is the average temperature in sunny cities?,gpt-4o-mini,default,20.997315168380737,ok,False,SELECT AVG(Temperature) FROM Weather WHERE Weather LIKE '%sunny%',26
+Where is it raining?,gpt-4o-mini,schema_only,21.928438425064087,sql_error,False,,
+Where is it the hottest?,gpt-4o-mini,schema_only,22.25647473335266,sql_error,False,,
+What is the temperature in Warsaw?,gpt-4o-mini,schema_only,2.6509714126586914,sql_error,False,,
+Which cities have tropical climate?,gpt-4o-mini,schema_only,22.15083265304565,sql_error,False,,
+Is it cloudy in Berlin?,gpt-4o-mini,schema_only,2.3855295181274414,sql_error,False,,
+What's the temperature in Fort Worth?,gpt-4o-mini,schema_only,21.770949363708496,sql_error,False,,
+Where is it the coldest?,gpt-4o-mini,schema_only,22.520509004592896,sql_error,False,,
+Which cities have temperate climate?,gpt-4o-mini,schema_only,2.189716339111328,sql_error,False,,
+WHere is it the hotest?,gpt-4o-mini,schema_only,22.588103532791138,sql_error,False,,
+Where is the sky clear?,gpt-4o-mini,schema_only,22.154677867889404,sql_error,False,,
+Where is it 20 degrees?,gpt-4o-mini,schema_only,22.873952627182007,sql_error,False,,
+What is the average temperature in sunny cities?,gpt-4o-mini,schema_only,22.60332942008972,sql_error,False,,
+Where is it raining?,gpt-4o-mini,schema_only,22.61305975914001,sql_error,False,,
+Where is it the hottest?,gpt-4o-mini,schema_only,23.453378438949585,sql_error,False,,
+What is the temperature in Warsaw?,gpt-4o-mini,schema_only,2.978431940078736,sql_error,False,,
+Which cities have tropical climate?,gpt-4o-mini,schema_only,21.96368670463562,sql_error,False,,
+Is it cloudy in Berlin?,gpt-4o-mini,schema_only,23.92561507225037,sql_error,False,,
+What's the temperature in Fort Worth?,gpt-4o-mini,schema_only,21.65512251853943,sql_error,False,,
+Where is it the coldest?,gpt-4o-mini,schema_only,2.3483006954193115,sql_error,False,,
+Which cities have temperate climate?,gpt-4o-mini,schema_only,21.829842805862427,sql_error,False,,
+WHere is it the hotest?,gpt-4o-mini,schema_only,22.9747314453125,sql_error,False,,
+Where is the sky clear?,gpt-4o-mini,schema_only,22.088865518569943,sql_error,False,,
+Where is it 20 degrees?,gpt-4o-mini,schema_only,1.6087095737457275,sql_error,False,,
+What is the average temperature in sunny cities?,gpt-4o-mini,schema_only,2.11333966255188,sql_error,False,,
+Where is it raining?,gpt-4o-mini,instructional,21.03202247619629,sql_error,False,,
+Where is it the hottest?,gpt-4o-mini,instructional,22.759512901306152,sql_error,False,,
+What is the temperature in Warsaw?,gpt-4o-mini,instructional,21.654715299606323,sql_error,False,,
+Which cities have tropical climate?,gpt-4o-mini,instructional,21.09242820739746,sql_error,False,,
+Is it cloudy in Berlin?,gpt-4o-mini,instructional,22.38168668746948,sql_error,False,,
+What's the temperature in Fort Worth?,gpt-4o-mini,instructional,20.80159378051757,sql_error,False,,
+Where is it the coldest?,gpt-4o-mini,instructional,22.28941035270691,sql_error,False,,
+Which cities have temperate climate?,gpt-4o-mini,instructional,22.135152101516724,sql_error,False,,
+WHere is it the hotest?,gpt-4o-mini,instructional,23.48989033699036,sql_error,False,,
+Where is the sky clear?,gpt-4o-mini,instructional,2.060099601745605,sql_error,False,,
+Where is it 20 degrees?,gpt-4o-mini,instructional,22.007678508758545,sql_error,False,,
+What is the average temperature in sunny cities?,gpt-4o-mini,instructional,22.52252531051636,sql_error,False,,
+Where is it raining?,gpt-4o-mini,instructional,21.227930307388306,sql_error,False,,
+Where is it the hottest?,gpt-4o-mini,instructional,21.690825700759888,sql_error,False,,
+What is the temperature in Warsaw?,gpt-4o-mini,instructional,21.486720323562626,sql_error,False,,
+Which cities have tropical climate?,gpt-4o-mini,instructional,21.59867048263549,sql_error,False,,
+Is it cloudy in Berlin?,gpt-4o-mini,instructional,22.403472423553467,sql_error,False,,
+What's the temperature in Fort Worth?,gpt-4o-mini,instructional,21.39527702331543,sql_error,False,,
+Where is it the coldest?,gpt-4o-mini,instructional,22.2189302444458,sql_error,False,,
+Which cities have temperate climate?,gpt-4o-mini,instructional,0.8261275291442871,sql_error,False,,
+WHere is it the hotest?,gpt-4o-mini,instructional,23.194128036499023,sql_error,False,,
+Where is the sky clear?,gpt-4o-mini,instructional,22.131033897399902,sql_error,False,,
+Where is it 20 degrees?,gpt-4o-mini,instructional,21.58612084388733,sql_error,False,,
+What is the average temperature in sunny cities?,gpt-4o-mini,instructional,1.843887090682984,sql_error,False,,
+Where is it raining?,gpt-4o-mini,few_shot,20.71165347099304,sql_error,False,,
+Where is it the hottest?,gpt-4o-mini,few_shot,20.91608190536499,ok,True,"SELECT City, Temperature FROM Weather ORDER BY Temperature DESC","Phoenix, 35, Cairo, 32, Houston, 30, Mumbai, 30, Rio de Janeiro, 29, Bangalore, 28, Tokyo, 26, Los Angeles, 25, Beijing, 24, Buenos Aires, 23, Sydney, 22, New York, 22, Paris, 21, Toronto, 20, Johannesburg, 20, Cape Town, 19, London, 18, Chicago, 18, Warsaw, 16, Moscow, 15"
+What is the temperature in Warsaw?,gpt-4o-mini,few_shot,20.807337999343872,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,gpt-4o-mini,few_shot,20.73272180557251,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%tropical%',"Houston, Bangalore, Tokyo, Sydney, Rio de Janeiro, Mumbai, Buenos Aires, Johannesburg"
+Is it cloudy in Berlin?,gpt-4o-mini,few_shot,20.72878098487854,ok,False,SELECT Weather FROM Weather WHERE City = 'Berlin',
+What's the temperature in Fort Worth?,gpt-4o-mini,few_shot,21.3923556804657,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,gpt-4o-mini,few_shot,20.98354172706604,ok,True,"SELECT City, Temperature FROM Weather ORDER BY Temperature ASC","Moscow, 15, Warsaw, 16, London, 18, Chicago, 18, Cape Town, 19, Toronto, 20, Johannesburg, 20, Paris, 21, New York, 22, Sydney, 22, Buenos Aires, 23, Beijing, 24, Los Angeles, 25, Tokyo, 26, Bangalore, 28, Rio de Janeiro, 29, Mumbai, 30, Houston, 30, Cairo, 32, Phoenix, 35"
+Which cities have temperate climate?,gpt-4o-mini,few_shot,20.861220121383667,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%temperate%',"New York, Warsaw, London, Paris"
+WHere is it the hotest?,gpt-4o-mini,few_shot,21.873387575149536,sql_error,False,,
+Where is the sky clear?,gpt-4o-mini,few_shot,20.69035387039185,ok,True,SELECT City FROM Weather WHERE Weather LIKE '%clear%',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,gpt-4o-mini,few_shot,20.890866994857788,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,gpt-4o-mini,few_shot,0.8844106197357178,ok,False,SELECT AVG(Temperature) FROM Weather WHERE Weather LIKE '%sunny%',26
+Where is it raining?,gpt-4o-mini,few_shot,20.824519634246823,sql_error,False,,
+Where is it the hottest?,gpt-4o-mini,few_shot,21.34095788002014,ok,True,"SELECT City, Temperature FROM Weather ORDER BY Temperature DESC","Phoenix, 35, Cairo, 32, Houston, 30, Mumbai, 30, Rio de Janeiro, 29, Bangalore, 28, Tokyo, 26, Los Angeles, 25, Beijing, 24, Buenos Aires, 23, Sydney, 22, New York, 22, Paris, 21, Toronto, 20, Johannesburg, 20, Cape Town, 19, London, 18, Chicago, 18, Warsaw, 16, Moscow, 15"
+What is the temperature in Warsaw?,gpt-4o-mini,few_shot,20.70614194869995,ok,True,SELECT Temperature FROM Weather WHERE City = 'Warsaw',16
+Which cities have tropical climate?,gpt-4o-mini,few_shot,20.92405676841736,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%tropical%',"Houston, Bangalore, Tokyo, Sydney, Rio de Janeiro, Mumbai, Buenos Aires, Johannesburg"
+Is it cloudy in Berlin?,gpt-4o-mini,few_shot,20.821609497070312,ok,False,SELECT Weather FROM Weather WHERE City = 'Berlin',
+What's the temperature in Fort Worth?,gpt-4o-mini,few_shot,20.929182052612305,ok,False,SELECT Temperature FROM Weather WHERE City = 'Fort Worth',
+Where is it the coldest?,gpt-4o-mini,few_shot,20.858158826828003,ok,True,"SELECT City, Temperature FROM Weather ORDER BY Temperature ASC","Moscow, 15, Warsaw, 16, London, 18, Chicago, 18, Cape Town, 19, Toronto, 20, Johannesburg, 20, Paris, 21, New York, 22, Sydney, 22, Buenos Aires, 23, Beijing, 24, Los Angeles, 25, Tokyo, 26, Bangalore, 28, Rio de Janeiro, 29, Mumbai, 30, Houston, 30, Cairo, 32, Phoenix, 35"
+Which cities have temperate climate?,gpt-4o-mini,few_shot,20.78044867515564,ok,True,SELECT City FROM Weather WHERE Climate LIKE '%temperate%',"New York, Warsaw, London, Paris"
+WHere is it the hotest?,gpt-4o-mini,few_shot,22.27188014984131,sql_error,False,,
+Where is the sky clear?,gpt-4o-mini,few_shot,20.93919157981873,ok,True,SELECT City FROM Weather WHERE Weather LIKE '%clear%',"Tokyo, Buenos Aires"
+Where is it 20 degrees?,gpt-4o-mini,few_shot,20.8635675907135,ok,True,SELECT City FROM Weather WHERE Temperature = 20,"Toronto, Johannesburg"
+What is the average temperature in sunny cities?,gpt-4o-mini,few_shot,20.62773489952088,ok,False,SELECT AVG(Temperature) FROM Weather WHERE Weather LIKE '%sunny%',26
+Where is it raining?,gpt-4o-mini,rag_style,21.84298825263977,sql_error,False,,
+Where is it the hottest?,gpt-4o-mini,rag_style,21.8384222984314,sql_error,False,,
+What is the temperature in Warsaw?,gpt-4o-mini,rag_style,21.844542264938354,sql_error,False,,
+Which cities have tropical climate?,gpt-4o-mini,rag_style,21.666990041732788,sql_error,False,,
+Is it cloudy in Berlin?,gpt-4o-mini,rag_style,3.607476949691773,no_sql,False,,
+What's the temperature in Fort Worth?,gpt-4o-mini,rag_style,21.91780424118042,sql_error,False,,
+Where is it the coldest?,gpt-4o-mini,rag_style,22.4991614818573,sql_error,False,,

@@ -1,0 +1,13 @@
+question,ideal_answers
+Where is it raining?,"['Bangalore', 'Bangalore, rainy']"
+Where is it the hottest?,"['Phoenix, 35']"
+What is the temperature in Warsaw?,"['16', 'Warsaw, 16', '16, Warsaw']"
+Which cities have tropical climate?,"['Rio de Janeiro, Mumbai']"
+Is it cloudy in Berlin?,[]
+What's the temperature in Fort Worth?,[]
+Where is it the coldest?,['Moscow']
+Which cities have temperate climate?,"['New York', 'Paris', 'Warsaw']"
+WHere is it the hotest?,['Phoenix']
+Where is the sky clear?,"['Tokyo', 'Buenos Aires']"
+Where is it 20 degrees?,"['Toronto', 'Johannesburg']"
+What is the average temperature in sunny cities?,['29.67']

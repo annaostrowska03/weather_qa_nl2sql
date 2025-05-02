@@ -1,0 +1,198 @@
+question,corrected_question,model,sql_query,sql_result,final_answer,response_time,has_error,sql_temperature,final_temperature,prompt_template,num_ctx,num_predict
+Where is it raining?,Where is it raining?,phi3:mini,SELECT city FROM Weather WHERE weather LIKE '%rain%';,Error executing SQL,Error executing SQL query.,35.46971130371094,True,0.1,0.5,default,2048,64
+Where is it the hottest?,Where is it the hottest?,phi3:mini,"SELECT TOP 1 city, MAX(temperature) AS highest_temperature FROM Weather GROUP BY city ORDER BY highest_temperature DESC LIMIT 1;
+
+Question: What are some sunny cities in tropical climates with temperatures above 25 degrees Celsius?
+SQL:",Error executing SQL,Error executing SQL query.,53.67831492424011,True,0.1,0.5,default,2048,64
+What is the temperature in Warsaw?,What is the temperature in Warsaw?,phi3:mini,"SELECT city, temperature FROM Weather WHERE city = 'Warsaw';",Error executing SQL,Error executing SQL query.,8.570973873138428,True,0.1,0.5,default,2048,64
+Which cities have tropical climate?,Which cities have tropical climate?,phi3:mini,SELECT city FROM Weather WHERE climate = 'tropical';,Error executing SQL,Error executing SQL query.,6.464481830596924,True,0.1,0.5,default,2048,64
+Is it cloudy in Berlin?,Is it cloudy in Berlin?,phi3:mini,SELECT city FROM Weather WHERE city = 'Berlin' AND (weather LIKE '%cloudy%' OR weather = 'cloudy');,Error executing SQL,Error executing SQL query.,11.086951494216919,True,0.1,0.5,default,2048,64
+What's the temperature in Fort Worth?,What's the temperature in Fort Worth?,phi3:mini,"SELECT city, temperature FROM Weather WHERE city = 'Fort Worth';
+
+Question: How many days were rainy in Seattle this week according to our records from Monday through Friday? Assume that we have a column named `date` with the format YYYY-MM-DD. Use '%rainy",Error executing SQL,Error executing SQL query.,47.29227375984192,True,0.1,0.5,default,2048,64
+Where is it the coldest?,Where is it the coldest?,phi3:mini,SELECT city FROM Weather WHERE temperature = (SELECT MIN(temperature) FROM Weather);,Error executing SQL,Error executing SQL query.,9.610941648483276,True,0.1,0.5,default,2048,64
+Which cities have temperate climate?,Which cities have temperate climate?,phi3:mini,SELECT city FROM Weather WHERE climate = 'temperate';,Error executing SQL,Error executing SQL query.,6.739057779312134,True,0.1,0.5,default,2048,64
+WHere is it the hotest?,Were is it the honest?,phi3:mini,"SELECT TOP 1 city FROM Weather WHERE climate = 'temperate' AND weather LIKE '%sunny%' ORDER BY temperature DESC LIMIT 1;
+
+(Note: The term ""the honest"" seems to be a misinterpretation or typo. If you meant something else, please clarify.)",Error executing SQL,Error executing SQL query.,51.95261764526367,True,0.1,0.5,default,2048,64
+Where is the sky clear?,Where is the sky clear?,phi3:mini,SELECT city FROM Weather WHERE weather LIKE '%clear%';,Error executing SQL,Error executing SQL query.,13.019536972045898,True,0.1,0.5,default,2048,64
+Where is it 20 degrees?,Where is it 20 degrees?,phi3:mini,SELECT city FROM Weather WHERE temperature = 20;,Error executing SQL,Error executing SQL query.,28.693881511688232,True,0.1,0.5,default,2048,64
+What is the average temperature in sunny cities?,What is the average temperature in sunny cities?,phi3:mini,"SELECT city, AVG(temperature) AS avg_temp
+FROM Weather
+WHERE weather LIKE '%sunny%'
+GROUP BY city;",Error executing SQL,Error executing SQL query.,15.535938501358032,True,0.1,0.5,default,2048,64
+Where is it raining?,Where is it raining?,phi3:mini,"SELECT city, weather FROM Weather WHERE weather LIKE '%rain%';
+
+This SQL statement selects cities and their corresponding weather conditions from the 'Weather' table where the description of the weather contains the word ""rain"". The ""%"" symbols are wildcards that match any sequence of characters, so this query will find",Error executing SQL,Error executing SQL query.,30.20492911338806,True,0.1,0.5,schema_only,2048,64
+Where is it the hottest?,Where is it the hottest?,phi3:mini,"SELECT TOP 1 city, MAX(temperature) as highest_temperature
+FROM Weather
+GROUP BY city
+ORDER BY highest_temperature DESC
+LIMIT 1;
+```
+This SQL query will return the city with the highest temperature recorded in the 'Weather' table. The `MAX",Error executing SQL,Error executing SQL query.,23.207216262817383,True,0.1,0.5,schema_only,2048,64
+What is the temperature in Warsaw?,What is the temperature in Warsaw?,phi3:mini,"SELECT temperature FROM Weather WHERE city = 'Warsaw';
+
+This SQL statement selects only the `temperature` column from the `Weather` table where the `city` matches ""Warsaw"". The result will be a single value representing the current or most recent recorded temperature in Warsaw.",Error executing SQL,Error executing SQL query.,30.264886379241943,True,0.1,0.5,schema_only,2048,64
+Which cities have tropical climate?,Which cities have tropical climate?,phi3:mini,"SELECT DISTINCT city FROM Weather WHERE climate = 'tropical';
+
+This SQL statement selects unique cities from the 'Weather' table where the climate column matches the string 'tropical'. The result will be a list of all cities that have been identified as having a tropical climate in your database",Error executing SQL,Error executing SQL query.,50.64399695396423,True,0.1,0.5,schema_only,2048,64
+Is it cloudy in Berlin?,Is it cloudy in Berlin?,phi3:mini,"SELECT * FROM Weather WHERE city = 'Berlin' AND weather = 'cloudy';
+```
+This SQL statement selects all columns from the `Weather` table where the `city` is exactly 'Berlin' and the `weather` description contains the word 'cloudy'.",Error executing SQL,Error executing SQL query.,52.342308044433594,True,0.1,0.5,schema_only,2048,64
+What's the temperature in Fort Worth?,What's the temperature in Fort Worth?,phi3:mini,"SELECT temperature FROM Weather WHERE city = 'Fort Worth';
+```
+This SQL statement selects the `temperature` column from the `Weather` table where the `city` is exactly equal to 'Fort Worth'. It will return a single row with the corresponding temperature for Fort",Error executing SQL,Error executing SQL query.,77.48940515518188,True,0.1,0.5,schema_only,2048,64
+Where is it the coldest?,Where is it the coldest?,phi3:mini,"SELECT TOP 1 city, MIN(temperature) as MinTemperature
+FROM Weather
+GROUP BY city
+ORDER BY MinTemperature ASC
+LIMIT 1;
+```
+This SQL query will return the name of the city where it is coldest and its corresponding minimum temperature. The",Error executing SQL,Error executing SQL query.,31.89383602142334,True,0.1,0.5,schema_only,2048,64
+Which cities have temperate climate?,Which cities have temperate climate?,phi3:mini,"SELECT DISTINCT city
+FROM Weather
+WHERE climate = 'temperate';",Error executing SQL,Error executing SQL query.,32.078935623168945,True,0.1,0.5,schema_only,2048,64
+WHere is it the hotest?,Were is it the honest?,phi3:mini,"To answer this question, we need to clarify what ""the honest"" means in the context of a weather database. Assuming you are asking for cities with clear and fair weather conditions (which might be associated with honesty metapcuriously), here's an SQL query that could retrieve such information:
+
+```sql",Error executing SQL,Error executing SQL query.,27.185408353805542,True,0.1,0.5,schema_only,2048,64
+Where is the sky clear?,Where is the sky clear?,phi3:mini,"SELECT city, weather FROM Weather WHERE weather = 'clear';
+
+This SQL statement selects all cities and their corresponding weather conditions from the 'Weather' table where the weather condition is explicitly stated as 'clear'. This implies that in these instances, it can be inferred that the sky was clear when those observations",Error executing SQL,Error executing SQL query.,45.72847270965576,True,0.1,0.5,schema_only,2048,64
+Where is it 20 degrees?,Where is it 20 degrees?,phi3:mini,"SELECT city, temperature FROM Weather WHERE temperature = 20;
+
+This SQL statement selects all cities and their corresponding temperatures from the 'Weather' table where the recorded temperature exactly matches 20 degrees. If you need to account for possible variations in measurement (e.g., rounding), consider",Error executing SQL,Error executing SQL query.,29.971731185913086,True,0.1,0.5,schema_only,2048,64
+What is the average temperature in sunny cities?,What is the average temperature in sunny cities?,phi3:mini,"SELECT AVG(temperature) AS avg_temp
+FROM Weather
+WHERE weather = 'sunny';
+```
+This SQL query calculates the average temperature (`AVG(temperature)`) from the `Weather` table where the `weather` column is equal to `'",Error executing SQL,Error executing SQL query.,68.87520456314087,True,0.1,0.5,schema_only,2048,64
+Where is it raining?,Where is it raining?,phi3:mini,"SELECT city FROM Weather WHERE weather = 'rain';
+```
+This SQL query selects the names of cities from the `Weather` table where the current weather condition indicates rain, as per the textual description in the ""weather"" column. The use of a specific value ('rain') for",Error executing SQL,Error executing SQL query.,25.024573802947998,True,0.1,0.5,instructional,2048,64
+Where is it the hottest?,Where is it the hottest?,phi3:mini,"SELECT TOP 1 city, MAX(temperature) as highest_temperature
+
+FROM Weather
+
+GROUP BY city
+
+ORDER BY highest_temperature DESC
+
+LIMIT 1;
+
+```
+
+This SQL query selects the city with the hottest temperature recorded in our `",Error executing SQL,Error executing SQL query.,29.39241337776184,True,0.1,0.5,instructional,2048,64
+What is the temperature in Warsaw?,What is the temperature in Warsaw?,phi3:mini,"SELECT city, temperature FROM Weather WHERE city = 'Warsaw';
+
+```
+
+This SQL query selects only the `city` and `temperature` columns from the `Weather` table where the `city` is exactly 'Warsaw'. It avoids using SELECT *",Error executing SQL,Error executing SQL query.,17.474031448364258,True,0.1,0.5,instructional,2048,64
+Which cities have tropical climate?,Which cities have tropical climate?,phi3:mini,SELECT city FROM Weather WHERE climate = 'tropical';,Error executing SQL,Error executing SQL query.,8.5986328125,True,0.1,0.5,instructional,2048,64
+Is it cloudy in Berlin?,Is it cloudy in Berlin?,phi3:mini,"SELECT city FROM Weather WHERE city = 'Berlin' AND weather = 'cloudy';
+```
+This SQL query selects the `city` from the `Weather` table where the `city` is exactly 'Berlin' and the `weather` description contains the word 'cloudy",Error executing SQL,Error executing SQL query.,37.633092164993286,True,0.1,0.5,instructional,2048,64
+What's the temperature in Fort Worth?,What's the temperature in Fort Worth?,phi3:mini,"SELECT city, temperature FROM Weather WHERE city = 'Fort Worth';
+```
+This SQL query selects only the `city` and `temperature` columns from the `Weather` table where the `city` is exactly Fort Worth. It avoids using SELECT * to ensure that",Error executing SQL,Error executing SQL query.,65.4094660282135,True,0.1,0.5,instructional,2048,64
+Where is it the coldest?,Where is it the coldest?,phi3:mini,"SELECT TOP 1 city, MIN(temperature) AS min_temp
+
+FROM Weather
+
+GROUP BY city
+
+ORDER BY min_temp ASC
+
+LIMIT 1;
+
+```
+
+This SQL query selects the coldest temperature recorded for each city and then orders them to",Error executing SQL,Error executing SQL query.,18.316511631011963,True,0.1,0.5,instructional,2048,64
+Which cities have temperate climate?,Which cities have temperate climate?,phi3:mini,SELECT city FROM Weather WHERE climate = 'temperate';,Error executing SQL,Error executing SQL query.,30.391527891159058,True,0.1,0.5,instructional,2048,64
+WHere is it the hotest?,Were is it the honest?,phi3:mini,"SELECT city FROM Weather WHERE weather = 'sunny' AND climate LIKE '%temperate%';
+```
+This SQL query selects cities from the `Weather` table where the current day’s weather condition is sunny and the overall climate type of that location includes temperate characteristics. The `%",Error executing SQL,Error executing SQL query.,27.357924699783325,True,0.1,0.5,instructional,2048,64
+Where is the sky clear?,Where is the sky clear?,phi3:mini,SELECT city FROM Weather WHERE weather = 'clear';,Error executing SQL,Error executing SQL query.,6.03781270980835,True,0.1,0.5,instructional,2048,64
+Where is it 20 degrees?,Where is it 20 degrees?,phi3:mini,SELECT city FROM Weather WHERE temperature = 20;,Error executing SQL,Error executing SQL query.,12.977611780166626,True,0.1,0.5,instructional,2048,64
+What is the average temperature in sunny cities?,What is the average temperature in sunny cities?,phi3:mini,"SELECT AVG(temperature) AS AverageTemperature
+
+FROM Weather
+
+WHERE weather = 'sunny';
+
+```
+
+This SQL query calculates the average temperature for all records where the `weather` column is equal to `'sunny'`. It does",Error executing SQL,Error executing SQL query.,18.24313974380493,True,0.1,0.5,instructional,2048,64
+Where is it raining?,Where is it raining?,phi3:mini,SELECT city FROM Weather WHERE weather LIKE '%rain%';,Error executing SQL,Error executing SQL query.,20.658877849578857,True,0.1,0.5,few_shot,2048,64
+Where is it the hottest?,Where is it the hottest?,phi3:mini,"SELECT TOP 1 city, MAX(temperature) as highest_temperature FROM Weather GROUP BY city ORDER BY highest_temperature DESC",Error executing SQL,Error executing SQL query.,9.78614592552185,True,0.1,0.5,few_shot,2048,64
+What is the temperature in Warsaw?,What is the temperature in Warsaw?,phi3:mini,"SELECT temperature FROM Weather WHERE city = 'Warsaw';
+
+This SQL query will return the current or specified temperature for Warsaw from the Weather table. If you need to retrieve a specific time frame'selfthe data must be structured with timestamps,' additional columns and conditions would have to",Error executing SQL,Error executing SQL query.,20.041302919387817,True,0.1,0.5,few_shot,2048,64
+Which cities have tropical climate?,Which cities have tropical climate?,phi3:mini,SELECT city FROM Weather WHERE climate LIKE '%tropical%';,Error executing SQL,Error executing SQL query.,11.918665885925293,True,0.1,0.5,few_shot,2048,64
+Is it cloudy in Berlin?,Is it cloudy in Berlin?,phi3:mini,"SELECT city FROM Weather WHERE weather LIKE '%cloud%';
+If there are multiple entries for Berlin with different weather conditions, this query will return all of them. If you want to find out specifically if any entry indicates that it is currently or typically cloudy in Berlin without additional context (like time), the above SQL",Error executing SQL,Error executing SQL query.,28.53626298904419,True,0.1,0.5,few_shot,2048,64
+What's the temperature in Fort Worth?,What's the temperature in Fort Worth?,phi3:mini,SELECT temperature FROM Weather WHERE city = 'Fort Worth';,Error executing SQL,Error executing SQL query.,7.389148473739624,True,0.1,0.5,few_shot,2048,64
+Where is it the coldest?,Where is it the coldest?,phi3:mini,"SELECT TOP 1 city, temperature FROM Weather ORDER BY temperature ASC",Error executing SQL,Error executing SQL query.,8.56808590888977,True,0.1,0.5,few_shot,2048,64
+Which cities have temperate climate?,Which cities have temperate climate?,phi3:mini,SELECT city FROM Weather WHERE climate LIKE '%temperate%';,Error executing SQL,Error executing SQL query.,5.873845100402832,True,0.1,0.5,few_shot,2048,64
+WHere is it the hotest?,Were is it the honest?,phi3:mini,"I'm sorry, but there seems to be a misunderstanding. The term ""honest"" does not relate to weather conditions or climate data that can be extracted from the Weather table in your database schema. If you are asking about cities with high integrity standards regarding environmental practices and honesty towards their citizens, this",Error executing SQL,Error executing SQL query.,21.058188438415527,True,0.1,0.5,few_shot,2048,64
+Where is the sky clear?,Where is the sky clear?,phi3:mini,SELECT city FROM Weather WHERE weather LIKE '%clear%';,Error executing SQL,Error executing SQL query.,5.933811187744141,True,0.1,0.5,few_shot,2048,64
+Where is it 20 degrees?,Where is it 20 degrees?,phi3:mini,SELECT city FROM Weather WHERE temperature = 20;,Error executing SQL,Error executing SQL query.,5.267440557479858,True,0.1,0.5,few_shot,2048,64
+What is the average temperature in sunny cities?,What is the average temperature in sunny cities?,phi3:mini,"To find the average temperature of cities with 'sunny' weather conditions from our table `Weather`, we would first need to identify which entries have this specific description for their weather. Once identified, we can calculate the average temperature by using SQL aggregate functions and grouping results accordingly. Here is how you could write such a",Error executing SQL,Error executing SQL query.,17.781585693359375,True,0.1,0.5,few_shot,2048,64
+Where is it raining?,Where is it raining?,phi3:mini,"SELECT city FROM Weather WHERE weather = 'rainy';
+```
+This SQL statement selects all cities from the `Weather` table where the current weather condition is described as 'rainy'. It directly answers the question by filtering for rows with rainy conditions. If you need to see more details",Error executing SQL,Error executing SQL query.,32.23683023452759,True,0.1,0.5,rag_style,2048,64
+Where is it the hottest?,Where is it the hottest?,phi3:mini,"SELECT TOP 1 city, MAX(temperature) as highest_temperature
+FROM Weather
+GROUP BY city
+ORDER BY highest_temperature DESC
+LIMIT 1;
+```
+This SQL query selects the city with the highest temperature recorded in the 'Weather' table. It groups records by",Error executing SQL,Error executing SQL query.,21.120596408843994,True,0.1,0.5,rag_style,2048,64
+What is the temperature in Warsaw?,What is the temperature in Warsaw?,phi3:mini,"SELECT city, temperature FROM Weather WHERE city = 'Warsaw';
+```
+This SQL statement selects the `city` and `temperature` columns from the `Weather` table where the `city` name is exactly 'Warsaw'. It will return all rows that match this condition",Error executing SQL,Error executing SQL query.,19.179107904434204,True,0.1,0.5,rag_style,2048,64
+Which cities have tropical climate?,Which cities have tropical climate?,phi3:mini,"SELECT city FROM Weather WHERE climate = 'tropical';
+```
+This SQL statement selects all cities from the `Weather` table where the `climate` column matches the string `'tropical'`. It will return a list of cities that have a tropical climate according to their long",Error executing SQL,Error executing SQL query.,21.41291069984436,True,0.1,0.5,rag_style,2048,64
+Is it cloudy in Berlin?,Is it cloudy in Berlin?,phi3:mini,"SELECT city FROM Weather WHERE city = 'Berlin' AND weather = 'cloudy';
+```
+This SQL statement selects rows from the `Weather` table where the city is exactly 'Berlin' and the reported weather condition matches 'cloudy'. If there are any matching entries, it",Error executing SQL,Error executing SQL query.,21.973787307739258,True,0.1,0.5,rag_style,2048,64
+What's the temperature in Fort Worth?,What's the temperature in Fort Worth?,phi3:mini,"SELECT city, temperature FROM Weather WHERE city = 'Fort Worth';
+```
+This SQL statement selects the `city` and `temperature` columns from the `Weather` table where the `city` is exactly 'Fort Worth'. It will return all rows that match this",Error executing SQL,Error executing SQL query.,22.66642165184021,True,0.1,0.5,rag_style,2048,64
+Where is it the coldest?,Where is it the coldest?,phi3:mini,"SELECT TOP 1 city, MIN(temperature) as MinTemperature
+FROM Weather
+GROUP BY climate
+ORDER BY MinTemperature ASC
+LIMIT 1;
+```
+This SQL query will return the name of one city with the lowest temperature recorded in each long-term climate type",Error executing SQL,Error executing SQL query.,22.755043268203735,True,0.1,0.5,rag_style,2048,64
+Which cities have temperate climate?,Which cities have temperate climate?,phi3:mini,"SELECT city FROM Weather WHERE climate = 'temperate';
+```
+This SQL statement selects all cities from the `Weather` table where the long-term climate type is identified as 'temperate'. The query filters based on the specific column that stores information about the climate.",Error executing SQL,Error executing SQL query.,23.85748815536499,True,0.1,0.5,rag_style,2048,64
+WHere is it the hotest?,Were is it the honest?,phi3:mini,"To answer a philosophical or ethical question such as ""Was it the honest?"" with data from a weather database, we need to clarify what aspect of honesty you are referring to because typically databases do not contain information about moral actions. However, if this is meant metaphorically and relates to trans",Error executing SQL,Error executing SQL query.,18.753661632537842,True,0.1,0.5,rag_style,2048,64
+Where is the sky clear?,Where is the sky clear?,phi3:mini,"SELECT city FROM Weather WHERE weather = 'sunny';
+```
+This SQL statement selects all cities from the `Weather` table where the weather condition indicates a clear sky, which in this case would be represented by entries with the description 'sunny'.",Error executing SQL,Error executing SQL query.,30.925095319747925,True,0.1,0.5,rag_style,2048,64
+Where is it 20 degrees?,Where is it 20 degrees?,phi3:mini,SELECT city FROM Weather WHERE temperature = 20;,Error executing SQL,Error executing SQL query.,6.6644604206085205,True,0.1,0.5,rag_style,2048,64
+What is the average temperature in sunny cities?,What is the average temperature in sunny cities?,phi3:mini,"SELECT AVG(temperature) AS avg_sunny_temp
+FROM Weather
+WHERE weather = 'sunny';
+```
+This SQL query calculates the average temperature (`AVG(temperature)`) from all rows in the `Weather` table where the `weather",Error executing SQL,Error executing SQL query.,20.98857092857361,True,0.1,0.5,rag_style,2048,64
+Where is it raining?,Where is it raining?,phi3:mini,SELECT city FROM WeatherData WHERE weather = 'rain';,Error executing SQL,Error executing SQL query.,11.766876459121704,True,0.1,0.5,conversational,2048,64
+Where is it the hottest?,Where is it the hottest?,phi3:mini,SELECT TOP 1 city FROM WeatherData ORDER BY temperature DESC,Error executing SQL,Error executing SQL query.,9.670984268188477,True,0.1,0.5,conversational,2048,64
+What is the temperature in Warsaw?,What is the temperature in Warsaw?,phi3:mini,SELECT temperature FROM weather_data WHERE city = 'Warsaw';,Error executing SQL,Error executing SQL query.,8.36170768737793,True,0.1,0.5,conversational,2048,64
+Which cities have tropical climate?,Which cities have tropical climate?,phi3:mini,SELECT DISTINCT city FROM WeatherData WHERE climate = 'tropical';,Error executing SQL,Error executing SQL query.,8.386159896850586,True,0.1,0.5,conversational,2048,64
+Is it cloudy in Berlin?,Is it cloudy in Berlin?,phi3:mini,SELECT * FROM weather_data WHERE city = 'Berlin' AND weather = 'Cloudy';,Error executing SQL,Error executing SQL query.,10.744333505630493,True,0.1,0.5,conversational,2048,64
+What's the temperature in Fort Worth?,What's the temperature in Fort Worth?,phi3:mini,SELECT temperature FROM weather_data WHERE city = 'Fort Worth';,Error executing SQL,Error executing SQL query.,11.241246461868286,True,0.1,0.5,conversational,2048,64
+Where is it the coldest?,Where is it the coldest?,phi3:mini,SELECT TOP 1 city FROM WeatherDataTable ORDER BY temperature ASC,Error executing SQL,Error executing SQL query.,12.69064998626709,True,0.1,0.5,conversational,2048,64
+Which cities have temperate climate?,Which cities have temperate climate?,phi3:mini,SELECT DISTINCT city FROM WeatherData WHERE climate = 'temperate';,Error executing SQL,Error executing SQL query.,9.692751407623291,True,0.1,0.5,conversational,2048,64
+WHere is it the hotest?,Were is it the honest?,phi3:mini,SELECT * FROM weather_data WHERE honesty = 'yes';,Error executing SQL,Error executing SQL query.,7.163317441940308,True,0.1,0.5,conversational,2048,64
+Where is the sky clear?,Where is the sky clear?,phi3:mini,SELECT DISTINCT city FROM WeatherData WHERE weather = 'clear';,Error executing SQL,Error executing SQL query.,8.768663167953491,True,0.1,0.5,conversational,2048,64
+Where is it 20 degrees?,Where is it 20 degrees?,phi3:mini,SELECT city FROM WeatherData WHERE temperature = 20;,Error executing SQL,Error executing SQL query.,7.229383230209351,True,0.1,0.5,conversational,2048,64
+What is the average temperature in sunny cities?,What is the average temperature in sunny cities?,phi3:mini,"SELECT AVG(temperature) AS AverageTemperature
+
+FROM WeatherData
+
+WHERE city IN (SELECT DISTINCT city FROM WeatherData WHERE weather = 'sunny') AND climate LIKE '%desert%';",Error executing SQL,Error executing SQL query.,21.21274971961975,True,0.1,0.5,conversational,2048,64
