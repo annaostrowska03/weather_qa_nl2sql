@@ -198,7 +198,7 @@ Query:
 {
   "question": "Where is it raining?",
   "model": "phi3:mini",
-  "api_key": None
+  "api_key": ""
 }
 ```
 
@@ -206,7 +206,7 @@ Response:
 
 ```json
 
-    "sql": "SELECT City FROM Weather WHERE Weather LIKE '%rainy%'
+    "sql": "SELECT City FROM Weather WHERE Weather LIKE '%rainy%'"
     "result": "Bangalore"
     "answer": "It is raining in Bangalore."
 ```
