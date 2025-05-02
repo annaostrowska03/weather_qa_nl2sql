@@ -109,6 +109,26 @@
     .eye-button:hover {
       color: #243aff;
     }
+
+    .hide-button {
+  background: #f8ecc1; 
+  color: #444;
+  font-size: 0.95em;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  display: block;
+  margin: 20px auto 10px auto;
+  width: fit-content;
+}
+
+  .hide-button:hover {
+    color: #000000; 
+    background: #f5e3b1;
+  }
+
     #model{
       width: 548px;
     }
@@ -124,7 +144,7 @@
 <body>
   <div class="container">
     <h1>Ask a Weather Question</h1>
-    <form method="post" action="/ask">
+    <form method="post" action="/ask" onsubmit="showLoading()">
       <label for="question">Your question:</label>
       <textarea name="question" id="question" rows="2" placeholder="e.g. Where is it raining?" required>{{ question or '' }}</textarea>
 
@@ -148,24 +168,28 @@
       <button type="submit" class = "answer_button">Get Answer</button>
     </form>
 
-    {% if sql %}
+    {% if answer %}
     <div class="answer">
+      <strong>Answer:</strong>  {{ answer }}
+    </div>
+    {% endif %}
+
+
+  {% if sql %}
+    <button onclick="toggleVisibility('sqlBlock')" class = "hide-button">Show/hide SQL Query</button>
+    <div id="sqlBlock" class="answer" style="display: none;">
       <strong>Generated SQL:</strong> {{ sql }}
     </div>
     {% endif %}
 
 
    {% if result %}
-    <div class="answer">
+    <button onclick="toggleVisibility('resultBlock')" class = "hide-button">Show/hide SQL Result</button>
+    <div id="resultBlock" class="answer" style="display: none;">
       <strong>SQL result:</strong> {{ result }}
     </div>
     {% endif %}
 
-    {% if answer %}
-    <div class="answer">
-      <strong>Answer:</strong>  {{ answer }}
-    </div>
-    {% endif %}
   </div>
 
   <script>
@@ -173,6 +197,36 @@
       const input = document.getElementById("api_key");
       input.type = input.type === "password" ? "text" : "password";
     }
+
+    function showLoading() {
+      document.getElementById("loadingOverlay").style.display = "block";
+    }
+
+    function toggleVisibility(id){
+      const block = document.getElementById(id);
+      if (block.style.display === "none") {
+        block.style.display = "block";
+      } else {
+        block.style.display = "none";
+      }
+    }
   </script>
+
+  <div id="loadingOverlay" style="
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #f3edd9c5;
+    z-index: 9999;
+    text-align: center;
+    padding-top: 20%;
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #444;
+    ">
+    ⏳ Generating answer...
+  </div>
+
 </body>
 </html>
