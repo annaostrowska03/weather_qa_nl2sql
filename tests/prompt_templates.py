@@ -1,9 +1,9 @@
 default_prompt = """
 Table 'Weather' has columns: 
-- city (text)
-- temperature (int)
-- weather (text): e.g., 'sunny', 'rainy', 'cloudy'
-- climate (text): e.g., 'temperate', 'tropical'
+- City (text)
+- Temperature (int)
+- Weather (text): e.g., 'sunny', 'rainy', 'cloudy'
+- Climate (text): e.g., 'temperate', 'tropical'
 
 Use fuzzy matching for textual data when needed (e.g., weather LIKE '%rain%').
 Write a correct and minimal SQL query for the question below.
@@ -19,10 +19,10 @@ SQL:"""
 # Schema-only (baseline)
 schema_only_prompt = """
 The 'Weather' table has the following columns:
-- city (text)
-- temperature (int)
-- weather (text)
-- climate (text)
+- City (text)
+- Temperature (int)
+- Weather (text)
+- Climate (text)
 
 Write an SQL query that answers the user's question.
 
@@ -34,7 +34,7 @@ SQL:
 instructional_prompt = """
 You're an expert data analyst. Generate an accurate and efficient SQL query for the following natural language question.
 
-Table: Weather(city TEXT, temperature INT, weather TEXT, climate TEXT)
+Table: Weather(City TEXT, Temperature INT, Weather TEXT, Climate TEXT)
 
 Avoid SELECT * and prefer WHERE clauses when appropriate.
 Question: {corrected_question}
@@ -43,20 +43,20 @@ SQL:
 
 # Few-shot example prompt (based on pattern learning)
 few_shot_prompt = """
-Table: Weather(city TEXT, temperature INT, weather TEXT, climate TEXT)
+Table: Weather(City TEXT, Temperature INT, Weather TEXT, Climate TEXT)
 
 Examples:
 Q: Which cities have a tropical climate?
-A: SELECT city FROM Weather WHERE climate LIKE '%tropical%';
+A: SELECT City FROM Weather WHERE Climate LIKE '%tropical%';
 
 Q: What is the temperature in Warsaw?
-A: SELECT temperature FROM Weather WHERE city = 'Warsaw';
+A: SELECT Temperature FROM Weather WHERE City = 'Warsaw';
 
 Q: Where is it raining?
-A: SELECT city FROM Weather WHERE weather LIKE '%rain%';
+A: SELECT City FROM Weather WHERE Weather LIKE '%rain%';
 
 Q: Where is it the hottest?
-A: SELECT city, temperature FROM Weather ORDER BY temperature DESC LIMIT 1;
+A: SELECT City, Temperature FROM Weather ORDER BY Temperature DESC LIMIT 1;
 
 Now answer:
 Q: {corrected_question}
@@ -65,10 +65,10 @@ A:"""
 # RAG-style: With natural language context
 rag_prompt = """
 You are given a database table named 'Weather' with the following meaning:
-- 'city': name of the city
-- 'temperature': temperature in Celsius
-- 'weather': description like 'sunny', 'cloudy', 'rainy'
-- 'climate': long-term climate type like 'temperate', 'tropical'
+- 'City': name of the city
+- 'Temperature': temperature in Celsius
+- 'Weather': description like 'sunny', 'cloudy', 'rainy'
+- 'Climate': long-term climate type like 'temperate', 'tropical'
 
 Write an SQL query that correctly answers the question using this schema.
 
@@ -80,7 +80,7 @@ SQL:
 conversational_prompt = """
 You're a helpful assistant converting questions to SQL for a table with weather data.
 
-Table columns: city, temperature, weather, climate
+'Weather' table columns: City, Temperature, Weather, Climate
 
 Just return SQL, no explanation.
 
@@ -99,6 +99,6 @@ prompt_templates_llms = {
 
 
 prompt_templates_other = {
-    "sqlcoder": "-- Given table Weather(city, temperature, weather, climate)\n-- {corrected_question}\nSELECT",
-    "cracksql": "{corrected_question}"
+    "tscholak/1zha5ono": "{corrected_question} | Weather : City, Temperature, Weather, Climate",
+    "juierror/text-to-sql-with-table-schema": "{corrected_question}"
 }
