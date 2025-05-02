@@ -5,7 +5,8 @@ This project was developed as a take-home task for a AI/ML internship at Evertz.
 ## Project Type
 
 This is a **web application** built with FastAPI.  
-It exposes a REST API that receives natural language weather questions and returns answers based on SQL queries.
+
+It lets you ask weather-related questions in natural language and get answers based on actual weather data stored in a database.
 
 
 ---
