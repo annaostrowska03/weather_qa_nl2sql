@@ -52,28 +52,56 @@ The selected default models in the web interface were:
 
 ## Running the App
 
-### Option 1: Docker (recommended)
+You can run the app in three different ways:
+
+---
+
+### Docker (Recommended)
 
 ```bash
-# Build
+# Build the Docker image
 docker build -t weather-nl2sql .
 
-# Run
+# Run with environment variables
 docker run -p 8000:8000 --env-file .env weather-nl2sql
 ```
 
 Then open your browser at: [http://localhost:8000](http://localhost:8000)
 
-### Option 2: Manual (local)
+### Docker Compose
 
 ```bash
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+docker compose up --build
 ```
+
+This version launches the API together with a seeded SQL Server instance.
+
+Stop with:
+
+```bash
+docker compose down
+```
+
+### Local setup (without Docker)
+
+```bash
+# Create and activate virtual environment (optional)
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start the app
+uvicorn app.main:app --reload
+
+```
+
+Then open your browser at: [http://localhost:8000](http://localhost:8000)
 
 ### Environment setup
 
-Create a `.env` file:
+Create a .env file in the project root to configure database and API access:
 
 ```dotenv
 DB_SERVER=localhost
@@ -81,7 +109,9 @@ DB_NAME=WeatherDB
 DB_USER=sa
 DB_PASSWORD=your_password_here
 SQL_DRIVER=ODBC Driver 17 for SQL Server
-OPEN_API_KEY=your_openai_api_key
+
+# OpenAI (optional)
+OPEN_API_KEY=sk-...
 ```
 
 ---
