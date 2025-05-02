@@ -155,7 +155,7 @@
         </option>
         
         <option value="juierror/text-to-sql-with-table-schema" {% if model == 'juierror/text-to-sql-with-table-schema' %}selected{% endif %}>
-          juierror – Instant responses, low accuracy, no answer in natural language
+          juierror – Instant responses, low accuracy, no answer in NL
         </option>
         
         <option value="gpt-4o-mini" {% if model == 'gpt-4o-mini' %}selected{% endif %}>
@@ -206,7 +206,7 @@
       <strong>Generated SQL:</strong> {{ sql }}
     </div>
     {% elif was_submitted and not is_gpt_and_missing_key%}
-  <div class="answer">
+    <div id="resultBlock" class="answer" style="display: none;">
     <strong>Generated SQL:</strong> Sorry, we couldn't generate an answer for your question.
     <br> Please try again with a different question or model.
   </div>
@@ -218,7 +218,7 @@
       <strong>SQL result:</strong> {{ result }}
     </div>
     {% elif was_submitted and not is_gpt_and_missing_key%}
-    <div class="answer">
+    <div id="resultBlock" class="answer" style="display: none;">
       <strong>SQL result:</strong> Sorry, we couldn't generate an answer for your question.
       <br> Please try again with a different question or model.
     </div>

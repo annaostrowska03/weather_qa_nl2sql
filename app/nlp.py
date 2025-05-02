@@ -8,6 +8,19 @@ from tests.prompt_templates import prompt_templates_llms, prompt_templates_other
 # Autocorrect
 spell = Speller(lang='en')
 
+def get_db_type():
+    try:
+        conn = get_db_connection()
+        driver = conn.getinfo(6)  # 6 = SQL_DRIVER_NAME
+        conn.close()
+        print(f"Detected driver: {driver}")
+        if "sql" in driver.lower():
+            return "sqlserver"
+    except Exception as e:
+        print(f"Could not detect driver: {e}")
+    return "sqlite"
+
+
 model_prompt_styles = {
     "phi3:mini": "few_shot",
     "gpt-4o-mini": "default",
@@ -34,7 +47,7 @@ def quote_values_after_equals(sql: str) -> str:
     pattern = re.compile(r'(=|!=|<>|LIKE)\s+([a-zA-Z_][a-zA-Z0-9_]*)', flags=re.IGNORECASE)
     return pattern.sub(replacer, sql)
 
-def extract_sql_from_response(response_text):
+def extract_sql_from_response(response_text, db_type: str = "sqlserver", model_name: str = None) -> str:
     """
     Extracts SQL from response starting at 'SELECT', applies normalization:
     - Replaces generic or lowercase column/table names with correct ones.
@@ -65,6 +78,27 @@ def extract_sql_from_response(response_text):
         # Replace only column names (not part of strings or function calls)
         sql = re.sub(rf'\b{old}\b', new, sql, flags=re.IGNORECASE)
 
+   # add FROM Weather if not present and if the query is a SELECT statement
+    if not re.search(r'\bfrom\b', sql, re.IGNORECASE):
+            if re.search(r'\bselect\b.+\b(city|temperature|weather|climate)\b', sql, re.IGNORECASE):
+                sql += " FROM Weather"
+
+    # Check for SQL Server specific syntax and convert LIMIT to TOP
+    if db_type == "sqlserver":
+        if re.search(r'\bLIMIT\s+1\b', sql, flags=re.IGNORECASE):
+            sql = re.sub(
+                r'(?i)SELECT\s+(.*?)\s+FROM',
+                lambda m: f"SELECT TOP 1 {m.group(1)} FROM",
+                sql,
+                count=1
+            )
+            sql = re.sub(r'\bLIMIT\s+1\b', '', sql, flags=re.IGNORECASE).strip()
+
+
+    if model_name == "tscholak/1zha5ono" or model_name == "juierror/text-to-sql-with-table-schema":
+        sql = repair_sql_query(sql)
+
+
     return sql
 
 def repair_sql_query(sql: str) -> str:
@@ -92,7 +126,9 @@ def repair_sql_query(sql: str) -> str:
     sql = re.sub(r"=\s*sunny", "= 'sunny'", sql, flags=re.IGNORECASE)
 
     # Fix function syntax (AVG Temperature → AVG(Temperature))
-    sql = re.sub(r'\bAVG\s+(\w+)', r'AVG(\1)', sql, flags=re.IGNORECASE)
+    # Fix function syntax (e.g. AVG Temperature → AVG(Temperature))
+    sql = re.sub(r'\b(AVG|MAX|MIN|SUM|COUNT)\s+(\w+)', r'\1(\2)', sql, flags=re.IGNORECASE)
+
 
     # Replace common misused column names or keywords
     replacements = {
@@ -129,6 +165,8 @@ def repair_sql_query(sql: str) -> str:
 
 def generate_sql(question: str, model_name: str, api_key: str=None, prompt_template: str = None, 
 temperature: float = 0.1, num_ctx: int = 2048, num_predict: int = 256) -> tuple:
+    db_type = get_db_type()
+
     corrected_question = " ".join([spell(word) for word in question.split()])
     try:
         if prompt_template is None:
@@ -141,6 +179,7 @@ temperature: float = 0.1, num_ctx: int = 2048, num_predict: int = 256) -> tuple:
                 prompt_template = prompt_templates_other[model_name]
             else:
                 prompt_template = prompt_templates_llms["default"]
+
 
         prompt = prompt_template.format(corrected_question=corrected_question)
 
@@ -206,35 +245,34 @@ temperature: float = 0.1, num_ctx: int = 2048, num_predict: int = 256) -> tuple:
             answer = response.json()["response"]
 
         # Clean the SQL output
-        answer = extract_sql_from_response(answer)
-        if model_name == "tscholak/1zha5ono" or model_name == "juierror/text-to-sql-with-table-schema":
-            answer = repair_sql_query(answer)
+        answer = extract_sql_from_response(answer, db_type=db_type, model_name=model_name)
         return corrected_question, answer
     except Exception as e:
-        return corrected_question, f"Error generating SQL: {e}"
+        return corrected_question, f"Error generating SQL: {str(e)}"
     
 def execute_sql(sql_query: str) -> list:
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
     except Exception as e:
-        return [("Error connecting to database", str(e))], True
+        return [("Error connecting to database")], True
     try:
         cursor.execute(sql_query)
         results = cursor.fetchall()
         has_error = False
     except Exception as e:
-        return [("Error executing SQL", str(e))], True
+        return [("Error executing SQL.")], True
     finally:
         try:
             cursor.close()
             conn.close()
         except Exception as e:
-            print(f"Error closing connection: {e}")
+            print("Error closing connection.")
 
     return results, has_error
 
 def answer_question(question: str, model_name: str, api_key: str, prompt_template: str = None, temperature: float = 0.1, num_ctx: int = 2048, num_predict: int = 256, final_prompt: str = None, answer_temperature: float = 0.5) -> tuple:
+    db_type = get_db_type()
     corrected_question, sql_query = generate_sql(
             question, model_name, api_key,
             prompt_template=prompt_template,
@@ -242,12 +280,9 @@ def answer_question(question: str, model_name: str, api_key: str, prompt_templat
             num_ctx=num_ctx,
             num_predict=num_predict
         )
+
     if sql_query.startswith("-- Error"):
             return sql_query, sql_query, sql_query, corrected_question, True
-    if model_name in ["tscholak/1zha5ono", "juierror/text-to-sql-with-table-schema"]:
-            sql_query = extract_sql_from_response(sql_query)
-            sql_query = repair_sql_query(sql_query)
-
     results, has_error = execute_sql(sql_query)
     result_summary = "; ".join([", ".join(map(str, row)) for row in results])
     if model_name in ["tscholak/1zha5ono", "juierror/text-to-sql-with-table-schema"]:
