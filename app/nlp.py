@@ -98,6 +98,8 @@ def extract_sql_from_response(response_text, db_type: str = "sqlserver", model_n
     if model_name == "tscholak/1zha5ono" or model_name == "juierror/text-to-sql-with-table-schema":
         sql = repair_sql_query(sql)
 
+    sql = quote_values_after_equals(sql)
+
 
     return sql
 
@@ -158,7 +160,6 @@ def repair_sql_query(sql: str) -> str:
     # Cleanup
     sql = re.sub(r'\s+', ' ', sql).strip()
     sql = sql.rstrip(';')
-    sql = quote_values_after_equals(sql)
 
     return sql
 
@@ -198,7 +199,8 @@ temperature: float = 0.1, num_ctx: int = 2048, num_predict: int = 256) -> tuple:
             inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
             outputs = model.generate(inputs=inputs["input_ids"], num_beams=10, max_length=700)
             output = tokenizer.decode(outputs[0], skip_special_tokens=True)
-            return corrected_question, output.strip()
+            output = extract_sql_from_response(output.strip(), db_type=db_type, model_name=model_name)
+            return corrected_question, output
 
         
         if model_name == "tscholak/1zha5ono":
@@ -210,6 +212,7 @@ temperature: float = 0.1, num_ctx: int = 2048, num_predict: int = 256) -> tuple:
             inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
             outputs = model.generate(**inputs, max_new_tokens=128)
             output = tokenizer.decode(outputs[0], skip_special_tokens=True)
+            output = extract_sql_from_response(output, db_type=db_type, model_name=model_name)
             return corrected_question, output
 
 
@@ -255,13 +258,13 @@ def execute_sql(sql_query: str) -> list:
         conn = get_db_connection()
         cursor = conn.cursor()
     except Exception as e:
-        return [("Error connecting to database")], True
+        return ["Error connecting to database"], True
     try:
         cursor.execute(sql_query)
         results = cursor.fetchall()
         has_error = False
     except Exception as e:
-        return [("Error executing SQL.")], True
+        return ["Error executing SQL."], True
     finally:
         try:
             cursor.close()
@@ -284,7 +287,8 @@ def answer_question(question: str, model_name: str, api_key: str, prompt_templat
     if sql_query.startswith("-- Error"):
             return sql_query, sql_query, sql_query, corrected_question, True
     results, has_error = execute_sql(sql_query)
-    result_summary = "; ".join([", ".join(map(str, row)) for row in results])
+    if not has_error:
+        result_summary = "; ".join([", ".join(map(str, row)) for row in results])
     if model_name in ["tscholak/1zha5ono", "juierror/text-to-sql-with-table-schema"]:
         return sql_query, result_summary, result_summary, corrected_question, has_error
 
