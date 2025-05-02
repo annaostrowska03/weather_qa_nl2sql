@@ -12,3 +12,4 @@ autocorrect
 openai
 torch
 numpy<2.0
+python-dotenv
