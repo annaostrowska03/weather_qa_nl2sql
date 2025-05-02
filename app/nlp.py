@@ -4,6 +4,7 @@ import requests
 import re
 from app.database import get_db_connection
 from tests.prompt_templates import prompt_templates_llms, prompt_templates_other
+import pyodbc
 
 # Autocorrect
 spell = Speller(lang='en')
@@ -11,14 +12,15 @@ spell = Speller(lang='en')
 def get_db_type():
     try:
         conn = get_db_connection()
-        driver = conn.getinfo(6)  # 6 = SQL_DRIVER_NAME
+        driver = conn.getinfo(pyodbc.SQL_DRIVER_NAME)  
         conn.close()
         print(f"Detected driver: {driver}")
-        if "sql" in driver.lower():
+        if "msodbcsql" in driver.lower():
             return "sqlserver"
     except Exception as e:
         print(f"Could not detect driver: {e}")
     return "sqlite"
+
 
 
 model_prompt_styles = {
@@ -84,15 +86,11 @@ def extract_sql_from_response(response_text, db_type: str = "sqlserver", model_n
                 sql += " FROM Weather"
 
     # Check for SQL Server specific syntax and convert LIMIT to TOP
-    if db_type == "sqlserver":
-        if re.search(r'\bLIMIT\s+1\b', sql, flags=re.IGNORECASE):
-            sql = re.sub(
-                r'(?i)SELECT\s+(.*?)\s+FROM',
-                lambda m: f"SELECT TOP 1 {m.group(1)} FROM",
-                sql,
-                count=1
-            )
-            sql = re.sub(r'\bLIMIT\s+1\b', '', sql, flags=re.IGNORECASE).strip()
+    print(f"DB Type: {db_type}")
+    if db_type == "sqlserver" and re.search(r'\bLIMIT\s+1\b', sql, flags=re.IGNORECASE):
+        sql = re.sub(r'\bLIMIT\s+1\b', '', sql, flags=re.IGNORECASE).strip()
+        sql = re.sub(r'(?i)^SELECT\s+', 'SELECT TOP 1 ', sql, count=1)
+
 
 
     if model_name == "tscholak/1zha5ono" or model_name == "juierror/text-to-sql-with-table-schema":
@@ -290,18 +288,19 @@ def answer_question(question: str, model_name: str, api_key: str, prompt_templat
 
     if has_error:
         result_summary = "Error executing SQL query."
-    if not has_error:
+    elif not results:
+        result_summary = "No matching results found."
+    else:
         result_summary = "; ".join([", ".join(map(str, row)) for row in results])
     if model_name in ["tscholak/1zha5ono", "juierror/text-to-sql-with-table-schema"]:
         return sql_query, result_summary, result_summary, corrected_question, has_error
 
     try:
-        if not results:
-            return sql_query, "No results", "No matching results found.", corrected_question, has_error
-        
         if has_error:
-            return sql_query, "Error executing SQL", "Error executing SQL query.", corrected_question, has_error
+            return sql_query, "Error executing SQL", "Error executing SQL query.", corrected_question, True
 
+        if not results:
+            return sql_query, "No results", "No matching results found.", corrected_question, False
 
         if final_prompt is None:
             final_prompt = """

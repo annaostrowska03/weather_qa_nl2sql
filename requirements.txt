@@ -4,7 +4,7 @@ uvicorn==0.34.2
 requests==2.32.3
 langchain==0.3.24
 langchain-community==0.3.23
-transformers==4.51.3
+transformers==4.35.2
 pydantic==2.7.4
 jinja2==3.1.6
 python-multipart==0.0.20

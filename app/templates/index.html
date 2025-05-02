@@ -188,11 +188,11 @@
 
     </form>
 
-    {% if answer %}
+    {% if answer and not has_error%}
     <div class="answer">
       <strong>Answer:</strong>  {{ answer }}
     </div>
-    {% elif was_submitted and not is_gpt_and_missing_key%}
+    {% elif was_submitted and not is_gpt_and_missing_key and (not answer or has_error)%}
     <div class="answer">
       <strong>Answer:</strong> Sorry, we couldn't generate an answer for your question.
       <br> Please try again with a different question or model.
@@ -201,7 +201,7 @@
     
 
   <button onclick="toggleVisibility('sqlBlock')" class = "hide-button">Show/hide SQL Query</button>
-  {% if sql %}
+  {% if sql%}
     <div id="sqlBlock" class="answer" style="display: none;">
       <strong>Generated SQL:</strong> {{ sql }}
     </div>
@@ -213,7 +213,7 @@
 {% endif %}
 
   <button onclick="toggleVisibility('resultBlock')" class = "hide-button">Show/hide SQL Result</button>
-   {% if result %}
+   {% if not has_error%}
     <div id="resultBlock" class="answer" style="display: none;">
       <strong>SQL result:</strong> {{ result }}
     </div>

@@ -34,6 +34,8 @@ async def ask_question(request: Request,
         
         question_model = QuestionModel(question=question, model=model, api_key=api_key)
         sql, result_summary, final_answer, corrected_question, has_error = answer_question(question, model, api_key)
+        has_error = bool(has_error)
+
         # if invalid api key, return error message
         if isinstance(sql, str) and "invalid_api_key" in sql.lower():
             return templates.TemplateResponse("index.html", {
