@@ -1,15 +1,20 @@
-# Weather Q\&A Natural Language to SQL (NL2SQL)
+# Weather Q&A: Natural Language to SQL
 
-This project was developed as a take-home task for a AI/ML internship at Evertz.  It uses LangChain, FastAPI, and several LLM backends to translate natural language questions into SQL queries for weather data — and vice versa, converting SQL results back into human-readable answers.
+This is a **web application** that allows users to ask weather-related questions in natural language. The app translates those questions into SQL queries and returns answers based on weather data stored in a database.
 
-## Project Type
-
-This is a **web application** built with FastAPI.  
-
-It lets you ask weather-related questions in natural language and get answers based on actual weather data stored in a database.
+This project was developed as a take-home task for an AI/ML internship at Evertz.
 
 
 ---
+
+## Technologies used
+
+- **FastAPI** – Web backend and interactive interface.
+- **LangChain** – Handles prompt logic and LLM orchestration.
+- **OpenAI / HuggingFace / Ollama** – Backends for running different language models.
+- **Docker & Docker Compose** – For easy deployment and environment isolation.
+- **PyODBC / SQL Server** – Database engine and Python connectivity.
+- **Autocorrect** – Improves robustness by correcting minor typos in natural language queries.
 
 ## Features
 
@@ -25,36 +30,14 @@ It lets you ask weather-related questions in natural language and get answers ba
 
 ---
 
-## Model Candidates Evaluated
+## Requirements
 
-| Model                                    | Source      |
-| ---------------------------------------- | ----------- |
-| `tscholak/1zha5ono`                      | HuggingFace |
-| `juierror/text-to-sql-with-table-schema` | HuggingFace |
-| `mistral`                                | Ollama      |
-| `phi3:mini`                              | Ollama      |
-| `llama3`                                 | Ollama      |
-| `gpt-4o-mini` | OpenAI API  |
+Before running the project, make sure you have:
 
----
+- [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) installed
+- A working OpenAI API key (for language model access)
 
-## Final Model Selection
-
-After evaluation on:
-
-* **Accuracy of SQL execution** (compared with 'ideal' results from the database)
-* **Validity of SQL syntax**
-* **Response time**
-
-The selected default models in the web interface were:
-
-* **`phi3:mini`** – for fast, accurate free use
-* **`gpt-4o-mini`** – best overall accuracy with fast response (requires OpenAI API key)
-* **`mistral`** – open-source fallback model (slower but reliable)
-* **`juierror/text-to-sql-with-table-schema`** – baseline HuggingFace model (the fastest but lower accuracy)
-
----
-
+  
 ## Running the App
 
 You can run the app in three different ways:
@@ -113,11 +96,41 @@ DB_SERVER=localhost
 DB_NAME=WeatherDB
 DB_USER=sa
 DB_PASSWORD=your_password_here
-SQL_DRIVER=ODBC Driver 17 for SQL Server
+SQL_DRIVER=ODBC Driver 18 for SQL Server
 
 # OpenAI (optional)
 OPEN_API_KEY=sk-...
 ```
+
+---
+
+## Model Candidates Evaluated
+
+| Model                                    | Source      |
+| ---------------------------------------- | ----------- |
+| `tscholak/1zha5ono`                      | HuggingFace |
+| `juierror/text-to-sql-with-table-schema` | HuggingFace |
+| `mistral`                                | Ollama      |
+| `phi3:mini`                              | Ollama      |
+| `llama3`                                 | Ollama      |
+| `gpt-4o-mini` | OpenAI API  |
+
+---
+
+## Final Model Selection
+
+After evaluation on:
+
+* **Accuracy of SQL execution** (compared with 'ideal' results from the database)
+* **Validity of SQL syntax**
+* **Response time**
+
+The selected default models in the web interface were:
+
+* **`phi3:mini`** – for fast, accurate free use
+* **`gpt-4o-mini`** – best overall accuracy with fast response (requires OpenAI API key)
+* **`mistral`** – open-source fallback model (slower but reliable)
+* **`juierror/text-to-sql-with-table-schema`** – baseline HuggingFace model (the fastest but lower accuracy)
 
 ---
 
@@ -149,14 +162,14 @@ model_prompt_styles = {
 }
 ```
 
-### Checked parameters
+**Hyperparameters tested:**
 
-Other additional parameters were checked:
+- SQL generation temp: 0.0, 0.1, 0.3,
 
-* SQL generation temperature: `0.0`, `0.1`, `0.3`
-* Final answer generation temperature: `0.5`, `0.7`, `1.0`
-* Context length (`num_ctx`): `2048`
-* Prediction tokens (`num_predict`): `64`, `128`
+- Answer temp: 0.5, 0.7, 1.0,
+
+- Context length: 2048, Tokens: 64, 128.
+
 
 ---
 
@@ -177,21 +190,58 @@ Results were saved to:
 
 ---
 
-## Libraries & Tools Used
+## Example query
 
-* Python 
-* FastAPI
-* LangChain
-* Ollama
-* OpenAI SDK
-* HuggingFace Transformers
-* SQLAlchemy / pyodbc
-* Docker
-* Pandas
-* Autocorrect
-* dotenv
+Query: 
+
+```json
+{
+  "question": "Where is it raining?",
+  "model": "phi3:mini",
+  "api_key": ""
+}
+```
+
+Response:
+
+```json
+
+    "sql": "SELECT City FROM Weather WHERE Weather LIKE '%rainy%'"
+    "result": "Bangalore"
+    "answer": "It is raining in Bangalore."
+```
+
 
 ---
+
+## Sample database
+
+
+The default database (`WeatherDB`) is automatically created and initialized using the `init-db` service defined in `docker-compose.yml`. This service runs a provided SQL script (`init_db.sql`) to seed example weather data during startup.
+
+If you wish to use your own custom database schema, you can modify or replace the `init_db.sql` script. However, please note that prompt templates and model behavior are aligned to the original column names and data structure — adjustments may be required to maintain accuracy if your schema differs significantly.
+
+---
+
+## Error Handling
+
+Returns clear messages on:
+
+- Empty or invalid questions
+- Query translation failure
+- No matching results
+- Wrong/missing API Key value (when using gpt)
+
+---
+
+## API Documentation
+
+This project includes automatic, interactive documentation thanks to FastAPI.
+
+- **Swagger UI** – Full interactive docs with try-it-now interface: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **ReDoc** – Clean, readable OpenAPI spec documentation: [http://localhost:8000/redoc](http://localhost:8000/redoc)
+
+--- 
 
 ## File structure
 
@@ -211,6 +261,7 @@ weather_qa_nl2sql/
 ├── Dockerfile
 ├── requirements.txt
 ├── .env                    # Config file (not committed)
+├── init_db.sql             # SQL init script
 ```
 
 
