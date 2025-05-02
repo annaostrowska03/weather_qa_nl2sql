@@ -10,3 +10,5 @@ python-multipart
 pyodbc
 autocorrect
 openai
+torch
+numpy<2.0
