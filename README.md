@@ -30,111 +30,132 @@ This project was developed as a take-home task for an AI/ML internship at Evertz
 
 ---
 
-## Requirements
+## ✅ Getting started – Step-by-Step Setup
+
+### 1. Requirements
 
 Before running the project, make sure you have:
 
 - [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) installed
-- A working OpenAI API key (for language model access)
+- A valid **OpenAI API key** (optional, for GPT-based models)
+- (Optional) [Ollama](https://ollama.com/) installed — to use local language models
 
-  
-## Running the App
+---
 
-Fist clone the repository and install dependencies:
+### 2. Clone the repository
 
 ```bash
 git clone https://github.com/annaostrowska03/weather_qa_nl2sql.git
 cd weather_qa_nl2sql
-pip install --user -r requirements.txt
 ```
 
-Then create a .env file in the project root to configure database and API access:
+---
 
-```dotenv
-DB_SERVER=host.docker.internal
+### 3. Create your `.env` file
+
+Create a file named `.env` in the project root:
+
+```env
+# SQL Server configuration
+SA_PASSWORD=MyStr0ngP@ssword!     # Required when using Docker for SQL Server
+DB_SERVER=sqlserver               # Use 'sqlserver' with docker-compose, or 'host.docker.internal' if running SQL Server separately
+DB_PORT=1433
 DB_NAME=WeatherDB
 DB_USER=sa
-DB_PASSWORD=your_password
+DB_PASSWORD=MyStr0ngP@ssword!     # Should match SA_PASSWORD
 SQL_DRIVER=ODBC Driver 17 for SQL Server
 
 # OpenAI (optional)
 OPEN_API_KEY=sk-...
 
+# Ollama (for local models)
 OLLAMA_BASE_URL=http://host.docker.internal:11434
 ```
 
-You can run the app in three different ways:
+#### Password requirements for `SA_PASSWORD`:
+Your password **must be strong**:
+- Min. 8 characters
+- Must include **uppercase**, **lowercase**, **digit**, and **special character** (e.g. `@`, `!`, `#`)
 
 ---
 
-### Docker (Recommended)
+### 4. Choose how you want to run the app
 
-```bash
-# Build the Docker image
-docker build -t weather-nl2sql .
+---
 
-# Run with environment variables
-docker run -p 8000:8000 --env-file .env weather-nl2sql
-```
+#### Option A: **Using Docker Compose (recommended)**
 
-Then open your browser at: [http://localhost:8000](http://localhost:8000)
-
-### Docker Compose
+This runs the **app and SQL Server together**, fully automated.
 
 ```bash
 docker compose up --build
 ```
 
-This version launches the API together with a seeded SQL Server instance.
-
 Stop with:
-
 ```bash
 docker compose down
 ```
 
-### Local setup (without Docker)
+---
+
+#### Option B: **Using plain Docker (`docker run`)**
+
+1. (Only once) create a Docker network:
+   ```bash
+   docker network create weather-net
+   ```
+
+2. Start SQL Server:
+   ```bash
+   docker run -d --name sqlserver --network weather-net -e SA_PASSWORD=MyStr0ngP@ssword! -e ACCEPT_EULA=Y -p 1433:1433 mcr.microsoft.com/mssql/server:2022-latest
+   ```
+
+3. Start the app:
+   ```bash
+   docker build -t weather-nl2sql .
+   docker run -d --name weather-app --network weather-net --env-file .env -p 8000:8000 weather-nl2sql
+   ```
+
+Open your browser at: [http://localhost:8000](http://localhost:8000)
+
+---
+
+#### 🔹 Option C: **Run locally (without Docker)**
 
 ```bash
-# Create and activate virtual environment (optional)
+# Create virtual environment (optional)
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
-pip install --user -r requirements.txt
+pip install -r requirements.txt
 
 # Start the app
 uvicorn app.main:app --reload
-
 ```
 
-Then open your browser at: [http://localhost:8000](http://localhost:8000)
+---
 
-## Running local models (optional)
+### 5. (Optional) Running local models with Ollama
 
-To use local open-source models (e.g., `phi3:mini`, `mistral`, `llama3`), you need to install [Ollama](https://ollama.com/).
+To use local models like `phi3:mini`, `mistral`, or `llama3`:
 
-### Steps
-
-**1. Install Ollama:**
-
+#### 1. Install Ollama
 ```bash
 curl -fsSL https://ollama.com/install.sh | sh
 ```
 
-**2. Pull the model(s) you want:**
-
+#### 2. Run a model
 ```bash
 ollama run mistral
-```
-
-or
-
-```bash
+# or
 ollama run phi3:mini
 ```
 
- Once a model is pulled, the app will connect to Ollama at http://localhost:11434 by default.
+The app will connect to Ollama at `http://host.docker.internal:11434`.
+
+---
+
 
 ## Model Recommendation
 
@@ -147,6 +168,27 @@ To use GPT-4o mini:
 - [Get your OpenAI API key](https://platform.openai.com/account/api-keys)
 
 - Enter it into the web interface when prompted.
+
+---
+
+### Summary: Model Options
+
+| Model                 | Source      | Requires API Key |
+|-----------------------|-------------|------------------|
+| `gpt-4o-mini`         | OpenAI      | ✅ Yes            |
+| `phi3:mini`, `mistral`, `llama3` | Ollama | ❌ No             |
+| `tscholak/1zha5ono`   | HuggingFace | ❌ No             |
+
+---
+
+You’re now ready! Open your browser at:
+
+```text
+http://localhost:8000
+```
+
+Use the web UI to enter questions and select the model you want.
+
   
 ---
 
