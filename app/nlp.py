@@ -5,6 +5,8 @@ import re
 from app.database import get_db_connection
 from tests.prompt_templates import prompt_templates_llms, prompt_templates_other
 import pyodbc
+import os
+from dotenv import load_dotenv
 
 # Autocorrect
 spell = Speller(lang='en')
@@ -165,7 +167,7 @@ def repair_sql_query(sql: str) -> str:
 def generate_sql(question: str, model_name: str, api_key: str=None, prompt_template: str = None, 
 temperature: float = 0.1, num_ctx: int = 2048, num_predict: int = 256) -> tuple:
     db_type = get_db_type()
-
+    load_dotenv()
     corrected_question = " ".join([spell(word) for word in question.split()])
     try:
         if prompt_template is None:
@@ -228,8 +230,9 @@ temperature: float = 0.1, num_ctx: int = 2048, num_predict: int = 256) -> tuple:
         else:
             # Use Ollama API for open-source models
 
+            ollama_base = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434").rstrip("/")
             response = requests.post(
-                "http://localhost:11434/api/generate",
+                f"{ollama_base}/api/generate",
                 json={
                     "model": model_name,
                     "prompt": prompt,
@@ -327,8 +330,9 @@ def answer_question(question: str, model_name: str, api_key: str, prompt_templat
                 temperature=answer_temperature
             ).choices[0].message.content.strip()
         else:
+            ollama_base = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434").rstrip("/")
             final_response = requests.post(
-                "http://localhost:11434/api/generate",
+                f"{ollama_base}/api/generate",
                 json={
                     "model": model_name,
                     "prompt": answer_prompt,
