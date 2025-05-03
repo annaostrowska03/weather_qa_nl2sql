@@ -45,7 +45,7 @@ Fist clone the repository and install dependencies:
 ```bash
 git clone https://github.com/annaostrowska03/weather_qa_nl2sql.git
 cd weather_qa_nl2sql
-pip install -r requirements.txt
+pip install --user -r requirements.txt
 ```
 
 Then create a .env file in the project root to configure database and API access:
