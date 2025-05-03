@@ -98,31 +98,13 @@ docker compose down
 
 Open your browser at: [http://localhost:8000](http://localhost:8000)
 
----
 
-#### Option B: **Using plain Docker (`docker run`)**
+You can also use docker run manually, but docker-compose is recommended for simplicity and proper DB initialization.
 
-1. (Only once) create a Docker network:
-   ```bash
-   docker network create weather-net
-   ```
-
-2. Start SQL Server:
-   ```bash
-   docker run -d --name sqlserver --network weather-net -e SA_PASSWORD=MyStr0ngP@ssword! -e ACCEPT_EULA=Y -p 1433:1433 mcr.microsoft.com/mssql/server:2022-latest
-   ```
-
-3. Start the app:
-   ```bash
-   docker build -t weather-nl2sql .
-   docker run -d --name weather-app --network weather-net --env-file .env -p 8000:8000 weather-nl2sql
-   ```
-
-Open your browser at: [http://localhost:8000](http://localhost:8000)
 
 ---
 
-#### 🔹 Option C: **Run locally (without Docker)**
+#### 🔹 Option B: **Run locally (without Docker)**
 
 ```bash
 # Create virtual environment (optional)
