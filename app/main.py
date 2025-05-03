@@ -50,7 +50,21 @@ async def ask_question(request: Request,
                 "answer": None,
                 "has_error": True,
                 "is_gpt_and_missing_key": True
-            })
+                })
+        elif isinstance(sql, str) and "insufficient_quota" in sql.lower():
+            return templates.TemplateResponse("index.html", {
+                    "request": request,
+                    "error": "You have exceeded your OpenAI API quota. Please check your billing settings or upgrade your plan.",
+                    "model": model,
+                    "question": question,
+                    "api_key": api_key,
+                    "was_submitted": True,
+                    "sql": None,
+                    "result": None,
+                    "answer": None,
+                    "has_error": True,
+                    "is_gpt_and_missing_key": True
+                })
 
         return templates.TemplateResponse("index.html", {
             "request": request,

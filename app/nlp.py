@@ -6,6 +6,7 @@ from app.database import get_db_connection
 from tests.prompt_templates import prompt_templates_llms, prompt_templates_other
 import pyodbc
 import os
+from openai import AuthenticationError, RateLimitError, APIError
 from dotenv import load_dotenv
 
 # Autocorrect
@@ -251,8 +252,15 @@ temperature: float = 0.1, num_ctx: int = 2048, num_predict: int = 256) -> tuple:
         # Clean the SQL output
         answer = extract_sql_from_response(answer, db_type=db_type, model_name=model_name)
         return corrected_question, answer
+
+    except APIError as e:
+        if "insufficient_quota" in str(e).lower():
+            return corrected_question, "insufficient_quota"
+        return corrected_question, f"Error generating SQL: {e}"
     except Exception as e:
         return corrected_question, f"Error generating SQL: {str(e)}"
+
+
     
 def execute_sql(sql_query: str) -> list:
     try:
