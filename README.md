@@ -55,7 +55,7 @@ DB_SERVER=localhost
 DB_NAME=WeatherDB
 DB_USER=sa
 DB_PASSWORD=your_password_here
-SQL_DRIVER=ODBC Driver 18 for SQL Server
+SQL_DRIVER=ODBC Driver 17 for SQL Server
 
 # OpenAI (optional)
 OPEN_API_KEY=sk-...
