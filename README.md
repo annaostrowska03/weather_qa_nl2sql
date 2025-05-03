@@ -145,7 +145,7 @@ To use GPT-4o mini:
 - [Get your OpenAI API key](https://platform.openai.com/account/api-keys)
 
 - Enter it into the web interface when prompted.
-- 
+  
 ---
 
 ## Model Candidates Evaluated
