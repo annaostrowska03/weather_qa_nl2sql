@@ -157,13 +157,16 @@ To use GPT-4o mini:
 
 - Enter it into the web interface when prompted.
 
+Support for additional OpenAI models (gpt-3.5-turbo and gpt-4o) was added to provide more flexibility for users with different API access levels.
+These models were not tested due to lack of access, so their behavior and accuracy may vary.
+
 ---
 
 ### Summary: Model Options
 
 | Model                 | Source      | Requires API Key |
 |-----------------------|-------------|------------------|
-| `gpt-4o-mini`         | OpenAI      | ✅ Yes            |
+| `gpt-4o-mini`, `gpt-4o`, `gpt-3.5-turbo`         | OpenAI      | ✅ Yes            |
 | `phi3:mini`, `mistral`, `llama3` | Ollama | ❌ No             |
 | `tscholak/1zha5ono`   | HuggingFace | ❌ No             |
 
@@ -207,6 +210,7 @@ The selected default models in the web interface were:
 * **`gpt-4o-mini`** – best overall accuracy with fast response (requires OpenAI API key)
 * **`mistral`** – open-source fallback model (slower but reliable)
 * **`juierror/text-to-sql-with-table-schema`** – baseline HuggingFace model (the fastest but lower accuracy)
+* **`gpt-4o`** and **`gpt-3.5-turbo`** for users with different API access levels (not tested)
   
 ---
 
