@@ -40,6 +40,27 @@ Before running the project, make sure you have:
   
 ## Running the App
 
+Fist clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/annaostrowska03/weather_qa_nl2sql.git
+cd weather_qa_nl2sql
+pip install -r requirements.txt
+```
+
+Then create a .env file in the project root to configure database and API access:
+
+```dotenv
+DB_SERVER=localhost
+DB_NAME=WeatherDB
+DB_USER=sa
+DB_PASSWORD=your_password_here
+SQL_DRIVER=ODBC Driver 18 for SQL Server
+
+# OpenAI (optional)
+OPEN_API_KEY=sk-...
+```
+
 You can run the app in three different ways:
 
 ---
@@ -87,21 +108,44 @@ uvicorn app.main:app --reload
 
 Then open your browser at: [http://localhost:8000](http://localhost:8000)
 
-### Environment setup
+## Running local models (optional)
 
-Create a .env file in the project root to configure database and API access:
+To use local open-source models (e.g., `phi3:mini`, `mistral`, `llama3`), you need to install [Ollama](https://ollama.com/).
 
-```dotenv
-DB_SERVER=localhost
-DB_NAME=WeatherDB
-DB_USER=sa
-DB_PASSWORD=your_password_here
-SQL_DRIVER=ODBC Driver 18 for SQL Server
+### Steps
 
-# OpenAI (optional)
-OPEN_API_KEY=sk-...
+**1. Install Ollama:**
+
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
 ```
 
+**2. Pull the model(s) you want:**
+
+```bash
+ollama run mistral
+```
+
+or
+
+```bash
+ollama run phi3:mini
+```
+
+ Once a model is pulled, the app will connect to Ollama at http://localhost:11434 by default.
+
+## Model Recommendation
+
+The recommended and most accurate model is **GPT-4o mini** – highest precision, fast and best overall results.
+
+However, this model requires a valid OpenAI API key. If you don’t have one, you can still choose from several alternative models (e.g., phi3:mini, mistral, or juierror/text-to-sql-with-table-schema) that are open-source and run locally using Ollama – although their accuracy may be lower.
+
+To use GPT-4o mini:
+
+- [Get your OpenAI API key](https://platform.openai.com/account/api-keys)
+
+- Enter it into the web interface when prompted.
+- 
 ---
 
 ## Model Candidates Evaluated
@@ -131,7 +175,7 @@ The selected default models in the web interface were:
 * **`gpt-4o-mini`** – best overall accuracy with fast response (requires OpenAI API key)
 * **`mistral`** – open-source fallback model (slower but reliable)
 * **`juierror/text-to-sql-with-table-schema`** – baseline HuggingFace model (the fastest but lower accuracy)
-
+  
 ---
 
 ## Prompt Engineering
