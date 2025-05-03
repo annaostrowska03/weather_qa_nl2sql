@@ -51,14 +51,16 @@ pip install --user -r requirements.txt
 Then create a .env file in the project root to configure database and API access:
 
 ```dotenv
-DB_SERVER=localhost
+DB_SERVER=host.docker.internal
 DB_NAME=WeatherDB
 DB_USER=sa
-DB_PASSWORD=your_password_here
+DB_PASSWORD=your_password
 SQL_DRIVER=ODBC Driver 17 for SQL Server
 
 # OpenAI (optional)
 OPEN_API_KEY=sk-...
+
+OLLAMA_BASE_URL=http://host.docker.internal:11434
 ```
 
 You can run the app in three different ways:
