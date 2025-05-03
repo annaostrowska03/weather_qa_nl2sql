@@ -104,7 +104,7 @@ You can also use docker run manually, but docker-compose is recommended for simp
 
 ---
 
-#### 🔹 Option B: **Run locally (without Docker)**
+#### Option B: **Run locally (without Docker)**
 
 ```bash
 # Create virtual environment (optional)
