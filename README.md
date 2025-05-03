@@ -96,6 +96,8 @@ Stop with:
 docker compose down
 ```
 
+Open your browser at: [http://localhost:8000](http://localhost:8000)
+
 ---
 
 #### Option B: **Using plain Docker (`docker run`)**
@@ -133,6 +135,7 @@ pip install -r requirements.txt
 # Start the app
 uvicorn app.main:app --reload
 ```
+Open your browser at: [http://localhost:8000](http://localhost:8000)
 
 ---
 
