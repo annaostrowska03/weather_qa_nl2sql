@@ -126,9 +126,12 @@ Open your browser at: [http://localhost:8000](http://localhost:8000)
 To use local models like `phi3:mini`, `mistral`, or `llama3`:
 
 #### 1. Install Ollama
-```bash
-curl -fsSL https://ollama.com/install.sh | sh
-```
+
+- **Windows**: Download and run the installer from [https://ollama.com/download](https://ollama.com/download)
+- **Linux/macOS**:
+  ```bash
+  curl -fsSL https://ollama.com/install.sh | sh
+  ```
 
 #### 2. Run a model
 ```bash
