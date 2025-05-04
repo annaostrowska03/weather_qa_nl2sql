@@ -227,7 +227,7 @@ From `tests/prompt_templates.py`, the following prompt styles were tested:
 * `rag_style` – schema in natural language
 * `conversational` – lightweight format
 
-Each model was mapped to its suitable prompt style in `model_prompt_styles` (it was checked in tests which prompt works the best for which model):
+Each model was mapped to its suitable prompt style (it was checked in tests which prompt works the best for which model):
 
 ```python
 model_prompt_styles = {
@@ -237,9 +237,12 @@ model_prompt_styles = {
     "gpt-4o": "default",
     "mistral": "default",
     "llama3": "default",
-    "tscholak/1zha5ono": None,
+    "tscholak/1zha5ono": "{corrected_question} | Weather : City, Temperature, Weather, Climate",
     "juierror/text-to-sql-with-table-schema": None
 }
+
+These prompt texts are available in the  `tests/prompt_templates.py` file.
+
 ```
 
 **Hyperparameters tested:**
@@ -300,6 +303,19 @@ Response:
 The default database (`WeatherDB`) is automatically created and initialized using the `init-db` service defined in `docker-compose.yml`. This service runs a provided SQL script (`init_db.sql`) to seed example weather data during startup.
 
 If you wish to use your own custom database schema, you can modify or replace the `init_db.sql` script. However, please note that prompt templates and model behavior are aligned to the original column names and data structure — adjustments may be required to maintain accuracy if your schema differs significantly.
+
+### Default Table Schema
+
+The app expects a single table called Weather with the following columns:
+
+| Column        | Type    | Description                    |
+| ------------- | ------- | ------------------------------ |
+| `City`        | TEXT    | Name of the city               |
+| `Temperature` | INTEGER | Temperature (degrees)          |
+| `Weather`     | TEXT    | Weather description            |
+| `Climate`     | TEXT    | General climate classification |
+
+You can inspect or edit this schema in the init_db.sql file.
 
 ---
 
