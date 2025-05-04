@@ -36,9 +36,22 @@ This project was developed as a take-home task for an AI/ML internship at Evertz
 
 Before running the project, make sure you have:
 
-- [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) installed
+- [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) installed (or run it locally)
 - A valid **OpenAI API key** (optional, for GPT-based models)
 - (Optional) [Ollama](https://ollama.com/) installed — to use local language models
+- Java 17+ (if you're running it locally)
+
+This app uses the `language_tool_python` library, which depends on Java.  
+If you're running the app **locally** (not in Docker), you **must have Java 17 or higher** installed on your system.
+
+To check your current version:
+ ```bash
+java --version
+```
+
+If it's below version 17, download and install the latest Java version from [Adoptium](https://adoptium.net/).
+
+After installation, make sure your system uses the new version (restart terminal or adjust JAVA_HOME/PATH if needed).
 
 ---
 
