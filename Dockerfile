@@ -2,7 +2,7 @@ FROM python:3.10-slim-bullseye
 
 # System dependencies
 RUN apt-get update && apt-get install -y \
-    gcc g++ build-essential curl gnupg2 apt-transport-https unixodbc-dev \
+    gcc g++ build-essential curl gnupg2 apt-transport-https unixodbc-dev openjdk-17-jre \
     && rm -rf /var/lib/apt/lists/*
 
 # Add Microsoft GPG key and repository for Debian 11 (Bullseye)

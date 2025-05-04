@@ -1,5 +1,5 @@
 from langchain.llms import Ollama
-from autocorrect import Speller
+import language_tool_python
 import requests
 import re
 from app.database import get_db_connection
@@ -10,7 +10,7 @@ from openai import AuthenticationError, RateLimitError, APIError
 from dotenv import load_dotenv
 
 # Autocorrect
-spell = Speller(lang='en')
+autocorrect = language_tool_python.LanguageTool('en-US')
 
 def get_db_type():
     try:
@@ -33,8 +33,8 @@ model_prompt_styles = {
     "gpt-4o": "default",
     "mistral": "default",
     "llama3": "default",
-    "tscholak/1zha5ono": None,
-    "juierror/text-to-sql-with-table-schema": None
+    "tscholak/1zha5ono": "tscholak/1zha5ono",
+    "juierror/text-to-sql-with-table-schema": "juierror/text-to-sql-with-table-schema"
 }
 def quote_values_after_equals(sql: str) -> str:
     """
@@ -169,16 +169,17 @@ def generate_sql(question: str, model_name: str, api_key: str=None, prompt_templ
 temperature: float = 0.1, num_ctx: int = 2048, num_predict: int = 256) -> tuple:
     db_type = get_db_type()
     load_dotenv()
-    corrected_question = " ".join([spell(word) for word in question.split()])
+    matches = autocorrect.check(question)
+    corrected_question = language_tool_python.utils.correct(question, matches)
     try:
         if prompt_template is None:
             # Determine the prompt key (style) based on model
             prompt_style = model_prompt_styles.get(model_name, "default")
 
-            if prompt_style is not None:
+            if model_name not in ["tscholak/1zha5ono", "juierror/text-to-sql-with-table-schema"] and prompt_style is not None:
                 prompt_template = prompt_templates_llms[prompt_style]
-            elif model_name in prompt_templates_other:
-                prompt_template = prompt_templates_other[model_name]
+            elif prompt_style is not None:
+                prompt_template = prompt_templates_other[prompt_style]
             else:
                 prompt_template = prompt_templates_llms["default"]
 
@@ -190,12 +191,6 @@ temperature: float = 0.1, num_ctx: int = 2048, num_predict: int = 256) -> tuple:
             import torch
             tokenizer = AutoTokenizer.from_pretrained(model_name)
             model = AutoModelForSeq2SeqLM.from_pretrained(model_name).to("cuda" if torch.cuda.is_available() else "cpu")
-
-            table_columns = ["City", "Temperature", "Weather", "Climate"]
-            table_prefix = "Weather:"
-            question_prefix = "question:"
-            join_table = ",".join(table_columns)
-            prompt = f"{question_prefix} {corrected_question} {table_prefix} {join_table}"
 
             inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
             outputs = model.generate(inputs=inputs["input_ids"], num_beams=10, max_length=700)

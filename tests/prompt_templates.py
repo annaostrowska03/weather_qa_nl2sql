@@ -100,5 +100,5 @@ prompt_templates_llms = {
 
 prompt_templates_other = {
     "tscholak/1zha5ono": "{corrected_question} | Weather : City, Temperature, Weather, Climate",
-    "juierror/text-to-sql-with-table-schema": "{corrected_question}"
+    "juierror/text-to-sql-with-table-schema": "question: {corrected_question} Weather: City,Temperature,Weather,Climate"
 }

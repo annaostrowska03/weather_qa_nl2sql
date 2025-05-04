@@ -21,3 +21,4 @@ scikit-learn==1.6.1
 pandas==2.2.2
 torch==2.1.2
 torchvision==0.16.2
+language_tool_python
