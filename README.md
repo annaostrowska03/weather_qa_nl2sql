@@ -238,12 +238,11 @@ model_prompt_styles = {
     "mistral": "default",
     "llama3": "default",
     "tscholak/1zha5ono": "{corrected_question} | Weather : City, Temperature, Weather, Climate",
-    "juierror/text-to-sql-with-table-schema": None
+    "juierror/text-to-sql-with-table-schema": "question: {corrected_question} Weather: City,Temperature,Weather,Climate"
 }
+```
 
 These prompt texts are available in the  `tests/prompt_templates.py` file.
-
-```
 
 **Hyperparameters tested:**
 
