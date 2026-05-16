@@ -1,9 +1,22 @@
-# Weather Q&A: Natural Language to SQL
+# Weather Q&A — Natural Language to SQL
 
-This is a **web application** that allows users to ask weather-related questions in natural language. The app translates those questions into SQL queries and returns answers based on weather data stored in a database.
+Weather Q&A is a web application that translates natural-language weather questions into SQL queries and returns answers from a structured database.
 
-This project was developed as a take-home task for an AI/ML internship at Evertz.
+The project was developed as a take-home AI/ML engineering task and focuses on practical LLM application design: prompt engineering, SQL generation, query validation, model backends, and evaluation of generated queries.
 
+## Key features
+
+- Natural-language-to-SQL generation for weather-related questions
+- FastAPI backend with a simple interactive web interface
+- Multiple LLM backends: OpenAI, Hugging Face, and Ollama
+- LangChain-based prompt orchestration
+- SQL dialect adaptation for SQLite / SQL Server
+- Dockerized setup for reproducible local deployment
+- Evaluation scripts for SQL accuracy, validity, and latency
+
+## Why this project matters
+
+This project demonstrates how LLMs can be integrated into structured-data workflows where correctness, robustness, and query safety matter. It is a small but production-inspired example of turning natural-language interaction into reliable data access.
 
 ---
 
